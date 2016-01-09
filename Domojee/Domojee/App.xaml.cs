@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domojee.ViewModels;
+using Domojee.Views;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +9,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -60,6 +63,7 @@ namespace Domojee
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
+                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -75,10 +79,33 @@ namespace Domojee
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                ConfigurationViewModel config = new ConfigurationViewModel();
+                if (config.Populated)
+                {
+                    rootFrame.Navigate(typeof(LoadingPage), e.Arguments);
+                }
+                else
+                {
+                    rootFrame.Navigate(typeof(ConnectPage), e.Arguments);
+                }
             }
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+                return;
+
+            // Navigate back if possible, and if the event has not 
+            // already been handled.
+            if (rootFrame.CanGoBack && e.Handled == false && rootFrame.BackStack.Last()?.SourcePageType.Name != "LoadingPage")
+            {
+                e.Handled = true;
+                rootFrame.GoBack();
+            }
         }
 
         /// <summary>

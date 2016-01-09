@@ -1,0 +1,93 @@
+﻿<UserControl
+    x:Class="Domojee.Controls.MainMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Domojee.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:Domojee.ViewModels"
+    xmlns:ctl="using:Domojee.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    x:Name="mainMenu">
+
+    <UserControl.DataContext>
+        <viewModels:ConfigurationViewModel/>
+    </UserControl.DataContext>
+    <Grid Background="{StaticResource BlackBack}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="None">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="False"/>
+                        <Setter Target="splitView.(SplitView.DisplayMode)" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Compact">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="960"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="False"/>
+                        <Setter Target="splitView.(SplitView.DisplayMode)" Value="CompactInline"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="splitView.(SplitView.DisplayMode)" Value="CompactInline"/>
+                        <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="True"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid Background="Gray" Canvas.ZIndex="2" Width="48" Height="48" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Button x:Name="hamburgerButton" Content="&#xE700;" VerticalAlignment="Center" Width="48" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Height="48" Click="hamburgerButton_Click"/>
+        </Grid>
+        <SplitView x:Name="splitView" Margin="0" d:LayoutOverrides="Width" PaneBackground="Gray" OpenPaneLength="260" IsPaneOpen="True">
+            <SplitView.Pane>
+                <StackPanel Margin="0,48,0,0">
+                    <ListView IsItemClickEnabled="True" ItemClick="ListView_ItemClick" SelectionMode="None">
+                        <ListViewItem x:Name="menuServer">
+                            <StackPanel Tag="Server" Orientation="Horizontal" Height="48" ToolTipService.ToolTip="Serveur JEEDOM">
+                                <ctl:ServerState Height="48" Width="24"/>
+                                <TextBlock VerticalAlignment="Center" Margin="14,0,0,0" Text="{Binding ServerName}"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="menuDashboard">
+                            <StackPanel Tag="Dashboard" Orientation="Horizontal" Height="48" ToolTipService.ToolTip="Tableau de bord" Margin="5,0,0,0">
+                                <TextBlock VerticalAlignment="Center" Text="&#xE175;" FontFamily="Segoe MDL2 Assets"/>
+                                <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" Text="Tableau de bord"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="menuScene">
+                            <StackPanel Tag="Scene" Orientation="Horizontal" Height="48" ToolTipService.ToolTip="Scénarios" Margin="5,0,0,0">
+                                <TextBlock VerticalAlignment="Center" Text="&#xE102;" FontFamily="Segoe MDL2 Assets"/>
+                                <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" Text="Scénarios"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <StackPanel Tag="Logout" Orientation="Horizontal" Height="48" ToolTipService.ToolTip="Se déconnecter" Margin="5,0,0,0">
+                                <TextBlock VerticalAlignment="Center" Text="&#xEA39;" FontFamily="Segoe MDL2 Assets"/>
+                                <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" Text="Se déconnecter"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <StackPanel Tag="About" Orientation="Horizontal" Height="48" ToolTipService.ToolTip="A propos" Margin="5,0,0,0">
+                                <TextBlock VerticalAlignment="Center" Text="&#xE897;" FontFamily="Segoe MDL2 Assets"/>
+                                <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" Text="A propos"/>
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
+                </StackPanel>
+            </SplitView.Pane>
+            <ContentPresenter x:Name="contentFrame"/>
+        </SplitView>
+    </Grid>
+</UserControl>
