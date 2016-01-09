@@ -103,6 +103,24 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Command.cs" />
+    <Compile Include="Models\CommandResult.cs" />
+    <Compile Include="Models\DisplayInfo.cs" />
+    <Compile Include="Models\EqLogic.cs" />
+    <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\JdObject.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Parameters.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\ResponseCommand.cs" />
+    <Compile Include="Models\ResponseCommandList.cs" />
+    <Compile Include="Models\ResponseEqLogicList.cs" />
+    <Compile Include="Models\ResponseJdObjectList.cs" />
+    <Compile Include="Models\ResponseMessageList.cs" />
+    <Compile Include="Models\ResponseScene.cs" />
+    <Compile Include="Models\ResponseSceneList.cs" />
+    <Compile Include="Models\Scene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
