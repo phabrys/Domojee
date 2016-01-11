@@ -1,3 +1,3 @@
 # Domojee
 
-Application Windows Universelle Permettant de gérer sa box domotique JEEDOM
+Application Windows Universelle non officielle permettant de gérer sa box domotique JEEDOM
