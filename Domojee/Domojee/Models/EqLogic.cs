@@ -15,7 +15,6 @@ namespace Domojee.Models
     [DataContract]
     public class EqLogic : INotifyPropertyChanged
     {
-        private string _id;
         [DataMember]
         public string id { get; set; }
 
