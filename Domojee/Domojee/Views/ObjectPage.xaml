@@ -32,7 +32,7 @@
                     <Button x:Name="btnON" Margin="5,0" Tag="{Binding id}" FontFamily="Segoe MDL2 Assets" Click="btnON_Click">
                         <Grid Width="20" Height="20">
                             <ProgressRing Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" IsActive="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding State, Converter={StaticResource EqLogicStateConverter}}" Visibility="{Binding Updating, Converter={StaticResource EqLogicNotUpdatingConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding State, Converter={StaticResource EqLogicStateConverter}}" Visibility="{Binding Updating, Converter={StaticResource EqLogicNotUpdatingConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding State, Converter={StaticResource EqLogicState2BrushConverter}}"/>
                         </Grid>
                     </Button>
                     <StackPanel Width="100" Margin="0,0,5,0">
