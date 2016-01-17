@@ -284,6 +284,8 @@ namespace Domojee.ViewModels
                             eq.cmds = new ObservableCollection<Command>();
                         eq.cmds.Add(p);
                         p.Parent = eq;
+                        if (p.name == "On")
+                            eq.OnVisibility = true;
 
                         if (p.type == "info")
                             await ExecuteCommand(p);

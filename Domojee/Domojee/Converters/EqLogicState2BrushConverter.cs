@@ -16,9 +16,9 @@ namespace Domojee.Converters
             var state = value as string;
             var brush = new SolidColorBrush();
             if (state == "1")
-                brush.Color = Colors.Green;
+                brush.Color = Colors.LightGreen;
             else
-                brush.Color = Colors.Red;
+                brush.Color = Colors.LightCoral;
             return brush;
         }
 

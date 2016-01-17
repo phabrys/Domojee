@@ -117,11 +117,11 @@ namespace Domojee.Views
 
             tbInformation.Text = "Connecté";
 
-            /*var instance = RequestViewModel.GetInstance();
+            var instance = RequestViewModel.GetInstance();
             var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             var taskFactory = new TaskFactory(taskScheduler);
             var tokenSource = new CancellationTokenSource();
-            await taskFactory.StartNew(() => instance.UpdateAllAsyncThread(tokenSource), tokenSource.Token);*/
+            await taskFactory.StartNew(() => instance.UpdateAllAsyncThread(tokenSource), tokenSource.Token);
 
             Frame.Navigate(typeof(DashboardPage));
             base.OnNavigatedTo(e);

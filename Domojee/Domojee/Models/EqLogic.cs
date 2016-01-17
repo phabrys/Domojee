@@ -118,6 +118,21 @@ namespace Domojee.Models
             }
         }
 
+        private bool _onVisibility = false;
+        public bool OnVisibility
+        {
+            get
+            {
+                return _onVisibility;
+            }
+            set
+            {
+                _onVisibility = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             if (PropertyChanged != null)

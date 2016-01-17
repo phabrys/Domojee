@@ -16,6 +16,7 @@
         <converter:EqLogicStateConverter x:Key="EqLogicStateConverter"/>
         <converter:EqLogicUpdatingConverter x:Key="EqLogicUpdatingConverter"/>
         <converter:EqLogicNotUpdatingConverter x:Key="EqLogicNotUpdatingConverter"/>
+        <converter:EqLogicState2BrushConverter x:Key="EqLogicState2BrushConverter"/>
         <DataTemplate x:Key="EqLogicTemplate">
             <Grid>
                 <Rectangle Width="150" Height="100" RadiusX="2" RadiusY="2" Fill="{StaticResource SystemControlForegroundAccentBrush}" Opacity="0.5"/>
@@ -29,7 +30,7 @@
                 <TextBlock x:Name="txtType" Text="openzwave" FontSize="8" RelativePanel.AlignTopWithPanel="True" Margin="5" RelativePanel.AlignRightWithPanel="True" />
                 <TextBlock x:Name="txtName" Text="{Binding name, FallbackValue=Name}" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="txtType" FontWeight="Bold" FontSize="18"/>
                 <StackPanel x:Name="stkTools" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="txtName" Orientation="Horizontal">
-                    <Button x:Name="btnON" Margin="5,0" Tag="{Binding id}" FontFamily="Segoe MDL2 Assets" Click="btnON_Click">
+                    <Button x:Name="btnON" Margin="5,0" Tag="{Binding id}" FontFamily="Segoe MDL2 Assets" Click="btnON_Click" Visibility="{Binding OnVisibility, Converter={StaticResource EqLogicUpdatingConverter}}">
                         <Grid Width="20" Height="20">
                             <ProgressRing Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" IsActive="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding State, Converter={StaticResource EqLogicStateConverter}}" Visibility="{Binding Updating, Converter={StaticResource EqLogicNotUpdatingConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding State, Converter={StaticResource EqLogicState2BrushConverter}}"/>
