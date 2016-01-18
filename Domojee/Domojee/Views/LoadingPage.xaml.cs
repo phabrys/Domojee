@@ -31,22 +31,38 @@ namespace Domojee.Views
         public LoadingPage()
         {
             this.InitializeComponent();
-            //SystemNavigationManager.GetForCurrentView().BackRequested += LoadingPage_BackRequested;
         }
 
-        private void LoadingPage_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
-                return;
+        private delegate Task<Error> ActionFunction();
 
-            // Navigate back if possible, and if the event has not 
-            // already been handled.
-            if (rootFrame.CanGoBack && e.Handled == false)
+        private struct ActionItem
+        {
+            public string message;
+            public ActionFunction function;
+        }
+
+        private ActionItem[] Actions = new ActionItem[] {
+            new ActionItem { message = "Objets",        function = RequestViewModel.GetInstance().DownloadObjects },
+            new ActionItem { message = "Equipements",   function = RequestViewModel.GetInstance().DownloadEqLogics },
+            new ActionItem { message = "Commandes",     function = RequestViewModel.GetInstance().DownloadCommands },
+            new ActionItem { message = "Scénarios",     function = RequestViewModel.GetInstance().DownloadScenes },
+            new ActionItem { message = "Messages",      function = RequestViewModel.GetInstance().DownloadMessages }
+        };
+
+        private async Task<bool> Action(ActionItem item, NavigationEventArgs e)
+        {
+            tbInformation.Text = item.message;
+            Error error = await item.function();
+            if (error != null)
             {
-                e.Handled = true;
-                rootFrame.GoBack();
+                tbInformation.Text = error.message;
+                await Task.Delay(new TimeSpan(0, 0, 3));
+                Frame.Navigate(typeof(ConnectPage));
+                base.OnNavigatedTo(e);
+                return false;
             }
+            else
+                return true;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -60,69 +76,16 @@ namespace Domojee.Views
 
             prProgress.IsActive = true;
 
-            tbInformation.Text = "Objets";
-            Error error = await RequestViewModel.GetInstance().DownloadObjects();
-            if (error != null)
+            foreach (ActionItem item in Actions)
             {
-                tbInformation.Text = error.message;
-                await Task.Delay(new TimeSpan(0, 0, 3));
-                Frame.Navigate(typeof(ConnectPage));
-                base.OnNavigatedTo(e);
-                return;
+                if (!await Action(item, e))
+                    return;
             }
 
-            tbInformation.Text = "Equipements";
-            error = await RequestViewModel.GetInstance().DownloadEqLogics();
-            if (error != null)
-            {
-                tbInformation.Text = error.message;
-                await Task.Delay(new TimeSpan(0, 0, 3));
-                Frame.Navigate(typeof(ConnectPage));
-                base.OnNavigatedTo(e);
-                return;
-            }
+            tbInformation.Text = "";
+            tbLoading.Text = "Connecté";
 
-            tbInformation.Text = "Commandes";
-            error = await RequestViewModel.GetInstance().DownloadCommands();
-            if (error != null)
-            {
-                tbInformation.Text = error.message;
-                await Task.Delay(new TimeSpan(0, 0, 3));
-                Frame.Navigate(typeof(ConnectPage));
-                base.OnNavigatedTo(e);
-                return;
-            }
-
-            tbInformation.Text = "Scénarios";
-            error = await RequestViewModel.GetInstance().DownloadScenes();
-            if (error != null)
-            {
-                tbInformation.Text = error.message;
-                await Task.Delay(new TimeSpan(0, 0, 3));
-                Frame.Navigate(typeof(ConnectPage));
-                base.OnNavigatedTo(e);
-                return;
-            }
-
-            tbInformation.Text = "Messages";
-            error = await RequestViewModel.GetInstance().DownloadMessages();
-            if (error != null)
-            {
-                tbInformation.Text = error.message;
-                await Task.Delay(new TimeSpan(0, 0, 3));
-                Frame.Navigate(typeof(ConnectPage));
-                base.OnNavigatedTo(e);
-                return;
-            }
-
-            tbInformation.Text = "Connecté";
-
-            var instance = RequestViewModel.GetInstance();
-            var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-            var taskFactory = new TaskFactory(taskScheduler);
-            var tokenSource = new CancellationTokenSource();
-            await taskFactory.StartNew(() => instance.UpdateAllAsyncThread(tokenSource), tokenSource.Token);
-
+            await Task.Delay(new TimeSpan(0, 0, 2));
             Frame.Navigate(typeof(DashboardPage));
             base.OnNavigatedTo(e);
         }

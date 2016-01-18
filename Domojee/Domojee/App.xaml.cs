@@ -101,10 +101,13 @@ namespace Domojee
 
             // Navigate back if possible, and if the event has not 
             // already been handled.
-            if (rootFrame.CanGoBack && e.Handled == false && rootFrame.BackStack.Last()?.SourcePageType.Name != "LoadingPage")
+            if (rootFrame.CanGoBack && e.Handled == false)
             {
-                e.Handled = true;
-                rootFrame.GoBack();
+                if (rootFrame.BackStack.Last()?.SourcePageType.Name != "LoadingPage")
+                {
+                    e.Handled = true;
+                    rootFrame.GoBack();
+                }
             }
         }
 

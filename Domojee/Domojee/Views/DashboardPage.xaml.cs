@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
@@ -31,7 +33,8 @@ namespace Domojee.Views
     {
         public ObservableCollection<JdObject> ObjectList = RequestViewModel.ObjectList;
         public RequestViewModel RqViewModel = RequestViewModel.GetInstance();
-        public bool Updating = RequestViewModel.GetInstance().Updating;
+        public bool Updating;
+        private CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         public DashboardPage()
         {
@@ -56,7 +59,38 @@ namespace Domojee.Views
             else
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
+            var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            await taskFactory.StartNew(() => DoWork(tokenSource), tokenSource.Token);
+
             base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            tokenSource.Cancel();
+            tokenSource.Dispose();
+            base.OnNavigatedFrom(e);
+        }
+
+        private async Task DoWork(CancellationTokenSource tokenSource)
+        {
+            while(!tokenSource.IsCancellationRequested)
+            {
+                Updating = true;
+                Bindings.Update();
+                await RequestViewModel.GetInstance().UpdateObjectList();
+                Updating = false;
+                Bindings.Update();
+
+                try
+                {
+                    await Task.Delay(TimeSpan.FromMinutes(15), tokenSource.Token);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
         }
 
         private void objectview_ItemClick(object sender, ItemClickEventArgs e)

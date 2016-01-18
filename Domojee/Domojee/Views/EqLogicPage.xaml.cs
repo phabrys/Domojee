@@ -31,27 +31,14 @@ namespace Domojee.Views
     {
         ObservableCollection<Command> ActionList;
         ObservableCollection<Command> InformationList;
+        private EqLogic eqLogic;
         string EqLogicName;
+        CancellationTokenSource tokenSource = new CancellationTokenSource();
+        public bool Updating;
 
         public EqLogicPage()
         {
             this.InitializeComponent();
-            //SystemNavigationManager.GetForCurrentView().BackRequested += EqLogicPage_BackRequested;
-        }
-
-        private void EqLogicPage_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
-                return;
-
-            // Navigate back if possible, and if the event has not 
-            // already been handled.
-            if (rootFrame.CanGoBack && e.Handled == false && Frame.BackStack.Last()?.SourcePageType.Name != "LoadingPage")
-            {
-                e.Handled = true;
-                rootFrame.GoBack();
-            }
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -66,19 +53,48 @@ namespace Domojee.Views
             else
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
-            var eq = e.Parameter as EqLogic;
-            ActionList = eq.GetActionsCmds();
-            InformationList = eq.GetInformationsCmds();
-            EqLogicName = eq.name;
+            eqLogic = e.Parameter as EqLogic;
+            ActionList = eqLogic.GetActionsCmds();
+            InformationList = eqLogic.GetInformationsCmds();
+            EqLogicName = eqLogic.name;
             if (ActionList.Count == 0)
                 actionview.Visibility = Visibility.Collapsed;
 
             if (InformationList.Count == 0)
                 infoview.Visibility = Visibility.Collapsed;
 
-            var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-            var taskFactory = new TaskFactory(taskScheduler);
+            var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            await taskFactory.StartNew(() => DoWork(tokenSource), tokenSource.Token);
+
             base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            tokenSource.Cancel();
+            tokenSource.Dispose();
+            base.OnNavigatedFrom(e);
+        }
+
+        private async Task DoWork(CancellationTokenSource tokenSource)
+        {
+            while (!tokenSource.IsCancellationRequested)
+            {
+                Updating = true;
+                Bindings.Update();
+                await RequestViewModel.GetInstance().UpdateEqLogic(eqLogic);
+                Updating = false;
+                Bindings.Update();
+
+                try
+                {
+                    await Task.Delay(TimeSpan.FromMinutes(2), tokenSource.Token);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
         }
 
         private async void commandview_ItemClick(object sender, ItemClickEventArgs e)

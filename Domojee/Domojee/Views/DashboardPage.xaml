@@ -31,7 +31,7 @@
     </Page.Resources>
     <ctl:MainMenu x:Name="menu">
         <Grid>
-            <ProgressRing x:Name="progressUpdating" Canvas.ZIndex="2" Width="50" Height="50" IsActive="{x:Bind RqViewModel.Updating, FallbackValue=False}"/>
+            <ProgressRing x:Name="progressUpdating" Canvas.ZIndex="2" Width="50" Height="50" IsActive="{x:Bind Updating, FallbackValue=False}"/>
             <StackPanel>
                 <Grid Background="{StaticResource BlueBase}" Height="48">
                     <TextBlock Text="Tableau de Bord" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>

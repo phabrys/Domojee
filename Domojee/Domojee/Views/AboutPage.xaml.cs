@@ -30,9 +30,7 @@ namespace Domojee.Views
         {
             this.InitializeComponent();
             menu.NavigateToPage += Menu_NavigateToPage;
-            Package package = Package.Current;
-            PackageId packageId = package.Id;
-            PackageVersion version = packageId.Version;
+            PackageVersion version = Package.Current.Id.Version;
             tbVersion.Text = String.Format(": {0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
             Logo.Begin();
         }

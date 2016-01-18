@@ -33,22 +33,6 @@ namespace Domojee.Views
         {
             this.InitializeComponent();
             menu.NavigateToPage += Menu_NavigateToPage;
-            //SystemNavigationManager.GetForCurrentView().BackRequested += ScenePage_BackRequested;
-        }
-
-        private void ScenePage_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
-                return;
-
-            // Navigate back if possible, and if the event has not 
-            // already been handled.
-            if (rootFrame.CanGoBack && e.Handled == false && Frame.BackStack.Last()?.SourcePageType.Name != "LoadingPage")
-            {
-                e.Handled = true;
-                rootFrame.GoBack();
-            }
         }
 
         private void Menu_NavigateToPage(object sender, Controls.NavigateEventArgs e)

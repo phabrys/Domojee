@@ -9,7 +9,7 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Chargement ..." HorizontalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold"/>
+            <TextBlock x:Name="tbLoading" Text="Chargement ..." HorizontalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold"/>
             <TextBlock x:Name="tbInformation" Text="Information" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center"/>
             <ProgressRing x:Name="prProgress" IsActive="True" Width="50" Height="50" Margin="0,30" Foreground="White"/>
         </StackPanel>

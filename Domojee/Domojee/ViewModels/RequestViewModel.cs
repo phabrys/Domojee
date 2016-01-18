@@ -42,6 +42,8 @@ namespace Domojee.ViewModels
         static public ObservableCollection<JdObject> ObjectList = new ObservableCollection<JdObject>();
         static public ObservableCollection<Scene> SceneList = new ObservableCollection<Scene>();
 
+        public CancellationTokenSource tokenSource;
+
         private bool _updating = false;
         public bool Updating
         {
@@ -462,6 +464,84 @@ namespace Domojee.ViewModels
             }
         }
 
+        public async Task UpdateObject(JdObject obj)
+        {
+            var config = new ConfigurationViewModel();
+            var parameters = new Parameters();
+            parameters.apikey = config.ApiKey;
+            parameters.object_id = obj.id;
+
+            try
+            {
+                HttpClient httpclient = GetNewHttpClient();
+                var serialized = await Request(httpclient, "eqLogic::byObjectId", parameters);
+                httpclient.Dispose();
+                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
+                stream.Position = 0;
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseJdObjectList));
+                ResponseEqLogicList resp = ser.ReadObject(stream) as ResponseEqLogicList;
+
+                if (resp.error == null)
+                {
+                    foreach (EqLogic eq in resp.result)
+                    {
+                        var lst = EqLogicList.Where(p => p.id == eq.id);
+                        if (lst.Count() != 0)
+                        {
+                            var eqold = lst.First();
+                            eqold = eq;
+                        }
+                        else
+                        {
+                            EqLogicList.Add(eq);
+                            obj.eqLogics.Add(eq);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        public async Task UpdateObjectList()
+        {
+            var config = new ConfigurationViewModel();
+            var parameters = new Parameters();
+            parameters.apikey = config.ApiKey;
+
+            try
+            {
+                HttpClient httpclient = GetNewHttpClient();
+                var serialized = await Request(httpclient, "object::all", parameters);
+                httpclient.Dispose();
+                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
+                stream.Position = 0;
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseJdObjectList));
+                ResponseJdObjectList resp = ser.ReadObject(stream) as ResponseJdObjectList;
+
+                if (resp.error == null)
+                {
+                    foreach(JdObject obj in resp.result)
+                    {
+                        var lst = ObjectList.Where(p => p.id == obj.id);
+                        if (lst.Count() != 0)
+                        {
+                            var ob = lst.First();
+                            ob = obj;
+                        }
+                        else
+                            ObjectList.Add(obj);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
         private async Task UpdateScene(Scene scene)
         {
             var config = new ConfigurationViewModel();
@@ -525,6 +605,19 @@ namespace Domojee.ViewModels
             {
                 return;
             }
+        }
+
+        public async Task RunBackgroundTask(TaskScheduler taskScheduler)
+        {
+            var taskFactory = new TaskFactory(taskScheduler);
+            tokenSource = new CancellationTokenSource();
+            await taskFactory.StartNew(() => UpdateAllAsyncThread(tokenSource), tokenSource.Token);
+        }
+
+        public void StopBackgroundTask()
+        {
+            if (tokenSource != null)
+                tokenSource.Cancel();
         }
 
         public async Task ExecuteCommand(Command cmd)

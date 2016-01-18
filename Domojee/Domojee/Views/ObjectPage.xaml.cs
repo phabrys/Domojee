@@ -30,8 +30,10 @@ namespace Domojee.Views
     public sealed partial class ObjectPage : Page
     {
         public ObservableCollection<EqLogic> EqLogicList;
-        public bool Updating = RequestViewModel.GetInstance().Updating;
+        public bool Updating;
         public string ObjectName;
+        private CancellationTokenSource tokenSource = new CancellationTokenSource();
+        public JdObject Object;
 
         public ObjectPage()
         {
@@ -50,12 +52,43 @@ namespace Domojee.Views
             else
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
-            var obj = e.Parameter as JdObject;
+            this.Object = e.Parameter as JdObject;
 
-            EqLogicList = obj.eqLogics;
-            ObjectName = obj.Name;
+            EqLogicList = this.Object.eqLogics;
+            ObjectName = this.Object.Name;
+
+            var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            await taskFactory.StartNew(() => DoWork(tokenSource), tokenSource.Token);
 
             base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            tokenSource.Cancel();
+            tokenSource.Dispose();
+            base.OnNavigatedFrom(e);
+        }
+
+        private async Task DoWork(CancellationTokenSource tokenSource)
+        {
+            while (!tokenSource.IsCancellationRequested)
+            {
+                Updating = true;
+                Bindings.Update();
+                await RequestViewModel.GetInstance().UpdateObject(this.Object);
+                Updating = false;
+                Bindings.Update();
+
+                try
+                {
+                    await Task.Delay(TimeSpan.FromMinutes(15), tokenSource.Token);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
         }
 
         private void eqlogicview_ItemClick(object sender, ItemClickEventArgs e)

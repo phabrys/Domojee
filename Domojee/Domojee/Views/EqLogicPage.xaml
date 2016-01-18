@@ -43,12 +43,12 @@
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{StaticResource BlackBack}">
+        <ProgressRing x:Name="progressUpdating" Canvas.ZIndex="2" Width="50" Height="50" IsActive="{x:Bind Updating, FallbackValue=False}"/>
         <ScrollViewer>
             <StackPanel>
                 <Grid Background="{StaticResource BlueBase}" Height="48">
                     <TextBlock Text="{x:Bind EqLogicName}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-                <ProgressBar x:Name="progressUpdating" IsIndeterminate="True" Visibility="Collapsed"/>
                 <GridView x:Name="actionview" Header="Actions" ItemsSource="{x:Bind ActionList}" ItemTemplate="{StaticResource ActionTemplate}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="commandview_ItemClick" Margin="15"/>
                 <GridView x:Name="infoview" Header="Informations" ItemsSource="{x:Bind InformationList}" ItemTemplate="{StaticResource InfoTemplate}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="commandview_ItemClick" Margin="15"/>
             </StackPanel>
