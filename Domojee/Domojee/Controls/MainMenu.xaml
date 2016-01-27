@@ -79,6 +79,12 @@
                             </StackPanel>
                         </ListViewItem>
                         <ListViewItem>
+                            <StackPanel Tag="Config" Orientation="Horizontal" Height="48" ToolTipService.ToolTip="Configuration" Margin="5,0,0,0">
+                                <TextBlock VerticalAlignment="Center" Text="&#xE897;" FontFamily="Segoe MDL2 Assets"/>
+                                <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" Text="Configuration"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem>
                             <StackPanel Tag="About" Orientation="Horizontal" Height="48" ToolTipService.ToolTip="A propos" Margin="5,0,0,0">
                                 <TextBlock VerticalAlignment="Center" Text="&#xE897;" FontFamily="Segoe MDL2 Assets"/>
                                 <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" Text="A propos"/>

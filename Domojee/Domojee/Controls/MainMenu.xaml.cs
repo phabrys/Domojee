@@ -85,6 +85,10 @@ namespace Domojee.Controls
                     ev.Page = typeof(Views.ServerPage);
                     NavigateToPage(this, ev);
                     break;
+                case "Config":
+                    ev.Page = typeof(Views.ConfigPage);
+                    NavigateToPage(this, ev);
+                    break;
                 default:
                     ev.Page = typeof(Views.AboutPage);
                     NavigateToPage(this, ev);
