@@ -10,36 +10,37 @@
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill"/>
     </Page.Background>
-    <ctl:MainMenu x:Name="menu">
-        <Grid Background="{StaticResource BlackBack}">
-            <ScrollViewer>
-                <StackPanel>
-                    <Grid Background="{StaticResource BlueBase}" Height="48">
-                        <TextBlock Text="AppParameter" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
-                    <Pivot Title="Configuration" Height="594">
-                        <PivotItem Header="Localisation" Margin="12,0,19,33">
-                            <Grid>
-                                <ToggleSwitch x:Name="active" Header="Activation" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Margin="10,0,0,0"/>
-                                <TextBlock x:Name="InputTextBlock" TextWrapping="Wrap" HorizontalAlignment="Left" Text="Enregistre une tâche de fond pour lire la géolocalisation sur une minuterie périodique. La position affichée sera actualisée périodiquement lorsque la tâche d'arrière-plan s'exécute (défini dans l'exemple à toutes les 15 minutes)." Margin="10,56,0,0" Height="127" VerticalAlignment="Top" />
-                                <Button x:Name="RegisterBackgroundTaskButton" Content="Register" Margin="16,197,0,0" Click="RegisterBackgroundTask" VerticalAlignment="Top"/>
-                                <Button x:Name="UnregisterBackgroundTaskButton"  Content="Unregister" Margin="115,197,125,0" Click="UnregisterBackgroundTask" VerticalAlignment="Top" HorizontalAlignment="Stretch" d:LayoutOverrides="Width, LeftPosition, RightPosition"/>
-                                <TextBlock TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Text="Latitude: " Height="46" VerticalAlignment="Bottom" Margin="16,0,0,134" />
-                                <TextBlock TextWrapping="Wrap" Grid.Column="0" Text="Longitude: " Height="51" VerticalAlignment="Bottom" Margin="16,0,0,159" HorizontalAlignment="Left" />
-                                <TextBlock TextWrapping="Wrap" Grid.Column="0" HorizontalAlignment="Left" Text="Accuracy: " Height="46" VerticalAlignment="Bottom" Margin="16,0,0,104" />
-                                <TextBlock x:Name="ScenarioOutput_Latitude" TextWrapping="Wrap" Grid.Row="0" Text="No data" Height="21" VerticalAlignment="Bottom" Margin="111,0,14,159" RenderTransformOrigin="0.818,0.5" d:LayoutOverrides="LeftPosition, RightPosition" />
-                                <TextBlock x:Name="ScenarioOutput_Longitude" TextWrapping="Wrap" Text="No data" Height="25" VerticalAlignment="Bottom" Margin="111,0,14,185" d:LayoutOverrides="LeftPosition, RightPosition" />
-                                <TextBlock x:Name="ScenarioOutput_Accuracy" TextWrapping="Wrap" Text="No data" Margin="111,0,14,130" Height="20" VerticalAlignment="Bottom" d:LayoutOverrides="LeftPosition, RightPosition" />
-                                <TextBlock x:Name="Status" TextWrapping="Wrap" Text="No data" Margin="16,0,0,200" Height="20" VerticalAlignment="Bottom" d:LayoutOverrides="LeftPosition, RightPosition" />
-                            </Grid>
+    <Grid Background="{StaticResource BlackBack}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <ctl:MainMenu x:Name="menu">
+        <ScrollViewer>
+            <StackPanel>
+                <Grid Background="{StaticResource BlueBase}" Height="48">
+                    <TextBlock Text="AppParameter" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+                <Pivot Height="594">
+                    <PivotItem Header="Localisation" Margin="12,0,19,33">
+                        <Grid>
+                            <ToggleSwitch x:Name="active" Header="Activation" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Margin="10,0,0,0" Toggled="active_Toggled"/>
+                            <TextBlock x:Name="InputTextBlock" TextWrapping="Wrap" HorizontalAlignment="Left" Text="Enregistre une tâche de fond pour lire la géolocalisation sur une minuterie périodique. La position affichée sera actualisée périodiquement lorsque la tâche d'arrière-plan s'exécute (défini dans l'exemple à toutes les 15 minutes)." Margin="10,56,0,0" Height="127" VerticalAlignment="Top" />
+                            <TextBlock TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Text="Latitude: " Height="25" VerticalAlignment="Bottom" Margin="16,0,0,155" />
+                            <TextBlock TextWrapping="Wrap" Grid.Column="0" Text="Longitude: " Height="30" VerticalAlignment="Bottom" Margin="16,0,0,180" HorizontalAlignment="Left" />
+                            <TextBlock TextWrapping="Wrap" Grid.Column="0" HorizontalAlignment="Left" Text="Accuracy: " Height="46" VerticalAlignment="Bottom" Margin="16,0,0,104" />
+                            <TextBlock x:Name="ScenarioOutput_Latitude" TextWrapping="Wrap" Grid.Row="0" Text="No data" Height="21" VerticalAlignment="Bottom" Margin="111,0,14,159" RenderTransformOrigin="0.818,0.5" d:LayoutOverrides="LeftPosition, RightPosition" />
+                            <TextBlock x:Name="ScenarioOutput_Longitude" TextWrapping="Wrap" Text="No data" Height="25" VerticalAlignment="Bottom" Margin="111,0,14,185" d:LayoutOverrides="LeftPosition, RightPosition" />
+                            <TextBlock x:Name="ScenarioOutput_Accuracy" TextWrapping="Wrap" Text="No data" Margin="111,0,14,130" Height="20" VerticalAlignment="Bottom" d:LayoutOverrides="LeftPosition, RightPosition" />
+                            <TextBlock x:Name="Status" TextWrapping="Wrap" Margin="16,0,0,212" Height="20" VerticalAlignment="Bottom" d:LayoutOverrides="LeftPosition, RightPosition" />
+                           </Grid>
                         </PivotItem>
                         <PivotItem x:Name="notify" Header="Notification">
                             <Grid/>
                         </PivotItem>
-                    </Pivot>
+                        <PivotItem x:Name="cortana" Header="Cortana">
+                                <Grid/>
+                            </PivotItem>
+                </Pivot>
 
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-    </ctl:MainMenu>
+            </StackPanel>
+        </ScrollViewer>
+        </ctl:MainMenu>
+    </Grid>
 </Page>

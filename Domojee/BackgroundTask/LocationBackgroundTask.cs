@@ -20,7 +20,7 @@ namespace BackgroundTask
     {
         private CancellationTokenSource _cts = null;
 
-        async void IBackgroundTask.Run(IBackgroundTaskInstance taskInstance)
+        async public void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 

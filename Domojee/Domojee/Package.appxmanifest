@@ -23,9 +23,12 @@
           <uap:Rotation Preference="portrait" />
           <uap:Rotation Preference="landscape" />
         </uap:InitialRotationPreference>
-      </uap:VisualElements>      
-	  <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.LocationBackgroundTask" >
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="AdventureWorks.VoiceCommands.AdventureWorksVoiceCommandService">
+          <uap:AppService Name="AdventureWorksVoiceCommandService" />
+        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.LocationBackgroundTask">
           <BackgroundTasks>
             <Task Type="timer" />
           </BackgroundTasks>
@@ -35,6 +38,9 @@
             <Task Type="location" />
           </BackgroundTasks>
         </Extension>
+        <!--Extension Category="windows.appService" EntryPoint="Domojee.VoiceCommands.DomojeeVoiceCommandService">
+          <AppService Name="DomojeeVoiceCommandService"/>
+        </Extension-->
       </Extensions>
     </Application>
   </Applications>
@@ -42,5 +48,6 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

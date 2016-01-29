@@ -59,13 +59,7 @@ namespace Domojee.Views
                 }
                 catch (Exception ex)
                 {
-                  //  _rootPage.NotifyUser(ex.ToString(), NotifyType.ErrorMessage);
                 }
-                UpdateButtonStates(/*registered:*/ true);
-            }
-            else
-            {
-                UpdateButtonStates(/*registered:*/ false);
             }
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
@@ -88,65 +82,6 @@ namespace Domojee.Views
             }
             base.OnNavigatingFrom(e);
         }
-        async private void RegisterBackgroundTask(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Get permission for a background task from the user. If the user has already answered once,
-                // this does nothing and the user must manually update their preference via PC Settings.
-                BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-
-                // Regardless of the answer, register the background task. If the user later adds this application
-                // to the lock screen, the background task will be ready to run.
-                // Create a new background task builder
-                BackgroundTaskBuilder geolocTaskBuilder = new BackgroundTaskBuilder();
-
-                geolocTaskBuilder.Name = BackgroundTaskName;
-                geolocTaskBuilder.TaskEntryPoint = BackgroundTaskEntryPoint;
-
-                // Create a new timer triggering at a 15 minute interval
-                var trigger = new TimeTrigger(15, false);
-
-                // Associate the timer trigger with the background task builder
-                geolocTaskBuilder.SetTrigger(trigger);
-
-                // Register the background task
-                _geolocTask = geolocTaskBuilder.Register();
-
-                // Associate an event handler with the new background task
-                _geolocTask.Completed += OnCompleted;
-
-                UpdateButtonStates(/*registered*/ true);
-
-                switch (backgroundAccessStatus)
-                {
-                    case BackgroundAccessStatus.Unspecified:
-                    case BackgroundAccessStatus.Denied:
-                       Status.Text = "Not able to run in background. Application must be added to the lock screen.";
-                        break;
-
-                    default:
-                        // BckgroundTask is allowed
-                        Status.Text = "Background task registered.";
-
-                        // Need to request access to location
-                        // This must be done with the background task registeration
-                        // because the background task cannot display UI.
-                        RequestLocationAccess();
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Status.Text = ex.ToString();
-                UpdateButtonStates(/*registered:*/ false);
-            }
-        }
-
-        /// <summary>
-        /// Get permission for location from the user. If the user has already answered once,
-        /// this does nothing and the user must manually update their preference via Settings.
-        /// </summary>
         private async void RequestLocationAccess()
         {
             // Request permission to access location
@@ -166,33 +101,6 @@ namespace Domojee.Views
                     break;
             }
         }
-
-        /// <summary>
-        /// This is the click handler for the 'Unregister' button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UnregisterBackgroundTask(object sender, RoutedEventArgs e)
-        {
-            // Unregister the background task
-            if (null != _geolocTask)
-            {
-                _geolocTask.Unregister(true);
-                _geolocTask = null;
-            }
-
-            ScenarioOutput_Latitude.Text = "No data";
-            ScenarioOutput_Longitude.Text = "No data";
-            ScenarioOutput_Accuracy.Text = "No data";
-            UpdateButtonStates(/*registered:*/ false);
-          //  _rootPage.NotifyUser("Background task unregistered", NotifyType.StatusMessage);
-        }
-
-        /// <summary>
-        /// Event handle to be raised when the background task is completed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void OnCompleted(IBackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs e)
         {
             if (sender != null)
@@ -227,18 +135,72 @@ namespace Domojee.Views
                 });
             }
         }
-
-        /// <summary>
-        /// Update the enable state of the register/unregister buttons.
-        /// 
-        private async void UpdateButtonStates(bool registered)
+        async private void active_Toggled(object sender, RoutedEventArgs e)
         {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                () =>
+            
+            if(active.IsOn==true)
+            {
+                try
                 {
-                    RegisterBackgroundTaskButton.IsEnabled = !registered;
-                    UnregisterBackgroundTaskButton.IsEnabled = registered;
-                });
+                    // Get permission for a background task from the user. If the user has already answered once,
+                    // this does nothing and the user must manually update their preference via PC Settings.
+                    BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
+
+                    // Regardless of the answer, register the background task. If the user later adds this application
+                    // to the lock screen, the background task will be ready to run.
+                    // Create a new background task builder
+                    BackgroundTaskBuilder geolocTaskBuilder = new BackgroundTaskBuilder();
+
+                    geolocTaskBuilder.Name = BackgroundTaskName;
+                    geolocTaskBuilder.TaskEntryPoint = BackgroundTaskEntryPoint;
+
+                    // Create a new timer triggering at a 15 minute interval
+                    var trigger = new TimeTrigger(15, false);
+
+                    // Associate the timer trigger with the background task builder
+                    geolocTaskBuilder.SetTrigger(trigger);
+
+                    // Register the background task
+                    _geolocTask = geolocTaskBuilder.Register();
+
+                    // Associate an event handler with the new background task
+                    _geolocTask.Completed += OnCompleted;
+
+                    switch (backgroundAccessStatus)
+                    {
+                        case BackgroundAccessStatus.Unspecified:
+                        case BackgroundAccessStatus.Denied:
+                            Status.Text = "Not able to run in background. Application must be added to the lock screen.";
+                            break;
+
+                        default:
+                            // BckgroundTask is allowed
+                            Status.Text = "Background task registered.";
+
+                            // Need to request access to location
+                            // This must be done with the background task registeration
+                            // because the background task cannot display UI.
+                            RequestLocationAccess();
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Status.Text = ex.ToString();
+                }
+            }
+            else
+            {
+                if (null != _geolocTask)
+                {
+                    _geolocTask.Unregister(true);
+                    _geolocTask = null;
+                }
+                ScenarioOutput_Latitude.Text = "No data";
+                ScenarioOutput_Longitude.Text = "No data";
+                ScenarioOutput_Accuracy.Text = "No data";
+
+            }
         }
     }
 }
