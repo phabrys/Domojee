@@ -122,13 +122,27 @@ namespace Domojee.ViewModels
                 {
                     ObjectList.Clear();
                     JdObject obj = new JdObject();
-                    obj.name = "Equipements sans objet parent";
-                    ObjectList.Add(obj);
+                    List<string> idList = new List<string>();
                     resp.result.ToList().ForEach(p =>
                     {
                         ObjectList.Add(p);
+                        idList.Add("dmj" + p.id);
                         UpdateObjectImage(p);
                     });
+
+                    // Efface les images inutiles
+                    var files = await ApplicationData.Current.RoamingFolder.GetFilesAsync();
+                    foreach (StorageFile f in files)
+                    {
+                        if(!idList.Contains(f.DisplayName))
+                        {
+                            // TODO: Catcher les exceptions au cas où deux instances de Domojee essaient de modifier le même fichier
+                            await f.DeleteAsync();
+                        }
+                    }
+
+                    obj.name = "Equipements sans objet parent";
+                    ObjectList.Add(obj);
                 }
 
                 return resp.error;

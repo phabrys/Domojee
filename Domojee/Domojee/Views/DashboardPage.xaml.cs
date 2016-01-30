@@ -119,9 +119,6 @@ namespace Domojee.Views
                 var item = sender as MenuFlyoutItem;
                 var id = item.Tag as string;
 
-                var folder = ApplicationData.Current.RoamingFolder;
-
-                // TODO: delete unused files on boot
                 RequestViewModel.UpdateObjectImage(id, null);
                 var onedrivefile = await ApplicationData.Current.RoamingFolder.CreateFileAsync("dmj" + id, CreationCollisionOption.ReplaceExisting);
                 await file.CopyAndReplaceAsync(onedrivefile);
