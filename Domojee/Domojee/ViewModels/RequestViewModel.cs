@@ -124,7 +124,11 @@ namespace Domojee.ViewModels
                     JdObject obj = new JdObject();
                     obj.name = "Equipements sans objet parent";
                     ObjectList.Add(obj);
-                    resp.result.ToList().ForEach(p => ObjectList.Add(p));
+                    resp.result.ToList().ForEach(p =>
+                    {
+                        ObjectList.Add(p);
+                        UpdateObjectImage(p);
+                    });
                 }
 
                 return resp.error;
@@ -135,6 +139,32 @@ namespace Domojee.ViewModels
                 error.code = "-1";
                 error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
                 return error;
+            }
+        }
+
+        private async void UpdateObjectImage(JdObject obj)
+        {
+            try
+            {
+                var file = await ApplicationData.Current.RoamingFolder.GetFileAsync("dmj" + obj.id);
+                obj.Image = "ms-appdata:///roaming/" + file.DisplayName;
+            }
+            catch (Exception)
+            {
+                obj.Image = "ms-appx:///Images/WP.jpg";
+            }
+        }
+
+        public static void UpdateObjectImage(string id, string name)
+        {
+            var objs = ObjectList.Where(o => o.id == id);
+            if (objs.Count() != 0)
+            {
+                var obj = objs.First();
+                if (name == null)
+                    obj.Image = "ms-appx:///Images/WP.jpg";
+                else
+                    obj.Image = "ms-appdata:///roaming/" + name;
             }
         }
 
@@ -523,7 +553,7 @@ namespace Domojee.ViewModels
 
                 if (resp.error == null)
                 {
-                    foreach(JdObject obj in resp.result)
+                    foreach (JdObject obj in resp.result)
                     {
                         var lst = ObjectList.Where(p => p.id == obj.id);
                         if (lst.Count() != 0)

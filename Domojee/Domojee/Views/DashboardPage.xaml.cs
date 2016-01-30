@@ -74,7 +74,7 @@ namespace Domojee.Views
 
         private async Task DoWork(CancellationTokenSource tokenSource)
         {
-            while(!tokenSource.IsCancellationRequested)
+            while (!tokenSource.IsCancellationRequested)
             {
                 Updating = true;
                 Bindings.Update();
@@ -113,6 +113,20 @@ namespace Domojee.Views
             openPicker.FileTypeFilter.Add(".png");
 
             StorageFile file = await openPicker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                var item = sender as MenuFlyoutItem;
+                var id = item.Tag as string;
+
+                var folder = ApplicationData.Current.RoamingFolder;
+
+                // TODO: delete unused files on boot
+                RequestViewModel.UpdateObjectImage(id, null);
+                var onedrivefile = await ApplicationData.Current.RoamingFolder.CreateFileAsync("dmj" + id, CreationCollisionOption.ReplaceExisting);
+                await file.CopyAndReplaceAsync(onedrivefile);
+                RequestViewModel.UpdateObjectImage(id, onedrivefile.DisplayName);
+            }
         }
     }
 }

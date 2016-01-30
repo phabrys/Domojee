@@ -34,6 +34,7 @@ namespace Domojee.Views
         public string ObjectName;
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
         public JdObject Object;
+        public string ImagePath;
 
         public ObjectPage()
         {
@@ -56,6 +57,7 @@ namespace Domojee.Views
 
             EqLogicList = this.Object.eqLogics;
             ObjectName = this.Object.Name;
+            ImagePath = this.Object.Image;
 
             var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             await taskFactory.StartNew(() => DoWork(tokenSource), tokenSource.Token);
