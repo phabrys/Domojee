@@ -14,7 +14,7 @@
     </Page.Background>
     <Page.Resources>
         <DataTemplate x:Key="ObjectTemplate">
-            <Grid CornerRadius="2" RightTapped="Grid_RightTapped">
+            <Grid CornerRadius="2" RightTapped="Grid_RightTapped" Holding="Grid_Holding">
                 <Image Width="192" Height="108" Stretch="UniformToFill" Source="{Binding Image}" />
                 <Rectangle Width="192" Height="48" Fill="{StaticResource BlueBase}" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
                 <StackPanel VerticalAlignment="Bottom">
@@ -23,7 +23,8 @@
                 </StackPanel>
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Tag="{Binding id}" Text="Changer l'image" Click="MenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Tag="{Binding id}" Text="Modifier l'image" Click="MenuFlyoutItem_Click"/>
+                        <MenuFlyoutItem Tag="{Binding id}" Text="Réinitialiser l'image" Click="MenuFlyoutItem_Click_1"/>
                     </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
             </Grid>
@@ -38,7 +39,7 @@
                 </Grid>
                 <TextBlock Text="Sélectionner un objet" HorizontalAlignment="Center"/>
                 <ScrollViewer>
-                    <GridView x:Name="objectview" ItemsSource="{x:Bind ObjectList}" Margin="15"  SelectionMode="None" IsItemClickEnabled="True" ItemClick="objectview_ItemClick" ItemTemplate="{StaticResource ObjectTemplate}"/>
+                    <GridView x:Name="objectview" ItemsSource="{x:Bind ObjectList}" Margin="15" IsItemClickEnabled="True" ItemClick="objectview_ItemClick" ItemTemplate="{StaticResource ObjectTemplate}"/>
                 </ScrollViewer>
             </StackPanel>
         </Grid>

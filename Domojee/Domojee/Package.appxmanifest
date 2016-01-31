@@ -23,16 +23,16 @@
           <uap:Rotation Preference="portrait" />
           <uap:Rotation Preference="landscape" />
         </uap:InitialRotationPreference>
-      </uap:VisualElements>      
-	  <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.LocationBackgroundTask" >
-          <BackgroundTasks>
-            <Task Type="timer" />
-          </BackgroundTasks>
-        </Extension>
+      </uap:VisualElements>
+      <Extensions>
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.GeofenceBackgroundTask">
           <BackgroundTasks>
             <Task Type="location" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.LocationBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
       </Extensions>
@@ -42,5 +42,6 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

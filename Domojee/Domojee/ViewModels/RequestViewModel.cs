@@ -36,6 +36,7 @@ namespace Domojee.ViewModels
 
         private int Id;
 
+        static public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
         static public ObservableCollection<Message> MessageList = new ObservableCollection<Message>();
         static public ObservableCollection<EqLogic> EqLogicList = new ObservableCollection<EqLogic>();
         static public ObservableCollection<Command> CommandList = new ObservableCollection<Command>();
@@ -121,7 +122,7 @@ namespace Domojee.ViewModels
                 if (resp.error == null)
                 {
                     ObjectList.Clear();
-                    JdObject obj = new JdObject();
+                    
                     List<string> idList = new List<string>();
                     resp.result.ToList().ForEach(p =>
                     {
@@ -131,16 +132,16 @@ namespace Domojee.ViewModels
                     });
 
                     // Efface les images inutiles
-                    var files = await ApplicationData.Current.RoamingFolder.GetFilesAsync();
+                    var files = await ImageFolder.GetFilesAsync();
                     foreach (StorageFile f in files)
                     {
                         if(!idList.Contains(f.DisplayName))
                         {
-                            // TODO: Catcher les exceptions au cas où deux instances de Domojee essaient de modifier le même fichier
                             await f.DeleteAsync();
                         }
                     }
 
+                    JdObject obj = new JdObject();
                     obj.name = "Equipements sans objet parent";
                     ObjectList.Add(obj);
                 }
@@ -160,8 +161,8 @@ namespace Domojee.ViewModels
         {
             try
             {
-                var file = await ApplicationData.Current.RoamingFolder.GetFileAsync("dmj" + obj.id);
-                obj.Image = "ms-appdata:///roaming/" + file.DisplayName;
+                var file = await ImageFolder.GetFileAsync("dmj" + obj.id);
+                obj.Image = "ms-appdata:///local/" + file.DisplayName;
             }
             catch (Exception)
             {
@@ -178,7 +179,7 @@ namespace Domojee.ViewModels
                 if (name == null)
                     obj.Image = "ms-appx:///Images/WP.jpg";
                 else
-                    obj.Image = "ms-appdata:///roaming/" + name;
+                    obj.Image = "ms-appdata:///local/" + name;
             }
         }
 

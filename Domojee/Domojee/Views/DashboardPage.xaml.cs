@@ -120,10 +120,28 @@ namespace Domojee.Views
                 var id = item.Tag as string;
 
                 RequestViewModel.UpdateObjectImage(id, null);
-                var onedrivefile = await ApplicationData.Current.RoamingFolder.CreateFileAsync("dmj" + id, CreationCollisionOption.ReplaceExisting);
+                var onedrivefile = await RequestViewModel.ImageFolder.CreateFileAsync("dmj" + id, CreationCollisionOption.ReplaceExisting);
                 await file.CopyAndReplaceAsync(onedrivefile);
                 RequestViewModel.UpdateObjectImage(id, onedrivefile.DisplayName);
             }
+        }
+
+        private async void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var item = sender as MenuFlyoutItem;
+                var id = item.Tag as string;
+                RequestViewModel.UpdateObjectImage(id, null);
+                var file = await RequestViewModel.ImageFolder.GetFileAsync("dmj" + id);
+                await file.DeleteAsync();
+            }
+            catch (Exception) { }
+        }
+
+        private void Grid_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
     }
 }
