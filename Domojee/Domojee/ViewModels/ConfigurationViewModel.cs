@@ -5,6 +5,7 @@ namespace Domojee.ViewModels
 {
     public class ConfigurationViewModel
     {
+
         string _address;
         string _apikey;
         public string Address
@@ -20,7 +21,6 @@ namespace Domojee.ViewModels
                 return _address;
             }
         }
-
         public string ApiKey
         {
             set
@@ -36,7 +36,6 @@ namespace Domojee.ViewModels
                 return _apikey;
             }
         }
-
         public string ServerName
         {
             get
@@ -59,7 +58,37 @@ namespace Domojee.ViewModels
         }
         public bool Populated = false;
 
+        private bool _GeolocActivation;
+        public bool GeolocActivation
+        {
+            set
+            {
+                _GeolocActivation = value;
+                LocalSettings.Values["GeolocActivation"] = value;
+            }
+
+            get
+            {
+                return _GeolocActivation;
+            }
+        }
+        private string _GeolocObjectId;
+        public string GeolocObjectId
+        {
+            set
+            {
+                _GeolocObjectId = value;
+                LocalSettings.Values["GeolocObjectId"] = value;
+            }
+
+            get
+            {
+                return _GeolocObjectId;
+            }
+        }
+
         ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
+        ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
 
         const string settingAddress = "addressSetting";
         const string settingAPIKey = "apikeySetting";
@@ -77,6 +106,9 @@ namespace Domojee.ViewModels
                     Populated = true;
                 }
             }
+            GeolocActivation = (LocalSettings.Values["GeolocActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["GeolocActivation"]);
+            _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
+          
         }
     }
 }

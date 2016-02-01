@@ -25,22 +25,11 @@
         </uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="AdventureWorks.VoiceCommands.AdventureWorksVoiceCommandService">
-          <uap:AppService Name="AdventureWorksVoiceCommandService" />
-        </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.LocationBackgroundTask">
           <BackgroundTasks>
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.GeofenceBackgroundTask">
-          <BackgroundTasks>
-            <Task Type="location" />
-          </BackgroundTasks>
-        </Extension>
-        <!--Extension Category="windows.appService" EntryPoint="Domojee.VoiceCommands.DomojeeVoiceCommandService">
-          <AppService Name="DomojeeVoiceCommandService"/>
-        </Extension-->
       </Extensions>
     </Application>
   </Applications>

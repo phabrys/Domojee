@@ -111,6 +111,12 @@
     <Compile Include="VoiceCommandService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domojee\Domojee.csproj">
+      <Project>{a53e8c96-a374-4e03-ac17-f6630b20664b}</Project>
+      <Name>Domojee</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
