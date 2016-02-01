@@ -123,10 +123,28 @@ namespace Domojee.ViewModels
                 if (resp.error == null)
                 {
                     ObjectList.Clear();
+
+                    List<string> idList = new List<string>();
+                    resp.result.ToList().ForEach(p =>
+                    {
+                        ObjectList.Add(p);
+                        idList.Add("dmj" + p.id);
+                        UpdateObjectImage(p);
+                    });
+
+                    // Efface les images inutiles
+                    var files = await ImageFolder.GetFilesAsync();
+                    foreach (StorageFile f in files)
+                    {
+                        if (!idList.Contains(f.DisplayName))
+                        {
+                            await f.DeleteAsync();
+                        }
+                    }
+
                     JdObject obj = new JdObject();
                     obj.name = "Equipements sans objet parent";
                     ObjectList.Add(obj);
-                    resp.result.ToList().ForEach(p => ObjectList.Add(p));
                 }
 
                 return resp.error;
@@ -137,6 +155,32 @@ namespace Domojee.ViewModels
                 error.code = "-1";
                 error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
                 return error;
+            }
+        }
+
+        private async void UpdateObjectImage(JdObject obj)
+        {
+            try
+            {
+                var file = await ImageFolder.GetFileAsync("dmj" + obj.id);
+                obj.Image = "ms-appdata:///local/" + file.DisplayName;
+            }
+            catch (Exception)
+            {
+                obj.Image = "ms-appx:///Images/WP.jpg";
+            }
+        }
+
+        public static void UpdateObjectImage(string id, string name)
+        {
+            var objs = ObjectList.Where(o => o.id == id);
+            if (objs.Count() != 0)
+            {
+                var obj = objs.First();
+                if (name == null)
+                    obj.Image = "ms-appx:///Images/WP.jpg";
+                else
+                    obj.Image = "ms-appdata:///local/" + name;
             }
         }
 

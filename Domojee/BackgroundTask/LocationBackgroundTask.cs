@@ -66,7 +66,7 @@ namespace BackgroundTask
         }
         private void Position(string position)
         {
-            var config = new Domojee.ViewModels.ConfigurationViewModel();
+           /* var config = new Domojee.ViewModels.ConfigurationViewModel();
             try
             {
                 HttpClient httpclient = new HttpClient();
@@ -77,7 +77,7 @@ namespace BackgroundTask
             }
             catch (Exception)
             {
-            }
+            }*/
         }
         private void WipeGeolocDataFromAppData()
         {
