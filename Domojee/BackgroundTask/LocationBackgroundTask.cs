@@ -1,18 +1,10 @@
-﻿//*********************************************************
-//
-// Copyright (c) Microsoft. All rights reserved.
-// THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-// IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-// PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//*********************************************************
-
-using System;
+﻿using System;
 using System.Threading;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
 using Windows.Devices.Geolocation;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace BackgroundTask
 {
@@ -66,12 +58,27 @@ namespace BackgroundTask
 
         private void WriteGeolocToAppData(Geoposition pos)
         {
+            Position(pos.Coordinate.Point.Position.Latitude.ToString() + ',' + pos.Coordinate.Point.Position.Longitude.ToString());
             var settings = ApplicationData.Current.LocalSettings;
             settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
             settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
             settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
         }
-
+        private void Position(string position)
+        {
+            var config = new Domojee.ViewModels.ConfigurationViewModel();
+            try
+            {
+                HttpClient httpclient = new HttpClient();
+                httpclient.DefaultRequestHeaders.Accept.Clear();
+                httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpclient.BaseAddress = new Uri(config.Address + "/core/api/jeeApi.php?api="+ config.ApiKey +"& type=geoloc&id="+ config.GeolocObjectId + "&value="+ position);
+                httpclient.Dispose();
+            }
+            catch (Exception)
+            {
+            }
+        }
         private void WipeGeolocDataFromAppData()
         {
             var settings = ApplicationData.Current.LocalSettings;
