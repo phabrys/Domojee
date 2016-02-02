@@ -5,6 +5,8 @@ using Windows.Storage;
 using Windows.Devices.Geolocation;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackgroundTask
 {
@@ -12,7 +14,7 @@ namespace BackgroundTask
     {
         private CancellationTokenSource _cts = null;
 
-        async public void Run(IBackgroundTaskInstance taskInstance)
+        async void IBackgroundTask.Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
@@ -58,26 +60,41 @@ namespace BackgroundTask
 
         private void WriteGeolocToAppData(Geoposition pos)
         {
-            Position(pos.Coordinate.Point.Position.Latitude.ToString() + ',' + pos.Coordinate.Point.Position.Longitude.ToString());
             var settings = ApplicationData.Current.LocalSettings;
             settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
             settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
             settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
+            Position(pos.Coordinate.Point.Position.Latitude.ToString() + ',' + pos.Coordinate.Point.Position.Longitude.ToString());
         }
-        private void Position(string position)
+
+        async private void Position(string position)
         {
-           /* var config = new Domojee.ViewModels.ConfigurationViewModel();
+            ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
+            ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+            var _apikey="";
+            var _address="";
+            var _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
+
+
+            if (RoamingSettings.Values["addressSetting"] != null)
+            {
+                _address = RoamingSettings.Values["addressSetting"] as string;
+                if (RoamingSettings.Values["apikeySetting"] != null)
+                {
+                   _apikey = RoamingSettings.Values["apikeySetting"] as string;
+                }
+            }
             try
             {
-                HttpClient httpclient = new HttpClient();
-                httpclient.DefaultRequestHeaders.Accept.Clear();
-                httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpclient.BaseAddress = new Uri(config.Address + "/core/api/jeeApi.php?api="+ config.ApiKey +"& type=geoloc&id="+ config.GeolocObjectId + "&value="+ position);
+                 HttpClient httpclient = new HttpClient();
+                httpclient.BaseAddress = new Uri(_address + "/core/api/");
+                HttpContent content=null;
+                var response = await httpclient.PostAsync("jeeApi.php?api=" + _apikey + "& type=geoloc&id=" + _GeolocObjectId + "&value=" + position, content);
                 httpclient.Dispose();
-            }
-            catch (Exception)
-            {
-            }*/
+             }
+             catch (Exception)
+             {
+             }
         }
         private void WipeGeolocDataFromAppData()
         {

@@ -5,7 +5,6 @@ namespace Domojee.ViewModels
 {
     public class ConfigurationViewModel
     {
-
         string _address;
         string _apikey;
         public string Address
@@ -21,6 +20,7 @@ namespace Domojee.ViewModels
                 return _address;
             }
         }
+
         public string ApiKey
         {
             set
@@ -36,6 +36,7 @@ namespace Domojee.ViewModels
                 return _apikey;
             }
         }
+
         public string ServerName
         {
             get
@@ -57,7 +58,6 @@ namespace Domojee.ViewModels
             }
         }
         public bool Populated = false;
-
         private bool _GeolocActivation;
         public bool GeolocActivation
         {
@@ -86,7 +86,6 @@ namespace Domojee.ViewModels
                 return _GeolocObjectId;
             }
         }
-
         ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
         ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
 
@@ -108,7 +107,6 @@ namespace Domojee.ViewModels
             }
             GeolocActivation = (LocalSettings.Values["GeolocActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["GeolocActivation"]);
             _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
-          
         }
     }
 }

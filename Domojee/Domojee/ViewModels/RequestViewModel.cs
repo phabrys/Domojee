@@ -42,7 +42,6 @@ namespace Domojee.ViewModels
         static public ObservableCollection<Command> CommandList = new ObservableCollection<Command>();
         static public ObservableCollection<JdObject> ObjectList = new ObservableCollection<JdObject>();
         static public ObservableCollection<Scene> SceneList = new ObservableCollection<Scene>();
-        static public ObservableCollection<Interact> InteractList = new ObservableCollection<Interact>();
 
         public CancellationTokenSource tokenSource;
 
@@ -123,7 +122,7 @@ namespace Domojee.ViewModels
                 if (resp.error == null)
                 {
                     ObjectList.Clear();
-
+                    
                     List<string> idList = new List<string>();
                     resp.result.ToList().ForEach(p =>
                     {
@@ -136,7 +135,7 @@ namespace Domojee.ViewModels
                     var files = await ImageFolder.GetFilesAsync();
                     foreach (StorageFile f in files)
                     {
-                        if (!idList.Contains(f.DisplayName))
+                        if(!idList.Contains(f.DisplayName))
                         {
                             await f.DeleteAsync();
                         }
@@ -304,42 +303,7 @@ namespace Domojee.ViewModels
                 return error;
             }
         }
-        public async Task<Error> DownloadInteraction()
-        {
-            var config = new ConfigurationViewModel();
-            var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
 
-            try
-            {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "message::all", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseInteractList));
-                ResponseInteractList resp = ser.ReadObject(stream) as ResponseInteractList;
-
-                if (resp.error == null)
-                {
-                  /*  InteractList.Clear();
-                    resp.result.ToList().ForEach(p => InteractList.Add(p));*/
-                    var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(
-                     new Uri("ms-appx:///DomojeeInteract.xml"));
-                    await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
-                //    await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandSetsFromStorageFileAsync(storageFile);
-                }
-
-                return resp.error;
-            }
-            catch (Exception)
-            {
-                Error error = new Error();
-                error.code = "-1";
-                error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
-                return error;
-            }
-        }
         public async Task<Error> DownloadCommands()
         {
             var config = new ConfigurationViewModel();
@@ -385,6 +349,7 @@ namespace Domojee.ViewModels
                 return error;
             }
         }
+
         public async Task<bool> Shutdown()
         {
             var config = new ConfigurationViewModel();
@@ -410,6 +375,7 @@ namespace Domojee.ViewModels
                 return false;
             }
         }
+
         public async Task<bool> Upgrade()
         {
             var config = new ConfigurationViewModel();
@@ -435,6 +401,7 @@ namespace Domojee.ViewModels
                 return false;
             }
         }
+
         public async Task<bool> Reboot()
         {
             var config = new ConfigurationViewModel();
@@ -460,6 +427,7 @@ namespace Domojee.ViewModels
                 return false;
             }
         }
+
         public void CancelThread()
         {
             TokenSource?.Cancel();
@@ -600,7 +568,7 @@ namespace Domojee.ViewModels
 
                 if (resp.error == null)
                 {
-                    foreach(JdObject obj in resp.result)
+                    foreach (JdObject obj in resp.result)
                     {
                         var lst = ObjectList.Where(p => p.id == obj.id);
                         if (lst.Count() != 0)

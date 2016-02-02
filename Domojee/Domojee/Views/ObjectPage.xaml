@@ -10,7 +10,7 @@
     xmlns:ctl="using:Domojee.Controls"
     mc:Ignorable="d">
     <Page.Background>
-        <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="{x:Bind ImagePath, FallbackValue=ms-appx:///Images/WP.jpg}" Stretch="UniformToFill"/>
     </Page.Background>
     <Page.Resources>
         <converter:EqLogicStateConverter x:Key="EqLogicStateConverter"/>

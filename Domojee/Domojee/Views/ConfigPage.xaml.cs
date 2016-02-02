@@ -175,8 +175,9 @@ namespace Domojee.Views
                     // Get permission for a background task from the user. If the user has already answered once,
                     // this does nothing and the user must manually update their preference via PC Settings.
                     BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-                 if (backgroundAccessStatus == BackgroundAccessStatus.Unspecified)
-                    { // Regardless of the answer, register the background task. If the user later adds this application
+                 //if (backgroundAccessStatus == BackgroundAccessStatus.Unspecified)
+                    //{ 
+                    // Regardless of the answer, register the background task. If the user later adds this application
                       // to the lock screen, the background task will be ready to run.
                       // Create a new background task builder
                         BackgroundTaskBuilder geolocTaskBuilder = new BackgroundTaskBuilder();
@@ -213,7 +214,7 @@ namespace Domojee.Views
                                 RequestLocationAccess();
                                 break;
                         }
-                    }
+                //    }
                 }
                 catch (Exception ex)
                 {

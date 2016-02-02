@@ -132,7 +132,6 @@ namespace Domojee.Models
             }
         }
 
-
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             if (PropertyChanged != null)

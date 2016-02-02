@@ -112,7 +112,6 @@
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
     <Compile Include="Converters\EqLogicUpdatingConverter.cs" />
-    <Compile Include="Models\Interact.cs" />
     <Compile Include="Models\Command.cs" />
     <Compile Include="Models\CommandResult.cs" />
     <Compile Include="Models\DisplayInfo.cs" />
@@ -127,7 +126,6 @@
     <Compile Include="Models\ResponseCommandList.cs" />
     <Compile Include="Models\ResponseEqLogicList.cs" />
     <Compile Include="Models\ResponseJdObjectList.cs" />
-    <Compile Include="Models\ResponseInteractList.cs" />
     <Compile Include="Models\ResponseMessageList.cs" />
     <Compile Include="Models\ResponseScene.cs" />
     <Compile Include="Models\ResponseSceneList.cs" />
@@ -173,7 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="DomojeeInteract.xml" />
     <Content Include="Images\WP.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -238,6 +235,12 @@
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BackgroundTask\BackgroundTask.csproj">
+      <Project>{7f8edafe-40bd-46e6-b192-bbe4ebd33450}</Project>
+      <Name>BackgroundTask</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
