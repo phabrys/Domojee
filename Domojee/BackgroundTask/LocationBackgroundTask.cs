@@ -5,7 +5,6 @@ using Windows.Storage;
 using Windows.Devices.Geolocation;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BackgroundTask
@@ -64,7 +63,7 @@ namespace BackgroundTask
             settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
             settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
             settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
-            Position(pos.Coordinate.Point.Position.Latitude.ToString() + ',' + pos.Coordinate.Point.Position.Longitude.ToString());
+            Position(pos.Coordinate.Point.Position.Longitude.ToString() + ',' + pos.Coordinate.Point.Position.Latitude.ToString());
         }
 
         async private void Position(string position)
