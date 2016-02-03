@@ -32,12 +32,16 @@ namespace Domojee.Views
             this.InitializeComponent();
             var settings = ApplicationData.Current.LocalSettings;
             ObservableCollection<Domojee.Models.Command> GeolocCmd = new ObservableCollection<Domojee.Models.Command>();
-            foreach (var Equipement in Domojee.ViewModels.RequestViewModel.EqLogicList) {
-                if (Equipement.eqType_name == "geoloc") {
-                    GeolocCmd=Equipement.GetInformationsCmds();
-                }
+            foreach (var Equipement in Domojee.ViewModels.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("geoloc"))) {
+                foreach (var Cmd in Equipement.GetInformationsCmds())
+                    GeolocCmd.Add(Cmd);
             }
-            MobilePosition_Cmd.ItemsSource = GeolocCmd;// Domojee.ViewModels.RequestViewModel.CommandList;
+            MobilePosition_Cmd.ItemsSource = GeolocCmd;
+
+            foreach (var ObjectsSelect in Domojee.ViewModels.RequestViewModel.CommandList.Where(w => w.id.Equals(settings.Values["GeolocObjectId"])))
+            {
+                MobilePosition_Cmd.SelectedItem = ObjectsSelect;
+            }
             if (settings.Values["Status"] != null)
             {
                 Status.Text = settings.Values["Status"].ToString();
