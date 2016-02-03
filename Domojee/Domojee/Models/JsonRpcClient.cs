@@ -37,23 +37,37 @@ namespace Domojee.Models
             this.parameters = new Parameters();
         }
 
-        private async Task<String> Request(HttpClient httpclient, string cmd, Parameters parms)
+        private T DeserializeFromJson<T>(string dataToDeserialize)
+        {
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(dataToDeserialize));
+            stream.Position = 0;
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
+            return (T)ser.ReadObject(stream);
+        }
+
+        private string SerializeToJson<T>(T objectToSerialize)
+        {
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
+            MemoryStream stream = new MemoryStream();
+            ser.WriteObject(stream, objectToSerialize);
+            stream.Position = 0;
+            StreamReader sr = new StreamReader(stream);
+
+            return sr.ReadToEnd();
+        }
+
+        private async Task<String> Request(HttpClient httpClient, string command, Parameters parameters)
         {
 
             Request requete;
             requete = new Request();
-            requete.parameters = parms;
-            requete.method = cmd;
+            requete.parameters = parameters;
+            requete.method = command;
             requete.id = Interlocked.Increment(ref Id);
 
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Request));
-            MemoryStream stream = new MemoryStream();
-            ser.WriteObject(stream, requete);
-            stream.Position = 0;
-            StreamReader sr = new StreamReader(stream);
-            var request = "request=" + sr.ReadToEnd();
+            var request = "request=" + SerializeToJson<Request>(requete);
             var content = new StringContent(request, Encoding.UTF8, "application/x-www-form-urlencoded");
-            var response = await httpclient.PostAsync("jeeApi.php", content);
+            var response = await httpClient.PostAsync("jeeApi.php", content);
             var serialized = await response.Content.ReadAsStringAsync();
             return serialized;
         }
@@ -78,12 +92,8 @@ namespace Domojee.Models
                 HttpClient httpclient = GetNewHttpClient();
                 rawResponse = await Request(httpclient, cmd, parameters);
                 httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseError));
-                ResponseError resp = ser.ReadObject(stream) as ResponseError;
-                stream.Position = 0;
-                var other = ser.ReadObject(stream);
+
+                var resp = DeserializeFromJson<ResponseError>(rawResponse);
                 error = resp.error;
                 if (error == null)
                     return true;
@@ -103,10 +113,7 @@ namespace Domojee.Models
         {
             try
             {
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseCommand));
-                ResponseCommand resp = ser.ReadObject(stream) as ResponseCommand;
+                var resp = DeserializeFromJson<ResponseCommand>(rawResponse);
                 return resp.result;
             }
             catch (Exception)
@@ -119,10 +126,7 @@ namespace Domojee.Models
         {
             try
             {
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseCommandList));
-                ResponseCommandList resp = ser.ReadObject(stream) as ResponseCommandList;
+                var resp = DeserializeFromJson<ResponseCommandList>(rawResponse);
                 return resp.result;
             }
             catch (Exception)
@@ -135,10 +139,7 @@ namespace Domojee.Models
         {
             try
             {
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseEqLogicList));
-                ResponseEqLogicList resp = ser.ReadObject(stream) as ResponseEqLogicList;
+                var resp = DeserializeFromJson<ResponseEqLogicList>(rawResponse);
                 return resp.result;
             }
             catch (Exception)
@@ -151,10 +152,7 @@ namespace Domojee.Models
         {
             try
             {
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseJdObjectList));
-                ResponseJdObjectList resp = ser.ReadObject(stream) as ResponseJdObjectList;
+                var resp = DeserializeFromJson<ResponseJdObjectList>(rawResponse);
                 return resp.result;
             }
             catch (Exception)
@@ -167,10 +165,7 @@ namespace Domojee.Models
         {
             try
             {
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseMessageList));
-                ResponseMessageList resp = ser.ReadObject(stream) as ResponseMessageList;
+                var resp = DeserializeFromJson<ResponseMessageList>(rawResponse);
                 return resp.result;
             }
             catch (Exception)
@@ -183,10 +178,7 @@ namespace Domojee.Models
         {
             try
             {
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseSceneList));
-                ResponseSceneList resp = ser.ReadObject(stream) as ResponseSceneList;
+                var resp = DeserializeFromJson<ResponseSceneList>(rawResponse);
                 return resp.result;
             }
             catch (Exception)
@@ -199,10 +191,7 @@ namespace Domojee.Models
         {
             try
             {
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(rawResponse));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseScene));
-                ResponseScene resp = ser.ReadObject(stream) as ResponseScene;
+                var resp = DeserializeFromJson<ResponseScene>(rawResponse);
                 return resp.result;
             }
             catch (Exception)
