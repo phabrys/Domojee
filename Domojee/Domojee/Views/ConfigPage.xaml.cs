@@ -29,10 +29,13 @@ namespace Domojee.Views
                     GeolocCmd.Add(Cmd);
             }
             MobilePosition_Cmd.ItemsSource = GeolocCmd;
-
-            foreach (var ObjectsSelect in Domojee.ViewModels.RequestViewModel.CommandList.Where(w => w.id.Equals(settings.Values["GeolocObjectId"])))
+            var GeolocObjectId = settings.Values["GeolocObjectId"];
+            if (GeolocObjectId != null)
             {
-                MobilePosition_Cmd.SelectedItem = ObjectsSelect;
+                foreach (var ObjectsSelect in GeolocCmd.Where(w => w.id.Equals(GeolocObjectId)))
+                {
+                    MobilePosition_Cmd.SelectedItem = ObjectsSelect;
+                }
             }
             if (settings.Values["Status"] != null)
             {
@@ -77,11 +80,11 @@ namespace Domojee.Views
                     {
                         case BackgroundAccessStatus.Unspecified:
                         case BackgroundAccessStatus.Denied:
-                            Status.Text = "Not able to run in background. Application must be added to the lock screen.";
+                            Status.Text = "Impossible de fonctionner en arrière-plan. La demande doit être ajouté à l'écran de verrouillage.";
                             break;
 
                         default:
-                            Status.Text = "Background task is already registered. Waiting for next update...";
+                            Status.Text = "La tâche de fond est déjà enregistré. Attendez la prochaine mise à jour ...";
                             break;
                     }
                 }
@@ -123,11 +126,11 @@ namespace Domojee.Views
                     break;
 
                 case GeolocationAccessStatus.Denied:
-                    Status.Text = "Access to location is denied.";
+                    Status.Text = "L'accès au GPS est refusé.";
                     break;
 
                 case GeolocationAccessStatus.Unspecified:
-                    Status.Text = "Unspecificed error!";
+                    Status.Text = "Erreur non spécifiée!";
                     break;
             }
         }
@@ -169,15 +172,13 @@ namespace Domojee.Views
 
         async private void active_Toggled(object sender, RoutedEventArgs e)
         {
-            if (active.IsOn == true)
+            if (active.IsOn == true && _geolocTask == null)
             {
                 try
                 {
                     // Get permission for a background task from the user. If the user has already answered once,
                     // this does nothing and the user must manually update their preference via PC Settings.
                     BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-                    //if (backgroundAccessStatus == BackgroundAccessStatus.Unspecified)
-                    //{
                     // Regardless of the answer, register the background task. If the user later adds this application
                     // to the lock screen, the background task will be ready to run.
                     // Create a new background task builder
@@ -191,7 +192,7 @@ namespace Domojee.Views
 
                     // Associate the timer trigger with the background task builder
                     geolocTaskBuilder.SetTrigger(trigger);
-
+                    
                     // Register the background task
                     _geolocTask = geolocTaskBuilder.Register();
 
@@ -202,12 +203,12 @@ namespace Domojee.Views
                     {
                         case BackgroundAccessStatus.Unspecified:
                         case BackgroundAccessStatus.Denied:
-                            Status.Text = "Not able to run in background. Application must be added to the lock screen.";
+                            Status.Text = "Impossible de fonctionner en arrière-plan. La demande doit être ajouté à l'écran de verrouillage.";
                             break;
 
                         default:
                             // BckgroundTask is allowed
-                            Status.Text = "Background task registered.";
+                            Status.Text = "Enregister.";
 
                             // Need to request access to location
                             // This must be done with the background task registeration
@@ -215,31 +216,33 @@ namespace Domojee.Views
                             RequestLocationAccess();
                             break;
                     }
-                    //    }
                 }
                 catch (Exception ex)
                 {
                     Status.Text = ex.ToString();
                 }
             }
-            else
+            if (active.IsOn == false)
             {
                 if (null != _geolocTask)
                 {
                     _geolocTask.Unregister(true);
                     _geolocTask = null;
                 }
-                MobilePosition_Latitude.Text = "No data";
-                MobilePosition_Longitude.Text = "No data";
-                MobilePosition_Accuracy.Text = "No data";
+                MobilePosition_Latitude.Text = "Pas dedata";
+                MobilePosition_Longitude.Text = "Pas de data";
+                MobilePosition_Accuracy.Text = "Pas de data";
             }
         }
 
         private void MobilePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var settings = ApplicationData.Current.LocalSettings;
-            Domojee.Models.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as Domojee.Models.Command;
-            settings.Values["GeolocObjectId"] = ObjectsSelect.id;
+            if (MobilePosition_Cmd.SelectedItem != null)
+            {
+                var settings = ApplicationData.Current.LocalSettings;
+                Domojee.Models.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as Domojee.Models.Command;
+                settings.Values["GeolocObjectId"] = ObjectsSelect.id;
+            }
         }
     }
 }

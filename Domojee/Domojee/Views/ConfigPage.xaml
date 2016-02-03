@@ -67,8 +67,6 @@
                                           Margin="0,0,20,128"
                                           HorizontalAlignment="Stretch"
                                           VerticalAlignment="Bottom"
-                                          SelectedValue="{Binding GeolocObjectId,
-                                                                  Mode=TwoWay}"
                                           SelectionChanged="MobilePosition_Cmd_SelectionChanged"
                                           d:LayoutOverrides="LeftPosition, RightPosition">
                                     <ComboBox.ItemTemplate>
