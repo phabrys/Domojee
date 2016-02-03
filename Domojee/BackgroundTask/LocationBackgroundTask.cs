@@ -1,11 +1,9 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading;
 using Windows.ApplicationModel.Background;
-using Windows.Storage;
 using Windows.Devices.Geolocation;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace BackgroundTask
 {
@@ -70,31 +68,31 @@ namespace BackgroundTask
         {
             ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
             ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
-            var _apikey="";
-            var _address="";
+            var _apikey = "";
+            var _address = "";
             var _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
-
 
             if (RoamingSettings.Values["addressSetting"] != null)
             {
                 _address = RoamingSettings.Values["addressSetting"] as string;
                 if (RoamingSettings.Values["apikeySetting"] != null)
                 {
-                   _apikey = RoamingSettings.Values["apikeySetting"] as string;
+                    _apikey = RoamingSettings.Values["apikeySetting"] as string;
                 }
             }
             try
             {
-                 HttpClient httpclient = new HttpClient();
+                HttpClient httpclient = new HttpClient();
                 httpclient.BaseAddress = new Uri(_address + "/core/api/");
-                HttpContent content=null;
+                HttpContent content = null;
                 var response = await httpclient.PostAsync("jeeApi.php?api=" + _apikey + "& type=geoloc&id=" + _GeolocObjectId + "&value=" + position, content);
                 httpclient.Dispose();
-             }
-             catch (Exception)
-             {
-             }
+            }
+            catch (Exception)
+            {
+            }
         }
+
         private void WipeGeolocDataFromAppData()
         {
             var settings = ApplicationData.Current.LocalSettings;
