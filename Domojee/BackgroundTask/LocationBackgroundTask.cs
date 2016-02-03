@@ -4,14 +4,14 @@ using System.Threading;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Geolocation;
 using Windows.Storage;
-
+using System.Net.Http.Headers;
 namespace BackgroundTask
 {
     public sealed class LocationBackgroundTask : IBackgroundTask
     {
         private CancellationTokenSource _cts = null;
 
-        async void IBackgroundTask.Run(IBackgroundTaskInstance taskInstance)
+        public async void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
@@ -61,7 +61,7 @@ namespace BackgroundTask
             settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
             settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
             settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
-            Position(pos.Coordinate.Point.Position.Longitude.ToString() + ',' + pos.Coordinate.Point.Position.Latitude.ToString());
+            Position(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',','.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
         }
 
         async private void Position(string position)
@@ -82,11 +82,13 @@ namespace BackgroundTask
             }
             try
             {
-                HttpClient httpclient = new HttpClient();
-                httpclient.BaseAddress = new Uri(_address + "/core/api/");
-                HttpContent content = null;
-                var response = await httpclient.PostAsync("jeeApi.php?api=" + _apikey + "& type=geoloc&id=" + _GeolocObjectId + "&value=" + position, content);
-                httpclient.Dispose();
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.BaseAddress = new Uri(_address + "/core/api/");
+                httpClient.GetAsync("jeeApi.php?api=" + _apikey + "& type=geoloc&id=" + _GeolocObjectId + "&value=" + position);
+                httpClient.Dispose();
             }
             catch (Exception)
             {
