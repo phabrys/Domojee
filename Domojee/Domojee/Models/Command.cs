@@ -1,12 +1,7 @@
-﻿using Domojee.ViewModels;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 
 namespace Domojee.Models
 {
@@ -38,6 +33,7 @@ namespace Domojee.Models
         public string isVisible;
 
         private string __value;
+
         [DataMember(Name = "value")]
         public string _value
         {
@@ -56,9 +52,11 @@ namespace Domojee.Models
                         case "Consommation":
                             Parent.Consommation = value + " " + unite;
                             break;
+
                         case "Puissance":
                             Parent.Puissance = value + " " + unite;
                             break;
+
                         case "Etat":
                             Parent.State = value;
                             break;

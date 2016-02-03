@@ -1,6 +1,6 @@
 ﻿namespace Domojee.Jeedom
 {
-    class NavigateInfo
+    internal class NavigateInfo
     {
         public string ObjectId { get; set; }
         public string EqLogicId { get; set; }

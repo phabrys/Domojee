@@ -3,7 +3,7 @@
 namespace Domojee.Models
 {
     [DataContract]
-    class Parameters
+    internal class Parameters
     {
         [DataMember]
         public string apikey;

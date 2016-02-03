@@ -1,16 +1,24 @@
-﻿<UserControl
-    x:Class="Domojee.Controls.ServerState"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Domojee.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="48"
-    d:DesignWidth="24">
+﻿<UserControl x:Class="Domojee.Controls.ServerState"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Domojee.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="48"
+             d:DesignWidth="24"
+             mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="{x:Bind MessageCount, FallbackValue=10}" FontSize="20" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
-        <TextBlock VerticalAlignment="Bottom" Text="&#xEA3B;" FontFamily="Segoe MDL2 Assets" Foreground="LightGreen" HorizontalAlignment="Right" FontSize="8" Padding="0,0,0,2"/>
+        <TextBlock HorizontalAlignment="Left"
+                   FontSize="20"
+                   Text="{x:Bind MessageCount, FallbackValue=10}"
+                   TextTrimming="CharacterEllipsis" />
+        <TextBlock HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   FontFamily="Segoe MDL2 Assets"
+                   FontSize="8"
+                   Foreground="LightGreen"
+                   Padding="0,0,0,2"
+                   Text="&#xEA3B;" />
     </Grid>
 </UserControl>

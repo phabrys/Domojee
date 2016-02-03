@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.UI.Xaml;
 
 namespace Domojee.Models
 {
@@ -15,6 +10,7 @@ namespace Domojee.Models
     public class JdObject : INotifyPropertyChanged
     {
         private string _id;
+
         [DataMember]
         public string id
         {
@@ -94,9 +90,11 @@ namespace Domojee.Models
                         case 0:
                             s = "aucun équipement";
                             break;
+
                         case 1:
                             s = "1 équipement";
                             break;
+
                         default:
                             s = eqLogics.Count + " équipements";
                             break;

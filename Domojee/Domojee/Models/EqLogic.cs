@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Domojee.Models;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace Domojee.Models
 {
@@ -36,6 +32,7 @@ namespace Domojee.Models
         }
 
         private string _eqtype_name;
+
         [DataMember]
         public String eqType_name
         {
@@ -51,9 +48,11 @@ namespace Domojee.Models
                     case "openzwave":
                         ColSpan = 2;
                         break;
+
                     case "energy":
                         ColSpan = 1;
                         break;
+
                     default:
                         break;
                 }
@@ -77,6 +76,7 @@ namespace Domojee.Models
         public string isEnable;
 
         private string _state;
+
         public string State
         {
             get
@@ -91,6 +91,7 @@ namespace Domojee.Models
         }
 
         private string _consommation;
+
         public string Consommation
         {
             get
@@ -105,6 +106,7 @@ namespace Domojee.Models
         }
 
         private string _puissance;
+
         public string Puissance
         {
             get
@@ -119,6 +121,7 @@ namespace Domojee.Models
         }
 
         private bool _onVisibility = false;
+
         public bool OnVisibility
         {
             get
@@ -143,6 +146,7 @@ namespace Domojee.Models
         public JdObject Parent;
 
         private bool _updating;
+
         public bool Updating
         {
             get

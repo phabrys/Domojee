@@ -5,8 +5,9 @@ namespace Domojee.ViewModels
 {
     public class ConfigurationViewModel
     {
-        string _address;
-        string _apikey;
+        private string _address;
+        private string _apikey;
+
         public string Address
         {
             set
@@ -57,8 +58,10 @@ namespace Domojee.ViewModels
                 }
             }
         }
+
         public bool Populated = false;
         private bool _GeolocActivation;
+
         public bool GeolocActivation
         {
             set
@@ -72,7 +75,9 @@ namespace Domojee.ViewModels
                 return _GeolocActivation;
             }
         }
+
         private string _GeolocObjectId;
+
         public string GeolocObjectId
         {
             set
@@ -86,16 +91,15 @@ namespace Domojee.ViewModels
                 return _GeolocObjectId;
             }
         }
-        ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
-        ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
 
-        const string settingAddress = "addressSetting";
-        const string settingAPIKey = "apikeySetting";
+        private ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
+        private ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+
+        private const string settingAddress = "addressSetting";
+        private const string settingAPIKey = "apikeySetting";
 
         public ConfigurationViewModel()
         {
-            //_address = "http://192.168.2.6/jeedom";
-            //_apikey = "HXCRXXVgJPsi6DTJ9E0c";
             if (RoamingSettings.Values[settingAddress] != null)
             {
                 _address = RoamingSettings.Values[settingAddress] as string;

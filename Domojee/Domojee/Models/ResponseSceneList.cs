@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domojee.Models
 {
     [DataContract]
-    class ResponseSceneList : Response
+    internal class ResponseSceneList : Response
     {
         [DataMember]
         public ObservableCollection<Scene> result;

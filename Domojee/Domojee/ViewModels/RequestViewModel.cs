@@ -3,18 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI.Xaml.Controls;
 
 namespace Domojee.ViewModels
 {
@@ -44,6 +37,7 @@ namespace Domojee.ViewModels
         public CancellationTokenSource tokenSource;
 
         private bool _updating = false;
+
         public bool Updating
         {
             get
@@ -78,8 +72,8 @@ namespace Domojee.ViewModels
                 ObjectList.Clear();
 
                 List<string> idList = new List<string>();
-                var list = jsonrpc.GetObjectList();
-                foreach (JdObject o in list)
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseJdObjectList>();
+                foreach (JdObject o in response.result)
                 {
                     ObjectList.Add(o);
                     idList.Add("dmj" + o.id);
@@ -138,7 +132,8 @@ namespace Domojee.ViewModels
             if (await jsonrpc.SendRequest("eqLogic::all"))
             {
                 EqLogicList.Clear();
-                EqLogicList = jsonrpc.GetEqLogicList();
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
+                EqLogicList = response.result;
                 foreach (EqLogic eq in EqLogicList)
                 {
                     // Recherche l'objet parent
@@ -170,7 +165,8 @@ namespace Domojee.ViewModels
             if (await jsonrpc.SendRequest("scenario::all"))
             {
                 SceneList.Clear();
-                SceneList = jsonrpc.GetSceneList();
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseSceneList>();
+                SceneList = response.result;
             }
 
             return jsonrpc.Error;
@@ -184,7 +180,8 @@ namespace Domojee.ViewModels
             if (await jsonrpc.SendRequest("message::all"))
             {
                 MessageList.Clear();
-                MessageList = jsonrpc.GetMessageList();
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseMessageList>();
+                MessageList = response.result;
             }
 
             return jsonrpc.Error;
@@ -198,7 +195,8 @@ namespace Domojee.ViewModels
             if (await jsonrpc.SendRequest("cmd::all"))
             {
                 CommandList.Clear();
-                CommandList = jsonrpc.GetCommandList();
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseCommandList>();
+                CommandList = response.result;
                 foreach (Command cmd in CommandList)
                 {
                     var eqlist = from eq in EqLogicList where eq.id == cmd.eqLogic_id select eq;
@@ -270,17 +268,17 @@ namespace Domojee.ViewModels
                 }
             }
         }
-        
+
         public async Task UpdateObject(JdObject obj)
         {
             var parameters = new Parameters();
             parameters.object_id = obj.id;
             var jsonrpc = new JsonRpcClient(parameters);
 
-            if(await jsonrpc.SendRequest("eqLogic::byObjectId"))
+            if (await jsonrpc.SendRequest("eqLogic::byObjectId"))
             {
-                var eqlist = jsonrpc.GetEqLogicList();
-                foreach (EqLogic eq in eqlist)
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
+                foreach (EqLogic eq in response.result)
                 {
                     var lst = from e in EqLogicList where e.id == eq.id select e;
                     if (lst.Count() != 0)
@@ -301,10 +299,10 @@ namespace Domojee.ViewModels
         {
             var jsonrpc = new JsonRpcClient();
 
-            if(await jsonrpc.SendRequest("object::all"))
+            if (await jsonrpc.SendRequest("object::all"))
             {
-                var objlist = jsonrpc.GetObjectList();
-                foreach (JdObject obj in objlist)
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseJdObjectList>();
+                foreach (JdObject obj in response.result)
                 {
                     var lst = from o in ObjectList where o.id == obj.id select o;
                     if (lst.Count() != 0)
@@ -324,9 +322,10 @@ namespace Domojee.ViewModels
             parameters.id = scene.id;
             var jsonrpc = new JsonRpcClient(parameters);
 
-            if(await jsonrpc.SendRequest("scenario::byId"))
+            if (await jsonrpc.SendRequest("scenario::byId"))
             {
-                scene.lastLaunch = jsonrpc.GetScene().lastLaunch;
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseScene>();
+                scene.lastLaunch = response.result.lastLaunch;
             }
         }
 
@@ -337,7 +336,7 @@ namespace Domojee.ViewModels
             parameters.state = "run";
             var jsonrpc = new JsonRpcClient(parameters);
 
-            if(await jsonrpc.SendRequest("scenario::changeState"))
+            if (await jsonrpc.SendRequest("scenario::changeState"))
             {
                 await UpdateScene(scene);
             }
@@ -350,10 +349,10 @@ namespace Domojee.ViewModels
             parameters.name = cmd.name;
             var jsonrpc = new JsonRpcClient(parameters);
 
-            if(await jsonrpc.SendRequest("cmd::execCmd"))
+            if (await jsonrpc.SendRequest("cmd::execCmd"))
             {
-                CommandResult res = jsonrpc.GetCommandResult();
-                cmd._value = res.value;
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseCommand>();
+                cmd._value = response.result.value;
             }
             else
             {

@@ -1,10 +1,6 @@
-﻿using Domojee.Models;
-using Domojee.ViewModels;
+﻿using Domojee.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
@@ -14,13 +10,14 @@ using System.Threading.Tasks;
 
 namespace Domojee.Models
 {
-    class JsonRpcClient
+    internal class JsonRpcClient
     {
         static private int Id;
         private Parameters parameters;
         private string rawResponse;
 
         private Error error;
+
         public Error Error
         {
             get
@@ -56,42 +53,37 @@ namespace Domojee.Models
             return sr.ReadToEnd();
         }
 
-        private async Task<String> Request(HttpClient httpClient, string command, Parameters parameters)
+        private async Task<String> Request(string command, Parameters parameters)
         {
+            var config = new ConfigurationViewModel();
 
-            Request requete;
-            requete = new Request();
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.BaseAddress = new Uri(config.Address + "/core/api/");
+
+            Request requete = new Request();
             requete.parameters = parameters;
             requete.method = command;
             requete.id = Interlocked.Increment(ref Id);
 
-            var request = "request=" + SerializeToJson<Request>(requete);
-            var content = new StringContent(request, Encoding.UTF8, "application/x-www-form-urlencoded");
+            var requeteJson = "request=" + SerializeToJson<Request>(requete);
+            var content = new StringContent(requeteJson, Encoding.UTF8, "application/x-www-form-urlencoded");
             var response = await httpClient.PostAsync("jeeApi.php", content);
             var serialized = await response.Content.ReadAsStringAsync();
+            httpClient.Dispose();
+
             return serialized;
         }
 
-        private HttpClient GetNewHttpClient()
-        {
-            var config = new ConfigurationViewModel();
-            HttpClient httpclient = new HttpClient();
-            httpclient.DefaultRequestHeaders.Accept.Clear();
-            httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpclient.BaseAddress = new Uri(config.Address + "/core/api/");
-            return httpclient;
-        }
-
-        public async Task<bool> SendRequest(string cmd)
+        public async Task<bool> SendRequest(string command)
         {
             var config = new ConfigurationViewModel();
             parameters.apikey = config.ApiKey;
 
             try
             {
-                HttpClient httpclient = GetNewHttpClient();
-                rawResponse = await Request(httpclient, cmd, parameters);
-                httpclient.Dispose();
+                rawResponse = await Request(command, parameters);
 
                 var resp = DeserializeFromJson<ResponseError>(rawResponse);
                 error = resp.error;
@@ -109,7 +101,20 @@ namespace Domojee.Models
             }
         }
 
-        public CommandResult GetCommandResult()
+        public T GetRequestResponseDeserialized<T>()
+        {
+            try
+            {
+                var resp = DeserializeFromJson<T>(rawResponse);
+                return resp;
+            }
+            catch (Exception)
+            {
+                return default(T);
+            }
+        }
+
+        /*public CommandResult GetCommandResult()
         {
             try
             {
@@ -198,7 +203,6 @@ namespace Domojee.Models
             {
                 return null;
             }
-        }
+        }*/
     }
 }
-

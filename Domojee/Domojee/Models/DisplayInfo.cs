@@ -1,6 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
 
 namespace Domojee.Models
 {

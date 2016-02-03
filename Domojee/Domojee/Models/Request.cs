@@ -1,10 +1,9 @@
-﻿using Domojee.Models;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Domojee.Models
 {
     [DataContract]
-    class Request
+    internal class Request
     {
         [DataMember]
         public int id;

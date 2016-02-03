@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Domojee.Controls
 {
-    class VariableSizedGridView : GridView
+    internal class VariableSizedGridView : GridView
     {
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
@@ -26,6 +21,5 @@ namespace Domojee.Controls
 
             base.PrepareContainerForItemOverride(element, item);
         }
-
     }
 }

@@ -1,15 +1,10 @@
 ﻿using Domojee.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Domojee.Selectors
 {
-    class EqLogicTemplateSelector : DataTemplateSelector
+    internal class EqLogicTemplateSelector : DataTemplateSelector
     {
         public DataTemplate ZWaveEqLogicTemplate { get; set; }
         public DataTemplate EqLogicTemplate { get; set; }
@@ -22,6 +17,7 @@ namespace Domojee.Selectors
             {
                 case "openzwave":
                     return ZWaveEqLogicTemplate;
+
                 default:
                     return EqLogicTemplate;
             }
