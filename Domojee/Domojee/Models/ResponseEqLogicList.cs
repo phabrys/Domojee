@@ -9,18 +9,9 @@ using System.Threading.Tasks;
 namespace Domojee.Models
 {
     [DataContract]
-    public class ResponseEqLogicList
+    public class ResponseEqLogicList : Response
     {
         [DataMember]
-        public string id;
-
-        [DataMember]
         public ObservableCollection<EqLogic> result;
-
-        [DataMember]
-        public string jsonrpc;
-
-        [DataMember]
-        public Error error;
     }
 }

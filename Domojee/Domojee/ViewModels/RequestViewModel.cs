@@ -34,8 +34,6 @@ namespace Domojee.ViewModels
             return _instance;
         }
 
-        private int Id;
-
         static public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
         static public ObservableCollection<Message> MessageList = new ObservableCollection<Message>();
         static public ObservableCollection<EqLogic> EqLogicList = new ObservableCollection<EqLogic>();
@@ -60,7 +58,6 @@ namespace Domojee.ViewModels
         }
 
         public bool Populated = false;
-        private CancellationTokenSource TokenSource;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -72,89 +69,39 @@ namespace Domojee.ViewModels
             }
         }
 
-        private async Task<String> Request(HttpClient httpclient, string cmd, Parameters parms)
-        {
-
-            Request requete;
-            requete = new Request();
-            requete.parameters = parms;
-            requete.method = cmd;
-            requete.id = Interlocked.Increment(ref Id);
-
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Request));
-            MemoryStream stream = new MemoryStream();
-            ser.WriteObject(stream, requete);
-            stream.Position = 0;
-            StreamReader sr = new StreamReader(stream);
-            var request = "request=" + sr.ReadToEnd();
-            var content = new StringContent(request, Encoding.UTF8, "application/x-www-form-urlencoded");
-            var response = await httpclient.PostAsync("jeeApi.php", content);
-            var serialized = await response.Content.ReadAsStringAsync();
-            return serialized;
-        }
-
-        private HttpClient GetNewHttpClient()
-        {
-            var config = new ConfigurationViewModel();
-            HttpClient httpclient = new HttpClient();
-            httpclient.DefaultRequestHeaders.Accept.Clear();
-            httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpclient.BaseAddress = new Uri(config.Address + "/core/api/");
-            return httpclient;
-        }
-
         public async Task<Error> DownloadObjects()
         {
-            var config = new ConfigurationViewModel();
-            var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient();
 
-            try
+            if (await jsonrpc.SendRequest("object::all"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "object::all", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseJdObjectList));
-                ResponseJdObjectList resp = ser.ReadObject(stream) as ResponseJdObjectList;
+                ObjectList.Clear();
 
-                if (resp.error == null)
+                List<string> idList = new List<string>();
+                var list = jsonrpc.GetObjectList();
+                foreach (JdObject o in list)
                 {
-                    ObjectList.Clear();
-                    
-                    List<string> idList = new List<string>();
-                    resp.result.ToList().ForEach(p =>
-                    {
-                        ObjectList.Add(p);
-                        idList.Add("dmj" + p.id);
-                        UpdateObjectImage(p);
-                    });
-
-                    // Efface les images inutiles
-                    var files = await ImageFolder.GetFilesAsync();
-                    foreach (StorageFile f in files)
-                    {
-                        if(!idList.Contains(f.DisplayName))
-                        {
-                            await f.DeleteAsync();
-                        }
-                    }
-
-                    JdObject obj = new JdObject();
-                    obj.name = "Equipements sans objet parent";
-                    ObjectList.Add(obj);
+                    ObjectList.Add(o);
+                    idList.Add("dmj" + o.id);
+                    UpdateObjectImage(o);
                 }
 
-                return resp.error;
+                // Efface les images inutiles
+                var files = await ImageFolder.GetFilesAsync();
+                foreach (StorageFile f in files)
+                {
+                    if (!idList.Contains(f.DisplayName))
+                    {
+                        await f.DeleteAsync();
+                    }
+                }
+
+                JdObject fakeobj = new JdObject();
+                fakeobj.name = "Equipements sans objet parent";
+                ObjectList.Add(fakeobj);
             }
-            catch (Exception)
-            {
-                Error error = new Error();
-                error.code = "-1";
-                error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
-                return error;
-            }
+
+            return jsonrpc.Error;
         }
 
         private async void UpdateObjectImage(JdObject obj)
@@ -172,7 +119,7 @@ namespace Domojee.ViewModels
 
         public static void UpdateObjectImage(string id, string name)
         {
-            var objs = ObjectList.Where(o => o.id == id);
+            var objs = from o in ObjectList where o.id == id select o;
             if (objs.Count() != 0)
             {
                 var obj = objs.First();
@@ -185,257 +132,134 @@ namespace Domojee.ViewModels
 
         public async Task<Error> DownloadEqLogics()
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if (await jsonrpc.SendRequest("eqLogic::all"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "eqLogic::all", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseEqLogicList));
-                ResponseEqLogicList resp = ser.ReadObject(stream) as ResponseEqLogicList;
-
-                if (resp.error == null)
+                EqLogicList.Clear();
+                EqLogicList = jsonrpc.GetEqLogicList();
+                foreach (EqLogic eq in EqLogicList)
                 {
-                    EqLogicList.Clear();
-                    resp.result.ToList().ForEach(p =>
-                    {
-                        EqLogicList.Add(p);
-                        JdObject obj = ObjectList.Where(o => o.id == p.object_id).First();
-                        if (obj.eqLogics == null)
-                            obj.eqLogics = new ObservableCollection<EqLogic>();
+                    // Recherche l'objet parent
+                    var _objectlist = from o in ObjectList where o.id == eq.object_id select o;
+                    var _obj = _objectlist.First();
+                    if (_obj.eqLogics == null)
+                        _obj.eqLogics = new ObservableCollection<EqLogic>();
 
-                        p.Parent = obj;
-                        obj.eqLogics.Add(p);
-                    });
-                    JdObject obje = ObjectList.Where(o => o.id == null).First();
-                    if (obje?.eqLogics == null)
-                        ObjectList.Remove(obje);
+                    eq.Parent = _obj;
+                    _obj.eqLogics.Add(eq);
                 }
 
-                return resp.error;
+                // Efface le faux objet contenant les eqlogics avec object_id == null
+                var objectlist = from o in ObjectList where o.id == null select o;
+                var obj = objectlist.First();
+
+                if (obj?.eqLogics == null)
+                    ObjectList.Remove(obj);
             }
-            catch (Exception)
-            {
-                Error error = new Error();
-                error.code = "-1";
-                error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
-                return error;
-            }
+
+            return jsonrpc.Error;
         }
 
         public async Task<Error> DownloadScenes()
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if (await jsonrpc.SendRequest("scenario::all"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "scenario::all", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseSceneList));
-                ResponseSceneList resp = ser.ReadObject(stream) as ResponseSceneList;
-
-                if (resp.error == null)
-                {
-                    SceneList.Clear();
-                    resp.result.ToList().ForEach(p => SceneList.Add(p));
-                }
-
-                return resp.error;
+                SceneList.Clear();
+                SceneList = jsonrpc.GetSceneList();
             }
-            catch (Exception)
-            {
-                Error error = new Error();
-                error.code = "-1";
-                error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
-                return error;
-            }
-        }
 
-        internal void Clear()
-        {
-            Populated = false;
-            MessageList.Clear();
-            SceneList.Clear();
-            CommandList.Clear();
-            EqLogicList.Clear();
-            ObjectList.Clear();
+            return jsonrpc.Error;
         }
 
         public async Task<Error> DownloadMessages()
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if (await jsonrpc.SendRequest("message::all"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "message::all", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseMessageList));
-                ResponseMessageList resp = ser.ReadObject(stream) as ResponseMessageList;
-
-                if (resp.error == null)
-                {
-                    MessageList.Clear();
-                    resp.result.ToList().ForEach(p => MessageList.Add(p));
-                }
-
-                return resp.error;
+                MessageList.Clear();
+                MessageList = jsonrpc.GetMessageList();
             }
-            catch (Exception)
-            {
-                Error error = new Error();
-                error.code = "-1";
-                error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
-                return error;
-            }
+
+            return jsonrpc.Error;
         }
 
         public async Task<Error> DownloadCommands()
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if (await jsonrpc.SendRequest("cmd::all"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "cmd::all", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseCommandList));
-                ResponseCommandList resp = ser.ReadObject(stream) as ResponseCommandList;
-
-                if (resp.error == null)
+                CommandList.Clear();
+                CommandList = jsonrpc.GetCommandList();
+                foreach (Command cmd in CommandList)
                 {
-                    CommandList.Clear();
-                    resp.result.ToList().ForEach(async p =>
-                    {
-                        CommandList.Add(p);
-                        EqLogic eq = EqLogicList.Where(e => e.id == p.eqLogic_id).First();
-                        if (eq.cmds == null)
-                            eq.cmds = new ObservableCollection<Command>();
-                        eq.cmds.Add(p);
-                        p.Parent = eq;
-                        if (p.name == "On")
-                            eq.OnVisibility = true;
+                    var eqlist = from eq in EqLogicList where eq.id == cmd.eqLogic_id select eq;
+                    var parenteq = eqlist.First();
+                    if (parenteq.cmds == null)
+                        parenteq.cmds = new ObservableCollection<Command>();
+                    parenteq.cmds.Add(cmd);
+                    cmd.Parent = parenteq;
+                    if (cmd.name == "On")
+                        parenteq.OnVisibility = true;
 
-                        if (p.type == "info")
-                            await ExecuteCommand(p);
-                    });
+                    if (cmd.type == "info")
+                        await ExecuteCommand(cmd);
                 }
+            }
 
-                return resp.error;
-            }
-            catch (Exception)
-            {
-                Error error = new Error();
-                error.code = "-1";
-                error.message = "Une erreur s'est produite lors de l'exécution de votre requête!";
-                return error;
-            }
+            return jsonrpc.Error;
         }
 
         public async Task<bool> Shutdown()
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
-            {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "jeeNetwork::halt", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Response));
-                Response resp = ser.ReadObject(stream) as Response;
-                if (resp.error != null)
-                    return false;
-                else
-                    return true;
-            }
-            catch (Exception)
-            {
+            await jsonrpc.SendRequest("jeeNetwork::halt");
+
+            if (jsonrpc.Error == null)
+                return true;
+            else
                 return false;
-            }
         }
 
         public async Task<bool> Upgrade()
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
-            {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "update::update", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Response));
-                Response resp = ser.ReadObject(stream) as Response;
-                if (resp.error != null)
-                    return false;
-                else
-                    return true;
-            }
-            catch (Exception)
-            {
+            await jsonrpc.SendRequest("update::update");
+
+            if (jsonrpc.Error == null)
+                return true;
+            else
                 return false;
-            }
         }
 
         public async Task<bool> Reboot()
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
-            {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "jeeNetwork::reboot", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Response));
-                Response resp = ser.ReadObject(stream) as Response;
-                if (resp.error != null)
-                    return false;
-                else
-                    return true;
-            }
-            catch (Exception)
-            {
+            await jsonrpc.SendRequest("jeeNetwork::reboot");
+
+            if (jsonrpc.Error == null)
+                return true;
+            else
                 return false;
-            }
-        }
-
-        public void CancelThread()
-        {
-            TokenSource?.Cancel();
         }
 
         public async Task UpdateEqLogic(EqLogic eq)
         {
-            var infoCmds = eq.cmds.Where(c => c.type == "info");
+            var infoCmds = from cmd in eq.cmds where cmd.type == "info" select cmd;
             foreach (Command cmd in infoCmds)
             {
                 if (!cmd.Updating)
@@ -446,252 +270,92 @@ namespace Domojee.ViewModels
                 }
             }
         }
-
-        public async Task UpdateAllAsyncThread(CancellationTokenSource tokenSource)
-        {
-            TokenSource = tokenSource;
-            while (!tokenSource.Token.IsCancellationRequested)
-            {
-                Updating = true;
-
-                //Mise à jour des commandes d'information
-                if (tokenSource.Token.IsCancellationRequested)
-                {
-                    return;
-                }
-                var infoCmds = from cmd in CommandList where cmd.type == "info" select cmd;
-                foreach (Command cmd in infoCmds)
-                {
-                    if (!cmd.Updating)
-                    {
-                        if (tokenSource.Token.IsCancellationRequested)
-                        {
-                            return;
-                        }
-                        cmd.Updating = true;
-                        await ExecuteCommand(cmd);
-                        cmd.Updating = false;
-                    }
-                }
-
-                // Mise à jour des scénarios
-                if (tokenSource.Token.IsCancellationRequested)
-                {
-                    return;
-                }
-                foreach (Scene scene in SceneList)
-                {
-                    await UpdateScene(scene);
-                }
-
-                // Mise à jour des messages
-                if (tokenSource.Token.IsCancellationRequested)
-                {
-                    return;
-                }
-                await DownloadMessages();
-
-                Updating = false;
-
-                if (tokenSource.Token.IsCancellationRequested)
-                {
-                    return;
-                }
-
-                try
-                {
-                    await Task.Delay(TimeSpan.FromMinutes(1), tokenSource.Token);
-                }
-                catch (Exception)
-                {
-                    return;
-                }
-            }
-        }
-
+        
         public async Task UpdateObject(JdObject obj)
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
             parameters.object_id = obj.id;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if(await jsonrpc.SendRequest("eqLogic::byObjectId"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "eqLogic::byObjectId", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseJdObjectList));
-                ResponseEqLogicList resp = ser.ReadObject(stream) as ResponseEqLogicList;
-
-                if (resp.error == null)
+                var eqlist = jsonrpc.GetEqLogicList();
+                foreach (EqLogic eq in eqlist)
                 {
-                    foreach (EqLogic eq in resp.result)
+                    var lst = from e in EqLogicList where e.id == eq.id select e;
+                    if (lst.Count() != 0)
                     {
-                        var lst = EqLogicList.Where(p => p.id == eq.id);
-                        if (lst.Count() != 0)
-                        {
-                            var eqold = lst.First();
-                            eqold = eq;
-                        }
-                        else
-                        {
-                            EqLogicList.Add(eq);
-                            obj.eqLogics.Add(eq);
-                        }
+                        var eqold = lst.First();
+                        eqold = eq;
+                    }
+                    else
+                    {
+                        EqLogicList.Add(eq);
+                        obj.eqLogics.Add(eq);
                     }
                 }
-            }
-            catch (Exception)
-            {
-                return;
             }
         }
 
         public async Task UpdateObjectList()
         {
-            var config = new ConfigurationViewModel();
-            var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
+            var jsonrpc = new JsonRpcClient();
 
-            try
+            if(await jsonrpc.SendRequest("object::all"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "object::all", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseJdObjectList));
-                ResponseJdObjectList resp = ser.ReadObject(stream) as ResponseJdObjectList;
-
-                if (resp.error == null)
+                var objlist = jsonrpc.GetObjectList();
+                foreach (JdObject obj in objlist)
                 {
-                    foreach (JdObject obj in resp.result)
+                    var lst = from o in ObjectList where o.id == obj.id select o;
+                    if (lst.Count() != 0)
                     {
-                        var lst = ObjectList.Where(p => p.id == obj.id);
-                        if (lst.Count() != 0)
-                        {
-                            var ob = lst.First();
-                            ob = obj;
-                        }
-                        else
-                            ObjectList.Add(obj);
+                        var ob = lst.First();
+                        ob = obj;
                     }
+                    else
+                        ObjectList.Add(obj);
                 }
-            }
-            catch (Exception)
-            {
-                return;
             }
         }
 
         private async Task UpdateScene(Scene scene)
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
             parameters.id = scene.id;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if(await jsonrpc.SendRequest("scenario::byId"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "scenario::byId", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseScene));
-                ResponseScene resp = ser.ReadObject(stream) as ResponseScene;
-                if (resp.error != null)
-                {
-                    return;
-                }
-                else
-                {
-                    scene.LastLaunch = resp.result.lastLaunch;
-                    return;
-                }
-            }
-            catch (Exception)
-            {
-                return;
+                scene.lastLaunch = jsonrpc.GetScene().lastLaunch;
             }
         }
 
         public async Task RunScene(Scene scene)
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
             parameters.id = scene.id;
             parameters.state = "run";
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if(await jsonrpc.SendRequest("scenario::changeState"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "scenario::changeState", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Response));
-                Response resp = ser.ReadObject(stream) as Response;
-                if (resp.error != null)
-                {
-                    return;
-                }
-                else
-                {
-                    await UpdateScene(scene);
-                    return;
-                }
+                await UpdateScene(scene);
             }
-            catch (Exception)
-            {
-                return;
-            }
-        }
-
-        public async Task RunBackgroundTask(TaskScheduler taskScheduler)
-        {
-            var taskFactory = new TaskFactory(taskScheduler);
-            tokenSource = new CancellationTokenSource();
-            await taskFactory.StartNew(() => UpdateAllAsyncThread(tokenSource), tokenSource.Token);
-        }
-
-        public void StopBackgroundTask()
-        {
-            if (tokenSource != null)
-                tokenSource.Cancel();
         }
 
         public async Task ExecuteCommand(Command cmd)
         {
-            var config = new ConfigurationViewModel();
             var parameters = new Parameters();
-            parameters.apikey = config.ApiKey;
             parameters.id = cmd.id;
             parameters.name = cmd.name;
+            var jsonrpc = new JsonRpcClient(parameters);
 
-            try
+            if(await jsonrpc.SendRequest("cmd::execCmd"))
             {
-                HttpClient httpclient = GetNewHttpClient();
-                var serialized = await Request(httpclient, "cmd::execCmd", parameters);
-                httpclient.Dispose();
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(serialized));
-                stream.Position = 0;
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseCommand));
-                ResponseCommand resp = ser.ReadObject(stream) as ResponseCommand;
-                if (resp.error == null)
-                {
-                    cmd._value = resp.result.value;
-                }
-                else
-                {
-                    cmd._value = "N/A";
-                }
+                CommandResult res = jsonrpc.GetCommandResult();
+                cmd._value = res.value;
             }
-            catch (Exception)
+            else
             {
                 cmd._value = "N/A";
             }

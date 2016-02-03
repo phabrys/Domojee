@@ -9,18 +9,9 @@ using System.Threading.Tasks;
 namespace Domojee.Models
 {
     [DataContract]
-    public class ResponseJdObjectList
+    public class ResponseJdObjectList : Response
     {
         [DataMember]
-        public string id;
-
-        [DataMember]
         public ObservableCollection<JdObject> result;
-
-        [DataMember]
-        public string jsonrpc;
-
-        [DataMember]
-        public Error error;
     }
 }

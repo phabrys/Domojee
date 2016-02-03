@@ -8,18 +8,9 @@ using System.Threading.Tasks;
 namespace Domojee.Models
 {
     [DataContract]
-    class ResponseScene
+    class ResponseScene : Response
     {
         [DataMember]
-        public string id;
-
-        [DataMember]
         public Scene result;
-
-        [DataMember]
-        public string jsonrpc;
-
-        [DataMember]
-        public Error error;
     }
 }

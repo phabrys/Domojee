@@ -8,16 +8,10 @@ using System.Threading.Tasks;
 namespace Domojee.Models
 {
     [DataContract]
-    public class ResponseCommand
+    public class ResponseCommand : Response
     {
         [DataMember]
-        public string id;
-
-        [DataMember]
         public CommandResult result;
-
-        [DataMember]
-        public string jsonrpc;
 
         [DataMember]
         public Error error;

@@ -76,7 +76,6 @@ namespace Domojee.Controls
                     ContentDialogResult r = await diag.ShowAsync();
                     if (r == ContentDialogResult.Primary)
                     {
-                        RequestViewModel.GetInstance().StopBackgroundTask();
                         ev.Page = typeof(Views.ConnectPage);
                         NavigateToPage(this, ev);
                     }

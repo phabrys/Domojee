@@ -112,6 +112,7 @@
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
     <Compile Include="Converters\EqLogicUpdatingConverter.cs" />
+    <Compile Include="Models\JsonRpcClient.cs" />
     <Compile Include="Models\Command.cs" />
     <Compile Include="Models\CommandResult.cs" />
     <Compile Include="Models\DisplayInfo.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\ResponseError.cs" />
     <Compile Include="Models\ResponseCommand.cs" />
     <Compile Include="Models\ResponseCommandList.cs" />
     <Compile Include="Models\ResponseEqLogicList.cs" />

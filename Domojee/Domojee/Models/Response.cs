@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -16,11 +15,5 @@ namespace Domojee.Models
 
         [DataMember]
         public string jsonrpc;
-
-        [DataMember]
-        public Error error;
-
-        [DataMember]
-        public string result;
     }
 }
