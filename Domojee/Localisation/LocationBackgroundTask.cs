@@ -5,7 +5,7 @@ using Windows.ApplicationModel.Background;
 using Windows.Devices.Geolocation;
 using Windows.Storage;
 using System.Net.Http.Headers;
-namespace BackgroundTask
+namespace Localisation
 {
     public sealed class LocationBackgroundTask : IBackgroundTask
     {
