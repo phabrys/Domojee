@@ -9,7 +9,7 @@ using Windows.ApplicationModel.Resources.Core;
 using Windows.ApplicationModel.VoiceCommands;
 
 
-namespace VoiceCommands
+namespace VoiceCommandService
 {
 
     public sealed class DomojeeVoiceCommandService : IBackgroundTask

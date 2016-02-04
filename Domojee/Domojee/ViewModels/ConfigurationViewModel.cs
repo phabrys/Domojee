@@ -75,6 +75,21 @@ namespace Domojee.ViewModels
                 return _GeolocActivation;
             }
         }
+        private bool _NotificationActivation;
+
+        public bool NotificationActivation
+        {
+            set
+            {
+                _NotificationActivation = value;
+                LocalSettings.Values["NotificationActivation"] = value;
+            }
+
+            get
+            {
+                return _NotificationActivation;
+            }
+        }
 
         private string _GeolocObjectId;
 
@@ -109,7 +124,8 @@ namespace Domojee.ViewModels
                     Populated = true;
                 }
             }
-            GeolocActivation = (LocalSettings.Values["GeolocActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["GeolocActivation"]);
+            _GeolocActivation = (LocalSettings.Values["GeolocActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["GeolocActivation"]);
+            _NotificationActivation = (LocalSettings.Values["NotificationActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["NotificationActivation"]);
             _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
         }
     }

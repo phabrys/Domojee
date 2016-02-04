@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.ApplicationModel.VoiceCommands;
 using System.Globalization;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Domojee.ViewModels
 {
@@ -259,7 +261,39 @@ namespace Domojee.ViewModels
 
             return jsonrpc.Error;
         }
+        public async Task<bool> SendNotificationUri(string uri)
+        {
+            var parameters = new Parameters();
+            var jsonrpc = new JsonRpcClient(parameters);
+            ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
+            ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+            var _apikey = "";
+            var _address = "";
+            var _NotificationObjectId = (LocalSettings.Values["NotificationObjectId"] == null) ? "" : LocalSettings.Values["NotificationObjectId"].ToString();
 
+            if (RoamingSettings.Values["addressSetting"] != null)
+            {
+                _address = RoamingSettings.Values["addressSetting"] as string;
+                if (RoamingSettings.Values["apikeySetting"] != null)
+                {
+                    _apikey = RoamingSettings.Values["apikeySetting"] as string;
+                }
+            }
+            try
+            {
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.BaseAddress = new Uri(_address + "/Plugins/pushNotification/php/");
+                await httpClient.GetAsync("updatUri.php?api=" + _apikey + "&id=" + _NotificationObjectId + "&uri=" + uri);
+                httpClient.Dispose();
+            }
+            catch (Exception)
+            {
+            }
+            return true;
+        }
         public async Task<bool> Shutdown()
         {
             var parameters = new Parameters();

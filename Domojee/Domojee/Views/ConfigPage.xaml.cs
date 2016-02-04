@@ -38,6 +38,16 @@ namespace Domojee.Views
                     MobilePosition_Cmd.SelectedItem = ObjectsSelect;
                 }
             }
+            MobileNotification.ItemsSource = Domojee.ViewModels.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
+             var NotificationId = settings.Values["NotificationObjectId"];
+            if (NotificationId != null)
+            {
+                foreach (var ObjectsSelect in Domojee.ViewModels.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
+                {
+                    MobileNotification.SelectedItem = ObjectsSelect;
+                }
+            }
+            
             if (settings.Values["Status"] != null)
             {
                 Status.Text = settings.Values["Status"].ToString();
@@ -174,16 +184,17 @@ namespace Domojee.Views
 
         async private void activePush_Toggled(object sender, RoutedEventArgs e)
         {
-            var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-            saveUriForNotificationService(channel.Uri);
+            var settings = ApplicationData.Current.LocalSettings;
+            if (activePush.IsOn == true && settings.Values["channelUri"] == null)
+            {
+                var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+                await Domojee.ViewModels.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
+                settings.Values["channelUri"] = channel.Uri.ToString();
+            }
         }
-        private void saveUriForNotificationService(string uri)
+        async private void activeLocation_Toggled(object sender, RoutedEventArgs e)
         {
-            //envoie a jeedom Uri de connexion push
-        }
-            async private void active_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (active.IsOn == true && _geolocTask == null)
+            if (activeLocation.IsOn == true && _geolocTask == null)
             {
                 try
                 {
@@ -233,7 +244,7 @@ namespace Domojee.Views
                     Status.Text = ex.ToString();
                 }
             }
-            if (active.IsOn == false)
+            if (activeLocation.IsOn == false)
             {
                 if (null != _geolocTask)
                 {
@@ -245,7 +256,6 @@ namespace Domojee.Views
                 MobilePosition_Accuracy.Text = "Pas de data";
             }
         }
-
         private void MobilePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MobilePosition_Cmd.SelectedItem != null)
@@ -253,6 +263,15 @@ namespace Domojee.Views
                 var settings = ApplicationData.Current.LocalSettings;
                 Domojee.Models.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as Domojee.Models.Command;
                 settings.Values["GeolocObjectId"] = ObjectsSelect.id;
+            }
+        }
+        private void MobileNotification_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MobileNotification.SelectedItem != null)
+            {
+                var settings = ApplicationData.Current.LocalSettings;
+                Domojee.Models.EqLogic EqLogicSelect = MobileNotification.SelectedItem as Domojee.Models.EqLogic;
+                settings.Values["NotificationObjectId"] = EqLogicSelect.id;
             }
         }
     }

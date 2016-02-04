@@ -17,58 +17,57 @@
                 <StackPanel>
                     <Grid Height="48" Background="{StaticResource BlueBase}">
                         <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="18"
-                                   FontWeight="Bold"
-                                   Text="AppParameter" />
+        					VerticalAlignment="Center"
+        					FontSize="18"
+        					FontWeight="Bold"
+        					Text="AppParameter" />
                     </Grid>
                     <Pivot Height="594">
                         <PivotItem Margin="12,0,19,33" Header="Localisation">
                             <Grid>
-                                <ToggleSwitch x:Name="active"
-                                              Width="100"
-                                              Height="100"
-                                              Margin="10,0,0,0"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Top"
-                                              Header="Activation"
-                                              IsOn="{Binding GeolocActivation,
-                                                             Mode=TwoWay}"
-                                              Toggled="active_Toggled" />
+                                <ToggleSwitch x:Name="activeLocation"
+        							Width="100"
+        							Height="100"
+        							Margin="10,0,0,0"
+        							HorizontalAlignment="Left"
+        							VerticalAlignment="Top"
+        							Header="Activation"
+        							IsOn="{Binding GeolocActivation, Mode=TwoWay}"
+        							Toggled="activeLocation_Toggled" />
                                 <TextBlock x:Name="InputTextBlock"
-                                           Height="127"
-                                           Margin="10,56,0,0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Top"
-                                           Text="Enregistre une tâche de fond pour lire la géolocalisation sur une minuterie périodique. La position affichée sera actualisée périodiquement lorsque la tâche d'arrière-plan s'exécute (défini dans l'exemple à toutes les 15 minutes)."
-                                           TextWrapping="Wrap" />
+        							Height="127"
+        							Margin="10,56,0,0"
+        							HorizontalAlignment="Left"
+        							VerticalAlignment="Top"
+        							Text="Enregistre une tâche de fond pour lire la géolocalisation sur une minuterie périodique. La position affichée sera actualisée périodiquement lorsque la tâche d'arrière-plan s'exécute (défini dans l'exemple à toutes les 15 minutes)."
+        							TextWrapping="Wrap" />
                                 <TextBlock x:Name="Status"
-                                           Height="20"
-                                           Margin="10,188,6,0"
-                                           VerticalAlignment="Top"
-                                           TextWrapping="Wrap"
-                                           d:LayoutOverrides="LeftPosition, RightPosition" />
+        							Height="20"
+        							Margin="10,188,6,0"
+        							VerticalAlignment="Top"
+        							TextWrapping="Wrap"
+        							d:LayoutOverrides="LeftPosition, RightPosition" />
                                 <TextBlock x:Name="MobilePosition_Longitude"
-                                           Height="25"
-                                           Margin="105,210,20,0"
-                                           VerticalAlignment="Top"
-                                           Text="No data"
-                                           TextWrapping="Wrap"
-                                           d:LayoutOverrides="LeftPosition, RightPosition" />
+        							Height="25"
+        							Margin="105,210,20,0"
+        							VerticalAlignment="Top"
+        							Text="No data"
+        							TextWrapping="Wrap"
+        							d:LayoutOverrides="LeftPosition, RightPosition" />
                                 <TextBlock x:Name="MobilePosition_Accuracy"
-                                           Height="20"
-                                           Margin="105,0,20,223"
-                                           VerticalAlignment="Bottom"
-                                           Text="No data"
-                                           TextWrapping="Wrap"
-                                           d:LayoutOverrides="LeftPosition, RightPosition" />
+        							Height="20"
+        							Margin="105,0,20,223"
+        							VerticalAlignment="Bottom"
+        							Text="No data"
+        							TextWrapping="Wrap"
+        							d:LayoutOverrides="LeftPosition, RightPosition" />
                                 <ComboBox x:Name="MobilePosition_Cmd"
-                                          Height="64"
-                                          Margin="0,0,20,128"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Bottom"
-                                          SelectionChanged="MobilePosition_Cmd_SelectionChanged"
-                                          d:LayoutOverrides="LeftPosition, RightPosition">
+        							Height="64"
+        							Margin="0,0,20,128"
+        							HorizontalAlignment="Stretch"
+        							VerticalAlignment="Bottom"
+        							SelectionChanged="MobilePosition_Cmd_SelectionChanged"
+        							d:LayoutOverrides="LeftPosition, RightPosition">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -80,52 +79,69 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <TextBlock Grid.Column="0"
-                                           Height="30"
-                                           Margin="10,210,0,0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Top"
-                                           Text="Longitude: "
-                                           TextWrapping="Wrap" />
+        							Height="30"
+        							Margin="10,210,0,0"
+        							HorizontalAlignment="Left"
+        							VerticalAlignment="Top"
+        							Text="Longitude: "
+        							TextWrapping="Wrap" />
                                 <TextBlock Grid.Column="0"
-                                           Height="46"
-                                           Margin="10,0,0,197"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Bottom"
-                                           Text="Accuracy: "
-                                           TextWrapping="Wrap" />
+        							Height="46"
+        							Margin="10,0,0,197"
+        							HorizontalAlignment="Left"
+        							VerticalAlignment="Bottom"
+        							Text="Accuracy: "
+        							TextWrapping="Wrap" />
                                 <TextBlock Grid.Column="0"
-                                           Height="20"
-                                           Margin="10,0,20,197"
-                                           VerticalAlignment="Bottom"
-                                           Text="Commande Geloc mobile"
-                                           TextWrapping="Wrap"
-                                           d:LayoutOverrides="LeftPosition, RightPosition" />
+        							Height="20"
+        							Margin="10,0,20,197"
+        							VerticalAlignment="Bottom"
+        							Text="Commande Geloc mobile"
+        							TextWrapping="Wrap"
+        							d:LayoutOverrides="LeftPosition, RightPosition" />
                                 <TextBlock x:Name="MobilePosition_Latitude"
-                                           Grid.Row="0"
-                                           Margin="105,240,20,252"
-                                           RenderTransformOrigin="0.818,0.5"
-                                           Text="No data"
-                                           TextWrapping="Wrap"
-                                           d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" />
+        							Grid.Row="0"
+        							Margin="105,240,20,252"
+        							RenderTransformOrigin="0.818,0.5"
+        							Text="No data"
+        							TextWrapping="Wrap"
+        							d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" />
                                 <TextBlock Grid.Row="0"
-                                           Grid.Column="0"
-                                           Margin="10,240,0,248"
-                                           HorizontalAlignment="Left"
-                                           Text="Latitude: "
-                                           TextWrapping="Wrap"
-                                           d:LayoutOverrides="TopPosition, BottomPosition" />
+        							Grid.Column="0"
+        							Margin="10,240,0,248"
+        							HorizontalAlignment="Left"
+        							Text="Latitude: "
+        							TextWrapping="Wrap"
+        							d:LayoutOverrides="TopPosition, BottomPosition" />
                             </Grid>
                         </PivotItem>
                         <PivotItem x:Name="notify" Header="Notification">
                             <Grid >
                                 <ToggleSwitch x:Name="activePush"
-                                              Width="100"
-                                              Height="100"
-                                              Margin="10,0,0,0"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Top"
-                                              Header="Activation"
-                                              Toggled="" />
+        							Width="100"
+        							Height="100"
+        							Margin="10,0,0,0"
+        							HorizontalAlignment="Left"
+        							VerticalAlignment="Top"
+        							Header="Activation"
+        							IsOn="{Binding NotificationActivation, Mode=TwoWay}"
+        							Toggled="activePush_Toggled" />
+                                <ComboBox x:Name="MobileNotification"
+        							Margin="10,63,10,0"
+        							HorizontalAlignment="Stretch"
+        							VerticalAlignment="Top"
+        							SelectionChanged="MobileNotification_Cmd_SelectionChanged"
+        							d:LayoutOverrides="LeftPosition, RightPosition" Height="64">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding name}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                             </Grid>
                         </PivotItem>
                         <PivotItem x:Name="cortana" Header="Cortana">
