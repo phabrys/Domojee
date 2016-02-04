@@ -90,6 +90,7 @@ namespace Domojee.Views
                 }
                 catch (Exception ex)
                 {
+                    Status.Text = ex.Message.ToString();
                 }
             }
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
