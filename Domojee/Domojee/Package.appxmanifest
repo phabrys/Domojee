@@ -33,6 +33,26 @@
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
+          <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationHistoryChangedTriggerTask">
+            <BackgroundTasks>
+              <Task Type="systemEvent" />
+            </BackgroundTasks>
+          </Extension>
+          <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationQuickReplyTask">
+            <BackgroundTasks>
+              <Task Type="systemEvent" />
+            </BackgroundTasks>
+          </Extension>
+          <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastActivationTypeBackgroundClosedTask">
+            <BackgroundTasks>
+              <Task Type="systemEvent" />
+            </BackgroundTasks>
+          </Extension>
+          <Extension Category="windows.backgroundTasks" EntryPoint="Notification.BadgeNotificationHistoryChangedTriggerTask">
+            <BackgroundTasks>
+              <Task Type="systemEvent" />
+            </BackgroundTasks>
+          </Extension>
       </Extensions>
     </Application>
   </Applications>
