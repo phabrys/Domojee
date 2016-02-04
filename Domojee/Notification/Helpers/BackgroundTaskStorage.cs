@@ -2,7 +2,7 @@
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
-namespace BackgroundTask.Helpers
+namespace Notification.Helpers
 {
     public static class BackgroundTaskStorage
     { 

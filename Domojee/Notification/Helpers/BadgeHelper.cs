@@ -1,4 +1,4 @@
-﻿namespace BackgroundTask.Helpers
+﻿namespace Notification.Helpers
 {
     public static class BadgeHelper
     {

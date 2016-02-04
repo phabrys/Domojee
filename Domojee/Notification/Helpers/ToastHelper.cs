@@ -4,7 +4,7 @@ using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
 using Windows.UI.Notifications;
 
-namespace BackgroundTask.Helpers
+namespace Notification.Helpers
 {
     public static class ToastHelper
     {

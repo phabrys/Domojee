@@ -1,8 +1,8 @@
-﻿using BackgroundTask.Helpers;
+﻿using Notification.Helpers;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
 
-namespace BackgroundTask
+namespace Notification
 {
     public sealed class ToastActivationTypeBackgroundClosedTask : IBackgroundTask
     {

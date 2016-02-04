@@ -4,7 +4,7 @@ using Windows.ApplicationModel.Background;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
-namespace BackgroundTask
+namespace Notification
 {
     public sealed class BadgeNotificationHistoryChangedTriggerTask : IBackgroundTask
     {
