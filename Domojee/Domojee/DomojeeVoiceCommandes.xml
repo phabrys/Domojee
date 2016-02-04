@@ -4,18 +4,24 @@
     <CommandPrefix> Domojee, </CommandPrefix>
     <Example> Quel est la température réel de la chambre bleu? </Example>
 
-    <Command Name="whenIsTripToDestination">
+    <Command Name="cmdInObjectValue">
       <Example>Quel est la température réel de la chambre bleu?</Example>
       <ListenFor> Quel est la {Cmd} de la {object}?</ListenFor>
       <Feedback> Je consulte Jeedom </Feedback>
       <VoiceCommandService Target="DomojeeVoiceCommandService"/>
+    </Command> 
+    <Command Name="cmdInObject">
+      <Example>Allume la lumiere du salon?</Example>
+      <ListenFor> Allume la {Cmd} du {object}?</ListenFor>
+      <Feedback> J'envoie la commande a Jeedom </Feedback>
+      <VoiceCommandService Target="DomojeeVoiceCommandService"/>
     </Command>
 	
-    <PhraseList Label="Cmd">
+    <PhraseList Label="Commande">
       <Item> température réel </Item>
       <Item> température consigne </Item>
     </PhraseList>
-    <PhraseList Label="destination">
+    <PhraseList Label="Object">
       <Item> chambre grise </Item>
       <Item> chambre bleu </Item>
       <Item> salon </Item>

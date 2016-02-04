@@ -8,6 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.ApplicationModel.VoiceCommands;
+using System.Globalization;
 
 namespace Domojee.ViewModels
 {
@@ -220,8 +222,40 @@ namespace Domojee.ViewModels
             var parameters = new Parameters();
             var jsonrpc = new JsonRpcClient(parameters);
             //Ajouter le téléchargemnent et la mise a jours des interaction Jeedom
-            var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///DomojeeVoiceCommandes.xml"));
-            await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
+            try
+            {
+                var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///DomojeeVoiceCommandes.xml"));
+                await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
+               
+                VoiceCommandDefinition commandDefinitions;
+
+                string countryCode = CultureInfo.CurrentCulture.Name.ToLower();
+                if (countryCode.Length == 0)
+                {
+                    countryCode = "fr-fr";
+                }
+
+                if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("DomojeeCommandSet_" + countryCode, out commandDefinitions))
+                {
+                    List<string> ObjectsList = new List<string>();
+                    foreach (var jdObject in ObjectList)
+                    {
+                        ObjectsList.Add(jdObject.name);
+                    }
+                    await commandDefinitions.SetPhraseListAsync("Object", ObjectsList);
+                    List<string> CommandesList = new List<string>();
+                    foreach (var jdCommand in CommandList)
+                    {
+                        ObjectsList.Add(jdCommand.name);
+                    }
+                    await commandDefinitions.SetPhraseListAsync("Commande", ObjectsList);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
+            }
+          
 
             return jsonrpc.Error;
         }
