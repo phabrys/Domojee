@@ -117,7 +117,16 @@
                             </Grid>
                         </PivotItem>
                         <PivotItem x:Name="notify" Header="Notification">
-                            <Grid />
+                            <Grid >
+                                <ToggleSwitch x:Name="activePush"
+                                              Width="100"
+                                              Height="100"
+                                              Margin="10,0,0,0"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Top"
+                                              Header="Activation"
+                                              Toggled="" />
+                            </Grid>
                         </PivotItem>
                         <PivotItem x:Name="cortana" Header="Cortana">
                             <Grid />

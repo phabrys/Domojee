@@ -9,6 +9,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.Networking.PushNotifications;
 
 namespace Domojee.Views
 {
@@ -171,7 +172,16 @@ namespace Domojee.Views
             }
         }
 
-        async private void active_Toggled(object sender, RoutedEventArgs e)
+        async private void activePush_Toggled(object sender, RoutedEventArgs e)
+        {
+            var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+            saveUriForNotificationService(channel.Uri);
+        }
+        private void saveUriForNotificationService(string uri)
+        {
+            //envoie a jeedom Uri de connexion push
+        }
+            async private void active_Toggled(object sender, RoutedEventArgs e)
         {
             if (active.IsOn == true && _geolocTask == null)
             {
@@ -193,7 +203,7 @@ namespace Domojee.Views
 
                     // Associate the timer trigger with the background task builder
                     geolocTaskBuilder.SetTrigger(trigger);
-                    
+
                     // Register the background task
                     _geolocTask = geolocTaskBuilder.Register();
 
