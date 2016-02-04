@@ -37,7 +37,8 @@ namespace Domojee.Views
             new ActionItem { message = "Equipements",   function = RequestViewModel.GetInstance().DownloadEqLogics },
             new ActionItem { message = "Commandes",     function = RequestViewModel.GetInstance().DownloadCommands },
             new ActionItem { message = "Scénarios",     function = RequestViewModel.GetInstance().DownloadScenes },
-            new ActionItem { message = "Messages",      function = RequestViewModel.GetInstance().DownloadMessages }
+            new ActionItem { message = "Messages",      function = RequestViewModel.GetInstance().DownloadMessages },
+            new ActionItem { message = "Interaction",   function = RequestViewModel.GetInstance().DownloadInteraction },
         };
 
         private async Task<bool> Action(ActionItem item, NavigationEventArgs e)

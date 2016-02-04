@@ -215,6 +215,16 @@ namespace Domojee.ViewModels
 
             return jsonrpc.Error;
         }
+        public async Task<Error> DownloadInteraction()
+        {
+            var parameters = new Parameters();
+            var jsonrpc = new JsonRpcClient(parameters);
+            //Ajouter le téléchargemnent et la mise a jours des interaction Jeedom
+            var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///DomojeeVoiceCommandes.xml"));
+            await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
+
+            return jsonrpc.Error;
+        }
 
         public async Task<bool> Shutdown()
         {

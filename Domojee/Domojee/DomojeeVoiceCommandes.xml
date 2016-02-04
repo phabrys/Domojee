@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="fr-fr" Name="commandSet_fr-fr">
+    <CommandPrefix> Domojee, </CommandPrefix>
+    <Example> Quel est la température réel de la chambre bleu? </Example>
+
+    <Command Name="whenIsTripToDestination">
+      <Example>Quel est la température réel de la chambre bleu?</Example>
+      <ListenFor> Quel est la {Cmd} de la {object}?</ListenFor>
+      <Feedback> Je consulte Jeedom </Feedback>
+      <VoiceCommandService Target="DomojeeVoiceCommandService"/>
+    </Command>
+	
+    <PhraseList Label="Cmd">
+      <Item> température réel </Item>
+      <Item> température consigne </Item>
+    </PhraseList>
+    <PhraseList Label="destination">
+      <Item> chambre grise </Item>
+      <Item> chambre bleu </Item>
+      <Item> salon </Item>
+    </PhraseList>
+  </CommandSet>
+
+</VoiceCommands>

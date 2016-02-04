@@ -15,7 +15,7 @@ namespace Domojee.Views
     public sealed partial class ConfigPage : Page
     {
         private const string BackgroundTaskName = "LocationBackgroundTask";
-        private const string BackgroundTaskEntryPoint = "BackgroundTask.LocationBackgroundTask";
+        private const string BackgroundTaskEntryPoint = "Localisation.LocationBackgroundTask";
         private IBackgroundTaskRegistration _geolocTask = null;
 
         public ConfigPage()

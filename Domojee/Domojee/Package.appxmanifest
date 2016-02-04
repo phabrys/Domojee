@@ -25,7 +25,10 @@
         </uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.LocationBackgroundTask">
+        <uap:Extension Category="windows.appService" EntryPoint="VoiceCommand.DomojeeVoiceCommandService">
+          <uap:AppService Name="DomojeeVoiceCommandService" />
+        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.LocationBackgroundTask">
           <BackgroundTasks>
             <Task Type="timer" />
           </BackgroundTasks>

@@ -93,6 +93,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DomojeeVoiceCommandes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Domojee_StoreKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
@@ -239,9 +243,17 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BackgroundTask\BackgroundTask.csproj">
-      <Project>{7f8edafe-40bd-46e6-b192-bbe4ebd33450}</Project>
-      <Name>BackgroundTask</Name>
+    <ProjectReference Include="..\Localisation\Localisation.csproj">
+      <Project>{00265c6d-b82b-4047-b6a6-fa0d3ab515ce}</Project>
+      <Name>Localisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Notification\Notification.csproj">
+      <Project>{9c1c6a34-d674-4d90-a30f-cd91af5bc020}</Project>
+      <Name>Notification</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoiceCommandService\VoiceCommandService.csproj">
+      <Project>{73b9215a-97b9-41f6-9405-f67a0d1523f7}</Project>
+      <Name>VoiceCommandService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
