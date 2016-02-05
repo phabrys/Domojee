@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.StartScreen;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, voir la page http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -128,6 +129,27 @@ namespace Domojee.Views
                 RequestViewModel.UpdateObjectImage(id, null);
                 var file = await RequestViewModel.ImageFolder.GetFileAsync("dmj" + id);
                 await file.DeleteAsync();
+            }
+            catch (Exception) { }
+        }
+        private async void MenuFlyoutItem_Click_Epingler(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var item = sender as MenuFlyoutItem;
+                var id = item.Tag as string;
+                JdObject objs = RequestViewModel.ObjectList.Where(o=>o.id.Equals(id)).First();
+                var TileExist=SecondaryTile.Exists(objs.id);
+                if (!TileExist)
+                {
+                    var Tile = new SecondaryTile(objs.id) {
+                        
+                        DisplayName= objs.Name,
+                        Arguments="Object",
+                    };
+                    var succes = await Tile.RequestCreateAsync();
+                }
+                
             }
             catch (Exception) { }
         }
