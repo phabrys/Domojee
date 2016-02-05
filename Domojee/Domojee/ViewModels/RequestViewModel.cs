@@ -3,15 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.ApplicationModel.VoiceCommands;
-using System.Globalization;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using Windows.Storage;
 
 namespace Domojee.ViewModels
 {
@@ -130,8 +130,7 @@ namespace Domojee.ViewModels
 
         public async Task<Error> DownloadEqLogics()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
 
             if (await jsonrpc.SendRequest("eqLogic::all"))
             {
@@ -163,8 +162,7 @@ namespace Domojee.ViewModels
 
         public async Task<Error> DownloadScenes()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
 
             if (await jsonrpc.SendRequest("scenario::all"))
             {
@@ -178,8 +176,7 @@ namespace Domojee.ViewModels
 
         public async Task<Error> DownloadMessages()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
 
             if (await jsonrpc.SendRequest("message::all"))
             {
@@ -193,8 +190,7 @@ namespace Domojee.ViewModels
 
         public async Task<Error> DownloadCommands()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
 
             if (await jsonrpc.SendRequest("cmd::all"))
             {
@@ -219,16 +215,16 @@ namespace Domojee.ViewModels
 
             return jsonrpc.Error;
         }
+
         public async Task<Error> DownloadInteraction()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
             //Ajouter le téléchargemnent et la mise a jours des interaction Jeedom
             try
             {
                 var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///DomojeeVoiceCommandes.xml"));
                 await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
-               
+
                 VoiceCommandDefinition commandDefinitions;
 
                 string countryCode = CultureInfo.CurrentCulture.Name.ToLower();
@@ -257,10 +253,10 @@ namespace Domojee.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
             }
-          
 
             return jsonrpc.Error;
         }
+
         public async Task<bool> SendNotificationUri(string uri)
         {
             var parameters = new Parameters();
@@ -281,7 +277,6 @@ namespace Domojee.ViewModels
             }
             try
             {
-
                 HttpClient httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -294,10 +289,10 @@ namespace Domojee.ViewModels
             }
             return true;
         }
+
         public async Task<bool> Shutdown()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
 
             await jsonrpc.SendRequest("jeeNetwork::halt");
 
@@ -309,8 +304,7 @@ namespace Domojee.ViewModels
 
         public async Task<bool> Upgrade()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
 
             await jsonrpc.SendRequest("update::update");
 
@@ -322,8 +316,7 @@ namespace Domojee.ViewModels
 
         public async Task<bool> Reboot()
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
+            var jsonrpc = new JsonRpcClient();
 
             await jsonrpc.SendRequest("jeeNetwork::reboot");
 
