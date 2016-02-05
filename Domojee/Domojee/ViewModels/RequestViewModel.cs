@@ -281,7 +281,7 @@ namespace Domojee.ViewModels
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.BaseAddress = new Uri(_address + "/plugins/pushNotification/php/");
-                await httpClient.GetAsync("updatUri.php?api=" + _apikey + "&id=" + _NotificationObjectId + "&uri=" + uri);
+                httpClient.GetAsync("updatUri.php?api=" + _apikey + "&id=" + _NotificationObjectId + "&uri=" + uri);
                 httpClient.Dispose();
             }
             catch (Exception)

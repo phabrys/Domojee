@@ -185,12 +185,12 @@ namespace Domojee.Views
         async private void activePush_Toggled(object sender, RoutedEventArgs e)
         {
             var settings = ApplicationData.Current.LocalSettings;
-            if (activePush.IsOn == true && settings.Values["channelUri"] == null)
-            {
+            //if (activePush.IsOn == true && settings.Values["channelUri"] == null)
+           // {
                 var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
                 await Domojee.ViewModels.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
                 settings.Values["channelUri"] = channel.Uri.ToString();
-            }
+           // }
         }
         async private void activeLocation_Toggled(object sender, RoutedEventArgs e)
         {
