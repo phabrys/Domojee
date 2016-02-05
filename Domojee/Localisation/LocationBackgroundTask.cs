@@ -87,7 +87,7 @@ namespace Localisation
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.BaseAddress = new Uri(_address + "/core/api/");
-                await httpClient.GetAsync("jeeApi.php?api=" + _apikey + "& type=geoloc&id=" + _GeolocObjectId + "&value=" + position);
+                httpClient.GetAsync("jeeApi.php?api=" + _apikey + "&type=geoloc&id=" + _GeolocObjectId + "&value=" + position);
                 httpClient.Dispose();
             }
             catch (Exception)
