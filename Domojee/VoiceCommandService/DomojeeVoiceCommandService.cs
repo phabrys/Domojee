@@ -16,7 +16,7 @@ namespace VoiceCommandService
         BackgroundTaskDeferral serviceDeferral;
         
         ResourceMap cortanaResourceMap;
-                ResourceContext cortanaContext;
+        ResourceContext cortanaContext;
         DateTimeFormatInfo dateFormatInfo;
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
@@ -62,7 +62,6 @@ namespace VoiceCommandService
                 }
             }
         }
-
         private async Task ShowProgressScreen(string message)
         {
             var userProgressMessage = new VoiceCommandUserMessage();
