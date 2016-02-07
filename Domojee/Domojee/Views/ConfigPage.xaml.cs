@@ -23,8 +23,8 @@ namespace Domojee.Views
         {
             this.InitializeComponent();
             var settings = ApplicationData.Current.LocalSettings;
-            ObservableCollection<Domojee.Models.Command> GeolocCmd = new ObservableCollection<Domojee.Models.Command>();
-            foreach (var Equipement in Domojee.ViewModels.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("geoloc")))
+            ObservableCollection<BackgroundWorker.Helpers.Command> GeolocCmd = new ObservableCollection<BackgroundWorker.Helpers.Command>();
+            foreach (var Equipement in BackgroundWorker.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("geoloc")))
             {
                 foreach (var Cmd in Equipement.GetInformationsCmds())
                     GeolocCmd.Add(Cmd);
@@ -38,11 +38,11 @@ namespace Domojee.Views
                     MobilePosition_Cmd.SelectedItem = ObjectsSelect;
                 }
             }
-            MobileNotification.ItemsSource = Domojee.ViewModels.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
+            MobileNotification.ItemsSource = BackgroundWorker.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
              var NotificationId = settings.Values["NotificationObjectId"];
             if (NotificationId != null)
             {
-                foreach (var ObjectsSelect in Domojee.ViewModels.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
+                foreach (var ObjectsSelect in BackgroundWorker.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
                 {
                     MobileNotification.SelectedItem = ObjectsSelect;
                 }
@@ -188,7 +188,7 @@ namespace Domojee.Views
             //if (activePush.IsOn == true && settings.Values["channelUri"] == null)
            // {
                 var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-                await Domojee.ViewModels.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
+                await BackgroundWorker.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
                 settings.Values["channelUri"] = channel.Uri.ToString();
            // }
         }
@@ -261,7 +261,7 @@ namespace Domojee.Views
             if (MobilePosition_Cmd.SelectedItem != null)
             {
                 var settings = ApplicationData.Current.LocalSettings;
-                Domojee.Models.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as Domojee.Models.Command;
+                BackgroundWorker.Helpers.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as BackgroundWorker.Helpers.Command;
                 settings.Values["GeolocObjectId"] = ObjectsSelect.id;
             }
         }
@@ -270,7 +270,7 @@ namespace Domojee.Views
             if (MobileNotification.SelectedItem != null)
             {
                 var settings = ApplicationData.Current.LocalSettings;
-                Domojee.Models.EqLogic EqLogicSelect = MobileNotification.SelectedItem as Domojee.Models.EqLogic;
+                BackgroundWorker.Helpers.EqLogic EqLogicSelect = MobileNotification.SelectedItem as BackgroundWorker.Helpers.EqLogic;
                 settings.Values["NotificationObjectId"] = EqLogicSelect.id;
             }
         }

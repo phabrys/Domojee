@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Domojee.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="using:Domojee.ViewModels"
+             xmlns:viewModels="using:BackgroundWorker"
              x:Name="mainMenu"
              d:DesignHeight="300"
              d:DesignWidth="400"

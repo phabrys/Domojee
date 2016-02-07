@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-namespace Domojee.Models
+namespace BackgroundWorker.Helpers
 {
     [DataContract]
     public class JdObject : INotifyPropertyChanged

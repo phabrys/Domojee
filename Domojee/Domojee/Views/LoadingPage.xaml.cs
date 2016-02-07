@@ -1,5 +1,5 @@
-﻿using Domojee.Models;
-using Domojee.ViewModels;
+﻿using BackgroundWorker.Helpers;
+using BackgroundWorker;
 using System;
 using System.Threading.Tasks;
 using Windows.Foundation.Metadata;

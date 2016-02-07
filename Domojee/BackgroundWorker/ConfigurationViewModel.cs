@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.Storage;
 
-namespace Domojee.ViewModels
+namespace BackgroundWorker
 {
     public class ConfigurationViewModel
     {

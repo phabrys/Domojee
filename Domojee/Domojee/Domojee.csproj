@@ -116,31 +116,8 @@
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
     <Compile Include="Converters\EqLogicUpdatingConverter.cs" />
-    <Compile Include="Models\JsonRpcClient.cs" />
-    <Compile Include="Models\Command.cs" />
-    <Compile Include="Models\CommandResult.cs" />
-    <Compile Include="Models\DisplayInfo.cs" />
-    <Compile Include="Models\EqLogic.cs" />
-    <Compile Include="Models\Error.cs" />
-    <Compile Include="Models\JdObject.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Parameters.cs" />
-    <Compile Include="Models\Request.cs" />
-    <Compile Include="Models\Response.cs" />
-    <Compile Include="Models\ResponseError.cs" />
-    <Compile Include="Models\ResponseCommand.cs" />
-    <Compile Include="Models\ResponseCommandList.cs" />
-    <Compile Include="Models\ResponseEqLogicList.cs" />
-    <Compile Include="Models\ResponseJdObjectList.cs" />
-    <Compile Include="Models\ResponseMessageList.cs" />
-    <Compile Include="Models\ResponseScene.cs" />
-    <Compile Include="Models\ResponseSceneList.cs" />
-    <Compile Include="Models\Scene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selectors\EqLogicTemplateSelector.cs" />
-    <Compile Include="ViewModels\ConfigurationViewModel.cs" />
-    <Compile Include="ViewModels\NavigateInfo.cs" />
-    <Compile Include="ViewModels\RequestViewModel.cs" />
     <Compile Include="Views\ConfigPage.xaml.cs">
       <DependentUpon>ConfigPage.xaml</DependentUpon>
     </Compile>

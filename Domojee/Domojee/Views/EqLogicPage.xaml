@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Domojee.ViewModels"
+      xmlns:vm="using:BackgroundWorker"
       mc:Ignorable="d">
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />

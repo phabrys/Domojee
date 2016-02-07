@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-namespace Domojee.Models
+namespace BackgroundWorker.Helpers
 {
     [DataContract]
     public class EqLogic : INotifyPropertyChanged

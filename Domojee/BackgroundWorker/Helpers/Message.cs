@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Domojee.Models
+namespace BackgroundWorker.Helpers
 {
     [DataContract]
     public class Message

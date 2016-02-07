@@ -1,4 +1,4 @@
-﻿using Domojee.Models;
+﻿using BackgroundWorker.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
 
-namespace Domojee.ViewModels
+namespace BackgroundWorker
 {
     public class RequestViewModel : INotifyPropertyChanged
     {
@@ -22,7 +22,7 @@ namespace Domojee.ViewModels
         private RequestViewModel()
         { }
 
-        static internal RequestViewModel GetInstance()
+        static public RequestViewModel GetInstance()
         {
             if (_instance == null)
             {

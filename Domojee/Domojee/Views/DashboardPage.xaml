@@ -6,7 +6,7 @@
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:selector="using:Domojee.Selectors"
-      xmlns:viewModels="using:Domojee.ViewModels"
+      xmlns:viewModels="using:BackgroundWorker"
       mc:Ignorable="d">
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
