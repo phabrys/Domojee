@@ -16,6 +16,6 @@ Dans cette première version, Une liste de 2 interactions avec cortana a été a
 
 `Quelle est la {Commande} de la {Object}?`
 
-`Allume** la {Commande} du {Object}?`
+`Allume la {Commande} du {Object}?`
 * {Commande}: Liste des commandes Jeedom 
 * {Object} : Liste des objets Jeedom
