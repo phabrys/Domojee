@@ -220,7 +220,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BackgroundWorker\Jeedom.csproj">
+    <ProjectReference Include="..\Jeedom\Jeedom.csproj">
       <Project>{e1987124-2d93-4cb4-9767-39ee26575802}</Project>
       <Name>Jeedom</Name>
     </ProjectReference>
