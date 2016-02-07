@@ -1,5 +1,5 @@
-﻿using BackgroundWorker.Helpers;
-using BackgroundWorker;
+﻿using Jeedom;
+using Jeedom.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,12 +9,12 @@ using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Core;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.StartScreen;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, voir la page http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -132,24 +132,24 @@ namespace Domojee.Views
             }
             catch (Exception) { }
         }
+
         private async void MenuFlyoutItem_Click_Epingler(object sender, RoutedEventArgs e)
         {
             try
             {
                 var item = sender as MenuFlyoutItem;
                 var id = item.Tag as string;
-                JdObject objs = RequestViewModel.ObjectList.Where(o=>o.id.Equals(id)).First();
-                var TileExist=SecondaryTile.Exists(objs.id);
+                JdObject objs = RequestViewModel.ObjectList.Where(o => o.id.Equals(id)).First();
+                var TileExist = SecondaryTile.Exists(objs.id);
                 if (!TileExist)
                 {
-                    var Tile = new SecondaryTile(objs.id) {
-                        
-                        DisplayName= objs.Name,
-                        Arguments="Object",
+                    var Tile = new SecondaryTile(objs.id)
+                    {
+                        DisplayName = objs.Name,
+                        Arguments = "Object",
                     };
                     var succes = await Tile.RequestCreateAsync();
                 }
-                
             }
             catch (Exception) { }
         }

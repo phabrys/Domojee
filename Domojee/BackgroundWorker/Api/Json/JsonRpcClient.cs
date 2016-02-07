@@ -1,4 +1,5 @@
-﻿using BackgroundWorker;
+﻿using Jeedom.Api.Json.Response;
+using Jeedom.Model;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Api.Json
 {
     internal class JsonRpcClient
     {

@@ -1,4 +1,4 @@
-﻿using BackgroundWorker.Helpers;
+﻿using Jeedom.Model;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

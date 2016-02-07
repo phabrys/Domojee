@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.Storage;
 
-namespace BackgroundWorker
+namespace Jeedom
 {
     public class ConfigurationViewModel
     {
@@ -75,6 +75,7 @@ namespace BackgroundWorker
                 return _GeolocActivation;
             }
         }
+
         private bool _NotificationActivation;
 
         public bool NotificationActivation

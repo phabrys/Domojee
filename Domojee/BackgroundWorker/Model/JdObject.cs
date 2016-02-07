@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Model
 {
     [DataContract]
     public class JdObject : INotifyPropertyChanged
