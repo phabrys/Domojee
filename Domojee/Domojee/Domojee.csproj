@@ -220,6 +220,10 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jeedom\Jeedom.csproj">
+      <Project>{e1987124-2d93-4cb4-9767-39ee26575802}</Project>
+      <Name>Jeedom</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Localisation\Localisation.csproj">
       <Project>{00265c6d-b82b-4047-b6a6-fa0d3ab515ce}</Project>
       <Name>Localisation</Name>

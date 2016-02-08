@@ -112,9 +112,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BackgroundWorker\BackgroundWorker.csproj">
+    <ProjectReference Include="..\Jeedom\Jeedom.csproj">
       <Project>{e1987124-2d93-4cb4-9767-39ee26575802}</Project>
-      <Name>BackgroundWorker</Name>
+      <Name>Jeedom</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
