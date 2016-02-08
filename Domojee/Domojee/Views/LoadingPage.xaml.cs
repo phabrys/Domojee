@@ -61,10 +61,7 @@ namespace Domojee.Views
         {
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                //await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
-                var bluebase = Application.Current.Resources["BlueBase"] as SolidColorBrush;
-                Windows.UI.ViewManagement.StatusBar.GetForCurrentView().BackgroundColor = bluebase.Color;
-                Windows.UI.ViewManagement.StatusBar.GetForCurrentView().ForegroundColor = Colors.White;
+                await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             }
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
