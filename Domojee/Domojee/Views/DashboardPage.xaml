@@ -6,7 +6,6 @@
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:selector="using:Domojee.Selectors"
-      xmlns:viewModels="using:BackgroundWorker"
       mc:Ignorable="d">
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
@@ -30,11 +29,11 @@
                     </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
 
-                <Image Width="192"
+                <Image Width="300"
                        Height="108"
                        Source="{Binding Image}"
                        Stretch="UniformToFill" />
-                <Rectangle Width="192"
+                <Rectangle Width="300"
                            Height="48"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Bottom"
@@ -81,7 +80,7 @@
                               IsItemClickEnabled="True"
                               ItemClick="objectview_ItemClick"
                               ItemTemplate="{StaticResource ObjectTemplate}"
-                              ItemsSource="{x:Bind ObjectList}" />
+                              ItemsSource="{x:Bind ObjectList}" HorizontalAlignment="Center" />
                 </ScrollViewer>
             </StackPanel>
         </Grid>

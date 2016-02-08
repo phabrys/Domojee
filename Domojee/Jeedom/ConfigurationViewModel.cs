@@ -15,7 +15,7 @@ namespace Jeedom
         {
             get
             {
-                var uri = new UriBuilder(_useSsl ? "https" : "http", _host, _useSsl ? 443 : 80, _path + "/core/api/jeeApi.php");
+                var uri = new UriBuilder(_useSsl ? "https" : "http", _host, _useSsl ? 443 : 80, _path);
                 return uri.Uri;
             }
         }
@@ -139,8 +139,6 @@ namespace Jeedom
                 return _GeolocObjectId;
             }
         }
-
-
 
         private string _NotificationObjectId;
 

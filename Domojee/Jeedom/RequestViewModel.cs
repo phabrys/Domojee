@@ -1,4 +1,5 @@
-﻿using Jeedom.Api.Json;
+﻿using Jeedom.Api.Http;
+using Jeedom.Api.Json;
 using Jeedom.Api.Json.Response;
 using Jeedom.Model;
 using System;
@@ -261,47 +262,20 @@ namespace Jeedom
 
         public async Task<bool> SendNotificationUri(string uri)
         {
-            try
-            {
-                var config = new ConfigurationViewModel();
+            var config = new ConfigurationViewModel();
+            var httpRpcClient = new HttpRpcClient("/plugins/pushNotification/php/updatUri.php?api=" + config.ApiKey + "&id=" + config.NotificationObjectId + "&uri=" + uri);
 
-                HttpClient httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.BaseAddress = new Uri(config.Uri + "/plugins/pushNotification/php/");
-
-               var reponse= await httpClient.GetAsync("updatUri.php?api=" + config.ApiKey + "&id=" + config.NotificationObjectId + "&uri=" + uri);
-                httpClient.Dispose();
-                return reponse.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return await httpRpcClient.SendRequest();
         }
-    
+
         public async Task<bool> SendPosition(string position)
         {
-            try
-            {
-                var config = new ConfigurationViewModel();
+            var config = new ConfigurationViewModel();
+            var httpRpcClient = new HttpRpcClient("/core/api/jeeApi.php?api=" + config.ApiKey + "&type=geoloc&id=" + config.GeolocObjectId + "&value=" + position);
 
-                HttpClient httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.BaseAddress = new Uri(config.Uri + "/core/api/");
-
-                //Envoie de l'information a jeedom sous la forme 
-                //#URL_JEEDOM#/core/api/jeeApi.php?api=#API_KEY#&type=geoloc&id=#ID_CMD#&value=%LOCN
-                var reponse = await httpClient.GetAsync("jeeApi.php?api=" + config.ApiKey + "&type=geoloc&id=" + config.GeolocObjectId + "&value=" + position);
-                httpClient.Dispose();
-                return reponse.IsSuccessStatusCode;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
+            return await httpRpcClient.SendRequest();
         }
+
         public async Task<bool> Shutdown()
         {
             var jsonrpc = new JsonRpcClient();

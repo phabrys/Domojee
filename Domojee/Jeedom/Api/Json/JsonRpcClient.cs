@@ -59,6 +59,7 @@ namespace Jeedom.Api.Json
         private async Task<String> Request(string command, Parameters parameters)
         {
             var config = new ConfigurationViewModel();
+            var uri = new Uri(config.Uri + "/core/api/jeeApi.php");
 
             var filter = new HttpBaseProtocolFilter();
             if (config.IsSelfSigned)
@@ -78,7 +79,7 @@ namespace Jeedom.Api.Json
 
             var requeteJson = "request=" + SerializeToJson<Request>(requete);
             var content = new HttpStringContent(requeteJson, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/x-www-form-urlencoded");
-            var response = await httpClient.PostAsync(config.Uri, content);
+            var response = await httpClient.PostAsync(uri, content);
             var serialized = await response.Content.ReadAsStringAsync();
             httpClient.Dispose();
 

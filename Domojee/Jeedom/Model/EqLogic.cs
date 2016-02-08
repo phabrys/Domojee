@@ -173,8 +173,13 @@ namespace Jeedom.Model
 
         public ObservableCollection<Command> GetInformationsCmds()
         {
-            IEnumerable<Command> results = cmds.Where(c => c.type == "info");
-            return new ObservableCollection<Command>(results);
+            if (cmds != null)
+            {
+                IEnumerable<Command> results = cmds.Where(c => c.type == "info");
+                return new ObservableCollection<Command>(results);
+            }
+            else
+                return new ObservableCollection<Command>();
         }
     }
 }
