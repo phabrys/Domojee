@@ -257,39 +257,47 @@ namespace BackgroundWorker
             return jsonrpc.Error;
         }
 
-        public async Task<bool> SendNotificationUri(string uri)
+        public void SendNotificationUri(string uri)
         {
-            var parameters = new Parameters();
-            var jsonrpc = new JsonRpcClient(parameters);
-            ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
-            ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
-            var _apikey = "";
-            var _address = "";
-            var _NotificationObjectId = (LocalSettings.Values["NotificationObjectId"] == null) ? "" : LocalSettings.Values["NotificationObjectId"].ToString();
-
-            if (RoamingSettings.Values["addressSetting"] != null)
-            {
-                _address = RoamingSettings.Values["addressSetting"] as string;
-                if (RoamingSettings.Values["apikeySetting"] != null)
-                {
-                    _apikey = RoamingSettings.Values["apikeySetting"] as string;
-                }
-            }
             try
             {
+                var config = new ConfigurationViewModel();
+
                 HttpClient httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.BaseAddress = new Uri(_address + "/plugins/pushNotification/php/");
-                httpClient.GetAsync("updatUri.php?api=" + _apikey + "&id=" + _NotificationObjectId + "&uri=" + uri);
+                httpClient.BaseAddress = new Uri(config.Address + "/plugins/pushNotification/php/");
+
+                httpClient.GetAsync("updatUri.php?api=" + config.ApiKey + "&id=" + config.NotificationObjectId + "&uri=" + uri);
                 httpClient.Dispose();
+                
             }
-            catch (Exception)
+            catch
             {
             }
-            return true;
         }
+        public async Task<bool> SendPosition(string position)
+        {
+            try
+            {
+                var config = new ConfigurationViewModel();
 
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.BaseAddress = new Uri(config.Address + "/core/api/");
+
+                //Envoie de l'information a jeedom sous la forme 
+                //#URL_JEEDOM#/core/api/jeeApi.php?api=#API_KEY#&type=geoloc&id=#ID_CMD#&value=%LOCN
+                httpClient.GetAsync("jeeApi.php?api=" + config.ApiKey + "&type=geoloc&id=" + config.GeolocObjectId + "&value=" + position);
+                httpClient.Dispose();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
         public async Task<bool> Shutdown()
         {
             var jsonrpc = new JsonRpcClient();

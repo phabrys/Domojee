@@ -107,6 +107,24 @@ namespace BackgroundWorker
             }
         }
 
+
+
+        private string _NotificationObjectId;
+
+        public string NotificationObjectId
+        {
+            set
+            {
+                _NotificationObjectId = value;
+                LocalSettings.Values["NotificationObjectId"] = value;
+            }
+
+            get
+            {
+                return _NotificationObjectId;
+            }
+        }
+
         private ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
         private ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
 
@@ -127,6 +145,7 @@ namespace BackgroundWorker
             _GeolocActivation = (LocalSettings.Values["GeolocActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["GeolocActivation"]);
             _NotificationActivation = (LocalSettings.Values["NotificationActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["NotificationActivation"]);
             _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
+            _NotificationObjectId = (LocalSettings.Values["NotificationObjectId"] == null) ? "" : LocalSettings.Values["NotificationObjectId"].ToString();
         }
     }
 }

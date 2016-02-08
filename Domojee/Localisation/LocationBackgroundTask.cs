@@ -55,44 +55,13 @@ namespace Localisation
             }
         }
 
-        private void WriteGeolocToAppData(Geoposition pos)
+         async private void WriteGeolocToAppData(Geoposition pos)
         {
             var settings = ApplicationData.Current.LocalSettings;
             settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
             settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
             settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
-            Position(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',','.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
-        }
-
-        async private void Position(string position)
-        {
-            ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
-            ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
-            var _apikey = "";
-            var _address = "";
-            var _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
-
-            if (RoamingSettings.Values["addressSetting"] != null)
-            {
-                _address = RoamingSettings.Values["addressSetting"] as string;
-                if (RoamingSettings.Values["apikeySetting"] != null)
-                {
-                    _apikey = RoamingSettings.Values["apikeySetting"] as string;
-                }
-            }
-            try
-            {
-
-                HttpClient httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.BaseAddress = new Uri(_address + "/core/api/");
-                httpClient.GetAsync("jeeApi.php?api=" + _apikey + "&type=geoloc&id=" + _GeolocObjectId + "&value=" + position);
-                httpClient.Dispose();
-            }
-            catch (Exception)
-            {
-            }
+            await BackgroundWorker.RequestViewModel.GetInstance().SendPosition(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',','.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
         }
 
         private void WipeGeolocDataFromAppData()
