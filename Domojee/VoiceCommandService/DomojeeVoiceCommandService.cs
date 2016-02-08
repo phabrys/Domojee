@@ -5,7 +5,8 @@ using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.ApplicationModel.VoiceCommands;
-
+using Jeedom;
+using System.Linq;
 
 namespace VoiceCommandService
 {
@@ -42,8 +43,26 @@ namespace VoiceCommandService
                     voiceServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
                     
                     VoiceCommand voiceCommand = await voiceServiceConnection.GetVoiceCommandAsync();
-                    var Commande = voiceCommand.Properties["Commande"][0];
-                    var Object = voiceCommand.Properties["Object"][0];
+                    var userMessage = new VoiceCommandUserMessage();
+
+                    await RequestViewModel.GetInstance().DownloadObjects();
+                    await RequestViewModel.GetInstance().DownloadEqLogics();
+                    await RequestViewModel.GetInstance().DownloadCommands();
+                   // var Commande = voiceCommand.Properties["Commande"][0];
+                   // var Object = voiceCommand.Properties["Object"][0];
+                    foreach (var Commande in RequestViewModel.CommandList.Where(w => w.name.Equals(voiceCommand.Properties["Commande"][0])))
+                    {
+                        foreach (var Equipement in RequestViewModel.EqLogicList.Where(w => w.id.Equals(Commande.eqLogic_id)))
+                        {
+                            foreach (var Object in RequestViewModel.ObjectList.Where(w => w.name.Equals(voiceCommand.Properties["Object"][0])))
+                            {
+                             if (Equipement.object_id == Object.id)
+                            {
+                             userMessage.SpokenMessage = "La valeur de " + Commande.name + " de "+ Object.name + " est de "+ Commande._value + Commande.Unite;
+                                }
+                            }
+                        }
+                    }
                     // Ajout d'une requet jeedom pour retrouver la commande 
                     switch (voiceCommand.CommandName)
                     {
@@ -55,6 +74,12 @@ namespace VoiceCommandService
                             LaunchAppInForeground();
                             break;
                     }
+
+                    var response = VoiceCommandResponse.CreateResponse(userMessage);
+
+                    response.AppLaunchArgument = "";
+
+                    await voiceServiceConnection.RequestAppLaunchAsync(response);
                 }
                 catch (Exception ex)
                 {
