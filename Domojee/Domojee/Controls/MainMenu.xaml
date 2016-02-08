@@ -80,7 +80,7 @@
                                 <local:ServerState Width="24" Height="48" />
                                 <TextBlock Margin="14,0,0,0"
                                            VerticalAlignment="Center"
-                                           Text="{Binding ServerName}" />
+                                           Text="{Binding Host}" />
                             </StackPanel>
                         </ListViewItem>
                         <ListViewItem x:Name="menuDashboard">

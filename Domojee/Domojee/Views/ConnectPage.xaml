@@ -1,8 +1,8 @@
 ﻿<Page x:Class="Domojee.Views.ConnectPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:jeedom="using:Jeedom"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:jeedom="using:Jeedom"
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
@@ -73,56 +73,59 @@
                 </Image.RenderTransform>
             </Image>
         </StackPanel>
-        <StackPanel x:Name="FlyoutURL"
-                    Grid.Row="1"
-                    Margin="0,5"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Background="White"
-                    BorderThickness="1"
-                    CornerRadius="2"
-                    Padding="10,2"
-                    RequestedTheme="Light">
-            <StackPanel.Transitions>
-                <TransitionCollection>
-                    <AddDeleteThemeTransition />
-                </TransitionCollection>
-            </StackPanel.Transitions>
-            <TextBlock HorizontalAlignment="Center" Text="Entrez ici l'URL d'accès à votre box" />
-            <TextBlock HorizontalAlignment="Center" Text="Ex:  http://192.168.1.10/jeedom" />
-        </StackPanel>
-        <StackPanel x:Name="stackPanel"
-                    Grid.Row="2"
-                    Width="280"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    Background="White"
-                    BorderThickness="1"
-                    CornerRadius="2"
-                    Padding="15,5,15,10"
-                    RequestedTheme="Light">
-            <TextBox x:Name="tbAddress"
-                     Margin="0,0,0,5"
-                     VerticalAlignment="Top"
-                     GotFocus="tbAddress_GotFocus"
+        <RelativePanel x:Name="configPanel"
+                       Grid.Row="2"
+                       Width="300"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Background="White"
+                       BorderThickness="1"
+                       CornerRadius="2"
+                       Padding="15,5,15,10"
+                       RequestedTheme="Light">
+            <TextBox x:Name="tbHost"
+                     Width="250"
+                     Margin="0,0,-184,5"
                      Header="Serveur"
-                     LostFocus="tbAddress_LostFocus"
-                     PlaceholderText="URL d'accès au serveur"
-                     Text="{Binding Address,
+                     PlaceholderText="Adresse du serveur"
+                     Text="{Binding Host,
                                     Mode=TwoWay}"
                      TextWrapping="Wrap" />
             <TextBox x:Name="pbAPIKey"
-                     Margin="0,5"
-                     VerticalAlignment="Top"
+                     Width="250"
+                     Margin="0,5,-181,5"
                      Header="Clé API"
                      PlaceholderText="Clé API à récupérer dans JEEDOM"
+                     RelativePanel.Below="tbPath"
                      Text="{Binding ApiKey,
                                     Mode=TwoWay}" />
             <Button x:Name="bConnect"
-                    Margin="0,5,0,0"
+                    Margin="0,5,-157,0"
                     HorizontalAlignment="Stretch"
                     Click="bConnect_Click"
-                    Content="Connexion" />
-        </StackPanel>
+                    Content="Connexion"
+                    RelativePanel.Below="cbSelfSigned" />
+            <CheckBox x:Name="cbSsl"
+                      Width="250"
+                      VerticalAlignment="Stretch"
+                      Content="Utiliser SSL"
+                      IsChecked="{Binding UseSSL,
+                                          Mode=TwoWay}"
+                      RelativePanel.Below="tbHost" />
+            <TextBox x:Name="tbPath"
+                     Width="250"
+                     Header="Chemin d'accès"
+                     RelativePanel.Below="cbSsl"
+                     Text="{Binding Pathy,
+                                    Mode=TwoWay}" />
+            <CheckBox x:Name="cbSelfSigned"
+                      Width="250"
+                      Margin="0,0,-90,0"
+                      HorizontalAlignment="Left"
+                      Content="Certificat Autosigné"
+                      IsChecked="{Binding IsSelfSigned,
+                                          Mode=TwoWay}"
+                      RelativePanel.Below="pbAPIKey" />
+        </RelativePanel>
     </Grid>
 </Page>
