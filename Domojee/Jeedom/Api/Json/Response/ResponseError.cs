@@ -1,6 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using Jeedom.Model;
+using System.Runtime.Serialization;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Api.Json.Response
 {
     [DataContract]
     public class ResponseError : Response

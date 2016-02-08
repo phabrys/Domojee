@@ -4,12 +4,12 @@ using System.Linq;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Geolocation;
 using Windows.Foundation.Metadata;
+using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.Networking.PushNotifications;
 
 namespace Domojee.Views
 {
@@ -23,8 +23,8 @@ namespace Domojee.Views
         {
             this.InitializeComponent();
             var settings = ApplicationData.Current.LocalSettings;
-            ObservableCollection<BackgroundWorker.Helpers.Command> GeolocCmd = new ObservableCollection<BackgroundWorker.Helpers.Command>();
-            foreach (var Equipement in BackgroundWorker.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("geoloc")))
+            ObservableCollection<Jeedom.Model.Command> GeolocCmd = new ObservableCollection<Jeedom.Model.Command>();
+            foreach (var Equipement in Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("geoloc")))
             {
                 foreach (var Cmd in Equipement.GetInformationsCmds())
                     GeolocCmd.Add(Cmd);
@@ -38,11 +38,11 @@ namespace Domojee.Views
                     MobilePosition_Cmd.SelectedItem = ObjectsSelect;
                 }
             }
-            MobileNotification.ItemsSource = BackgroundWorker.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
+            MobileNotification.ItemsSource = Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
              var NotificationId = settings.Values["NotificationObjectId"];
             if (NotificationId != null)
             {
-                foreach (var ObjectsSelect in BackgroundWorker.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
+                foreach (var ObjectsSelect in Jeedom.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
                 {
                     MobileNotification.SelectedItem = ObjectsSelect;
                 }
@@ -188,10 +188,11 @@ namespace Domojee.Views
             //if (activePush.IsOn == true && settings.Values["channelUri"] == null)
            // {
                 var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-                BackgroundWorker.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
+                await BackgroundWorker.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
                 settings.Values["channelUri"] = channel.Uri.ToString();
            // }
         }
+
         async private void activeLocation_Toggled(object sender, RoutedEventArgs e)
         {
             if (activeLocation.IsOn == true && _geolocTask == null)
@@ -256,21 +257,23 @@ namespace Domojee.Views
                 MobilePosition_Accuracy.Text = "Pas de data";
             }
         }
+
         private void MobilePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MobilePosition_Cmd.SelectedItem != null)
             {
                 var settings = ApplicationData.Current.LocalSettings;
-                BackgroundWorker.Helpers.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as BackgroundWorker.Helpers.Command;
+                Jeedom.Model.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as Jeedom.Model.Command;
                 settings.Values["GeolocObjectId"] = ObjectsSelect.id;
             }
         }
+
         private void MobileNotification_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MobileNotification.SelectedItem != null)
             {
                 var settings = ApplicationData.Current.LocalSettings;
-                BackgroundWorker.Helpers.EqLogic EqLogicSelect = MobileNotification.SelectedItem as BackgroundWorker.Helpers.EqLogic;
+                Jeedom.Model.EqLogic EqLogicSelect = MobileNotification.SelectedItem as Jeedom.Model.EqLogic;
                 settings.Values["NotificationObjectId"] = EqLogicSelect.id;
             }
         }

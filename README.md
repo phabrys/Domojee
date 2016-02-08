@@ -1,18 +1,21 @@
 # Domojee
 
-Application Windows Universelle non officielle permettant de gérer sa box domotique JEEDOM.
+Application Windows Universelle non officielle permettant de gérer sa box domotique Jeedom.
 
 Cette application n'est pas officielle. 
-Il s'agit juste d'un petit projet réalisé par un amateur en attendant l'application officielle.
 
-Integration de la géolocalisation
+Il s'agit juste d'un petit projet réalisé en attendant l'application officielle.
 
-L'application vas relevé votre position toutes les 15 minutes et l'envoyé sur une commande du plugin géoloc que vous allez pouvoir configurée
+## Integration de la géolocalisation
 
-Integration de Cortana
+L'application va relever votre position toutes les 15 minutes et l'envoyer sur une commande du plugin géoloc que vous allez pouvoir configurer
 
-Dans cette premiere version 2 interaction avec cortana a ete ajouté, elle sera complété et liée au interaction de jeedom dans le future
-Quel est la {Commande} de la {Object}?
-Allume la {Commande} du {Object}?
-{Commande}: Liste des commande jeedom 
-{Object} : Liste des objet jeedom
+## Integration de Cortana
+
+Dans cette première version, Une liste de 2 interactions avec cortana a été ajoutée, elle sera complètée et liée aux interactions de Jeedom dans le futur:
+
+`Quelle est la {Commande} de la {Object}?`
+
+`Allume la {Commande} du {Object}?`
+* {Commande}: Liste des commandes Jeedom 
+* {Object} : Liste des objets Jeedom

@@ -35,20 +35,5 @@ namespace Domojee.Views
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Logo.Begin();
         }
-
-        private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as TextBlock);
-        }
-
-        private void tbAddress_GotFocus(object sender, RoutedEventArgs e)
-        {
-            FlyoutURL.Visibility = Visibility.Visible;
-        }
-
-        private void tbAddress_LostFocus(object sender, RoutedEventArgs e)
-        {
-            FlyoutURL.Visibility = Visibility.Collapsed;
-        }
     }
 }

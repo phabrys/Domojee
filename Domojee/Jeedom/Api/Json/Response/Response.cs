@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Api.Json.Response
 {
     [DataContract]
     public class Response

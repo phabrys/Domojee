@@ -1,14 +1,17 @@
-﻿using BackgroundWorker;
+﻿using Jeedom.Api.Json.Response;
+using Jeedom.Model;
 using System;
 using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography.Certificates;
+using Windows.Web.Http;
+using Windows.Web.Http.Filters;
+using Windows.Web.Http.Headers;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Api.Json
 {
     internal class JsonRpcClient
     {
@@ -57,10 +60,16 @@ namespace BackgroundWorker.Helpers
         {
             var config = new ConfigurationViewModel();
 
-            HttpClient httpClient = new HttpClient();
+            var filter = new HttpBaseProtocolFilter();
+            if (config.IsSelfSigned)
+            {
+                filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Untrusted);
+                filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.InvalidName);
+            }
+
+            HttpClient httpClient = new HttpClient(filter);
             httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.BaseAddress = new Uri(config.Address + "/core/api/");
+            httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
 
             Request requete = new Request();
             requete.parameters = parameters;
@@ -68,8 +77,8 @@ namespace BackgroundWorker.Helpers
             requete.id = Interlocked.Increment(ref Id);
 
             var requeteJson = "request=" + SerializeToJson<Request>(requete);
-            var content = new StringContent(requeteJson, Encoding.UTF8, "application/x-www-form-urlencoded");
-            var response = await httpClient.PostAsync("jeeApi.php", content);
+            var content = new HttpStringContent(requeteJson, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/x-www-form-urlencoded");
+            var response = await httpClient.PostAsync(config.Uri, content);
             var serialized = await response.Content.ReadAsStringAsync();
             httpClient.Dispose();
 
@@ -113,96 +122,5 @@ namespace BackgroundWorker.Helpers
                 return default(T);
             }
         }
-
-        /*public CommandResult GetCommandResult()
-        {
-            try
-            {
-                var resp = DeserializeFromJson<ResponseCommand>(rawResponse);
-                return resp.result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public ObservableCollection<Command> GetCommandList()
-        {
-            try
-            {
-                var resp = DeserializeFromJson<ResponseCommandList>(rawResponse);
-                return resp.result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public ObservableCollection<EqLogic> GetEqLogicList()
-        {
-            try
-            {
-                var resp = DeserializeFromJson<ResponseEqLogicList>(rawResponse);
-                return resp.result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public ObservableCollection<JdObject> GetObjectList()
-        {
-            try
-            {
-                var resp = DeserializeFromJson<ResponseJdObjectList>(rawResponse);
-                return resp.result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public ObservableCollection<Message> GetMessageList()
-        {
-            try
-            {
-                var resp = DeserializeFromJson<ResponseMessageList>(rawResponse);
-                return resp.result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public ObservableCollection<Scene> GetSceneList()
-        {
-            try
-            {
-                var resp = DeserializeFromJson<ResponseSceneList>(rawResponse);
-                return resp.result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public Scene GetScene()
-        {
-            try
-            {
-                var resp = DeserializeFromJson<ResponseScene>(rawResponse);
-                return resp.result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }*/
     }
 }

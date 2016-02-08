@@ -27,8 +27,6 @@ namespace Domojee.Controls
             {
                 contentFrame.Content = value;
                 var frm = value as FrameworkElement;
-                /*if (frm?.Tag != null)
-                    title.Text = frm.Tag as string;*/
             }
         }
 

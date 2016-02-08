@@ -1,5 +1,5 @@
-﻿using BackgroundWorker;
-using Domojee.Views;
+﻿using Domojee.Views;
+using Jeedom;
 using System;
 using System.Linq;
 using Windows.ApplicationModel;

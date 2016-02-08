@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Model
 {
     [DataContract]
     public class EqLogic : INotifyPropertyChanged

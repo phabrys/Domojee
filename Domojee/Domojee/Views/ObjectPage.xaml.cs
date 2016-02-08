@@ -1,5 +1,5 @@
-﻿using BackgroundWorker.Helpers;
-using BackgroundWorker;
+﻿using Jeedom;
+using Jeedom.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;

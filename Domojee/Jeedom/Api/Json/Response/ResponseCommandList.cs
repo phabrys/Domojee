@@ -1,7 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using Jeedom.Model;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Api.Json.Response
 {
     [DataContract]
     internal class ResponseCommandList : Response

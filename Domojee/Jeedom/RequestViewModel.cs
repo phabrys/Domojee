@@ -1,4 +1,6 @@
-﻿using BackgroundWorker.Helpers;
+﻿using Jeedom.Api.Json;
+using Jeedom.Api.Json.Response;
+using Jeedom.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
 
-namespace BackgroundWorker
+namespace Jeedom
 {
     public class RequestViewModel : INotifyPropertyChanged
     {

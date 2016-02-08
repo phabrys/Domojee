@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BackgroundWorker.Helpers
+namespace Jeedom.Model
 {
     [DataContract]
     internal class Request

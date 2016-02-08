@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification", "Notificatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localisation", "Localisation\Localisation.csproj", "{00265C6D-B82B-4047-B6A6-FA0D3AB515CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundWorker", "BackgroundWorker\BackgroundWorker.csproj", "{E1987124-2D93-4CB4-9767-39EE26575802}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeedom", "Jeedom\Jeedom.csproj", "{E1987124-2D93-4CB4-9767-39EE26575802}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
