@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domojee.Models
+namespace Jeedom.Model
 {
     [DataContract]
     public class CustomParameters

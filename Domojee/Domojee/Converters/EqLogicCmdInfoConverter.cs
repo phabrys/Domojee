@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Jeedom.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace Domojee.Converters
@@ -13,7 +10,7 @@ namespace Domojee.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var cmds = (ObservableCollection<Models.Command>)value;
+            var cmds = (ObservableCollection<Command>)value;
             var searchName = parameter.ToString();
             var searchcmd = cmds.Where(c => c.name.ToLower() == searchName.ToLower()).First();
 

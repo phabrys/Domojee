@@ -1,6 +1,4 @@
-﻿using Domojee.Models;
-using Domojee.Mvvm;
-using Domojee.ViewModels;
+﻿using Jeedom.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -240,9 +238,9 @@ namespace Jeedom.Model
         {
             if (cmds != null)
             {
-            IEnumerable<Command> results = cmds.Where(c => c.type == "info");
-            return new ObservableCollection<Command>(results);
-        }
+                IEnumerable<Command> results = cmds.Where(c => c.type == "info");
+                return new ObservableCollection<Command>(results);
+            }
             else
                 return new ObservableCollection<Command>();
         }
