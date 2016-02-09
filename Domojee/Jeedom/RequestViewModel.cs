@@ -139,7 +139,8 @@ namespace Jeedom
             {
                 EqLogicList.Clear();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
-                EqLogicList = response.result;
+                if (response != null)
+                    EqLogicList = response.result;
                 foreach (EqLogic eq in EqLogicList)
                 {
                     // Recherche l'objet parent
@@ -171,7 +172,8 @@ namespace Jeedom
             {
                 SceneList.Clear();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseSceneList>();
-                SceneList = response.result;
+                if (response != null)
+                    SceneList = response.result;
             }
 
             return jsonrpc.Error;
@@ -185,7 +187,8 @@ namespace Jeedom
             {
                 MessageList.Clear();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseMessageList>();
-                MessageList = response.result;
+                if (response != null)
+                    MessageList = response.result;
             }
 
             return jsonrpc.Error;
@@ -194,12 +197,12 @@ namespace Jeedom
         public async Task<Error> DownloadCommands()
         {
             var jsonrpc = new JsonRpcClient();
-
             if (await jsonrpc.SendRequest("cmd::all"))
             {
                 CommandList.Clear();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseCommandList>();
-                CommandList = response.result;
+                if (response!=null)
+                    CommandList = response.result;
                 foreach (Command cmd in CommandList)
                 {
                     var eqlist = from eq in EqLogicList where eq.id == cmd.eqLogic_id select eq;
