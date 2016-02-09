@@ -111,7 +111,7 @@
 
         <!--  Template pour commande On Off  -->
         <DataTemplate x:Key="OnOffEqLogicTemplate">
-            <RelativePanel Background="{Binding cmds, Converter={StaticResource TestConverter}, ConverterParameter=State, Mode=TwoWay}"
+            <RelativePanel Background="{Binding cmds, Converter={StaticResource TestConverter}, ConverterParameter=LIGHT_STATE, Mode=TwoWay}"
                            Padding="4"
                            d:DesignHeight="150"
                            d:DesignWidth="150">
@@ -125,11 +125,11 @@
                             RelativePanel.Above="PART_Caption"
                             RelativePanel.AlignHorizontalCenterWithPanel="True">
                     <Button Command="{Binding ExecCommand}"
-                            CommandParameter="on"
+                            CommandParameter="LIGHT_ON"
                             Content="On" />
                     <Button Margin="4,0,0,0"
                             Command="{Binding ExecCommand}"
-                            CommandParameter="off"
+                            CommandParameter="LIGHT_OFF"
                             Content="Off" />
                 </StackPanel>
                 <TextBlock x:Name="PART_Name"

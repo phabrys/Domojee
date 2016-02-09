@@ -1,4 +1,6 @@
 ﻿using Jeedom.Model;
+using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -6,17 +8,23 @@ namespace Domojee.Selectors
 {
     internal class EqLogicTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate ZWaveEqLogicTemplate { get; set; }
-        public DataTemplate SonosEqLogicTemplate { get; set; }
-        public DataTemplate OnOffEqLogicTemplate { get; set; }
+        #region Public Properties
+
         public DataTemplate EqLogicTemplate { get; set; }
+        public DataTemplate OnOffEqLogicTemplate { get; set; }
+        public DataTemplate SonosEqLogicTemplate { get; set; }
+        public DataTemplate ZWaveEqLogicTemplate { get; set; }
+
+        #endregion Public Properties
+
+        #region Protected Methods
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             var eq = item as EqLogic;
             var element = container as FrameworkElement;
 
-            // Cherche si on a spécifié un Template dans les customParameters
+            // Cherche si on a spécifié un Template dans les customParameters de l'équipement
             if (eq.display != null)
                 if (eq.display.customParameters != null)
                     if (eq.display.customParameters.DomojeeTemplate != null)
@@ -32,9 +40,13 @@ namespace Domojee.Selectors
                                 return EqLogicTemplate;
                         }
 
-            // Cherche par rapport aux commandes
+            // Cherche par rapport aux commandes de l'équipement
             //TODO : Voir "generic_type" : https://www.jeedom.com/forum/viewtopic.php?f=112&t=15155#p278226
 
+            if (ContainCmd(eq, new[] { "LIGHT_STATE", "LIGHT_ON", "LIGHT_OFF" }))
+                return OnOffEqLogicTemplate;
+
+            // Cherche par rapport au plugin
             switch (eq.eqType_name)
             {
                 case "openzwave":
@@ -44,5 +56,25 @@ namespace Domojee.Selectors
                     return EqLogicTemplate;
             }
         }
+
+        /// <summary>
+        /// Renvoie vrai si l'équipement a les commandes recherchées
+        /// </summary>
+        /// <param name="eq">L'équipement Jeedom</param>
+        /// <param name="types">Les generic_type recherchés</param>
+        /// <returns></returns>
+        private static bool ContainCmd(EqLogic eq, string[] types)
+        {
+            int _find = 0;
+            foreach (var type in types)
+            {
+                var search = eq.cmds.Where(c => c.generic_type == type);
+                if (search.Count() > 0)
+                    _find += 1;
+            }
+            return _find == types.Count();
+        }
+
+        #endregion Protected Methods
     }
 }
