@@ -216,7 +216,7 @@ namespace Jeedom.Model
                 this._execCommand = this._execCommand ?? new RelayCommand<object>(async parameters =>
                 {
                     // Cherche la commande
-                    var cmd = cmds.Where(c => c.name.ToLower() == parameters.ToString().ToLower()).First();
+                    var cmd = cmds.Where(c => c.generic_type == parameters.ToString()).First();
                     if (cmd != null)
                     {
                         this.Updating = true;

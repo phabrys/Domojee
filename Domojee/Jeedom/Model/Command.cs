@@ -33,7 +33,7 @@ namespace Jeedom.Model
         public string isVisible;
 
         [DataMember]
-        public GenericTypeEnum generic_type;
+        public string generic_type;
 
         private string __value;
 
