@@ -1,23 +1,11 @@
-﻿using Domojee.Models;
-using Domojee.ViewModels;
+﻿using Jeedom;
+using Jeedom.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, voir la page http://go.microsoft.com/fwlink/?LinkId=234238
@@ -30,6 +18,7 @@ namespace Domojee.Views
     public sealed partial class ServerPage : Page
     {
         public ObservableCollection<Message> MessageList = RequestViewModel.MessageList;
+
         public ServerPage()
         {
             this.InitializeComponent();
@@ -71,6 +60,7 @@ namespace Domojee.Views
                     title = "Eteindre";
                     text = "Voulez-vous vraiment éteindre JEEDOM ?";
                     break;
+
                 case "reboot":
                     title = "Redémarrer";
                     text = "Voulez-vous vraiment redémarrer JEEDOM ?";
@@ -94,9 +84,11 @@ namespace Domojee.Views
                     case "update":
                         await instance.Upgrade();
                         break;
+
                     case "reboot":
                         await instance.Reboot();
                         break;
+
                     case "shutdown":
                         await instance.Shutdown();
                         break;

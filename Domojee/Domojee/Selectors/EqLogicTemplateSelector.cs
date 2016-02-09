@@ -1,9 +1,4 @@
-﻿using Domojee.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Jeedom.Model;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

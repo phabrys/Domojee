@@ -1,21 +1,12 @@
-﻿using Domojee.Models;
-using Domojee.ViewModels;
+﻿using Jeedom;
+using Jeedom.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
@@ -46,7 +37,8 @@ namespace Domojee.Views
             new ActionItem { message = "Equipements",   function = RequestViewModel.GetInstance().DownloadEqLogics },
             new ActionItem { message = "Commandes",     function = RequestViewModel.GetInstance().DownloadCommands },
             new ActionItem { message = "Scénarios",     function = RequestViewModel.GetInstance().DownloadScenes },
-            new ActionItem { message = "Messages",      function = RequestViewModel.GetInstance().DownloadMessages }
+            new ActionItem { message = "Messages",      function = RequestViewModel.GetInstance().DownloadMessages },
+            new ActionItem { message = "Interaction",   function = RequestViewModel.GetInstance().DownloadInteraction },
         };
 
         private async Task<bool> Action(ActionItem item, NavigationEventArgs e)
@@ -84,6 +76,7 @@ namespace Domojee.Views
 
             tbInformation.Text = "";
             tbLoading.Text = "Connecté";
+            prProgress.IsActive = false;
 
             await Task.Delay(new TimeSpan(0, 0, 2));
             Frame.Navigate(typeof(DashboardPage));

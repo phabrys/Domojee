@@ -25,14 +25,32 @@
         </uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.GeofenceBackgroundTask">
-          <BackgroundTasks>
-            <Task Type="location" />
-          </BackgroundTasks>
-        </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.LocationBackgroundTask">
+        <uap:Extension Category="windows.appService" EntryPoint="VoiceCommandService.DomojeeVoiceCommandService">
+          <uap:AppService Name="DomojeeVoiceCommandService" />
+        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.LocationBackgroundTask">
           <BackgroundTasks>
             <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationHistoryChangedTriggerTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationQuickReplyTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastActivationTypeBackgroundClosedTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.BadgeNotificationHistoryChangedTriggerTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
       </Extensions>
@@ -43,5 +61,6 @@
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
     <DeviceCapability Name="location" />
+    <DeviceCapability Name="microphone" />
   </Capabilities>
 </Package>

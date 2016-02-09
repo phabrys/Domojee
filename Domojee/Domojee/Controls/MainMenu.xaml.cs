@@ -1,19 +1,7 @@
-﻿using Domojee.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -23,6 +11,7 @@ namespace Domojee.Controls
     public sealed partial class MainMenu : UserControl
     {
         public event EventHandler<NavigateEventArgs> NavigateToPage;
+
         public MainMenu()
         {
             this.InitializeComponent();
@@ -38,8 +27,6 @@ namespace Domojee.Controls
             {
                 contentFrame.Content = value;
                 var frm = value as FrameworkElement;
-                /*if (frm?.Tag != null)
-                    title.Text = frm.Tag as string;*/
             }
         }
 
@@ -60,10 +47,12 @@ namespace Domojee.Controls
                     ev.Page = typeof(Views.DashboardPage);
                     NavigateToPage(this, ev);
                     break;
+
                 case "Scene":
                     ev.Page = typeof(Views.ScenePage);
                     NavigateToPage(this, ev);
                     break;
+
                 case "Logout":
                     ContentDialog diag = new ContentDialog()
                     {
@@ -76,19 +65,21 @@ namespace Domojee.Controls
                     ContentDialogResult r = await diag.ShowAsync();
                     if (r == ContentDialogResult.Primary)
                     {
-                        RequestViewModel.GetInstance().StopBackgroundTask();
                         ev.Page = typeof(Views.ConnectPage);
                         NavigateToPage(this, ev);
                     }
                     break;
+
                 case "Server":
                     ev.Page = typeof(Views.ServerPage);
                     NavigateToPage(this, ev);
                     break;
+
                 case "Config":
                     ev.Page = typeof(Views.ConfigPage);
                     NavigateToPage(this, ev);
                     break;
+
                 default:
                     ev.Page = typeof(Views.AboutPage);
                     NavigateToPage(this, ev);

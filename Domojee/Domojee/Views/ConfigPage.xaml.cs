@@ -1,29 +1,71 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Windows.ApplicationModel.Background;
+using Windows.Devices.Geolocation;
 using Windows.Foundation.Metadata;
+using Windows.Networking.PushNotifications;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.Devices.Geolocation;
-using Windows.ApplicationModel.Background;
-using Windows.Storage;
 
 namespace Domojee.Views
 {
     public sealed partial class ConfigPage : Page
-    { 
+    {
         private const string BackgroundTaskName = "LocationBackgroundTask";
-        private const string BackgroundTaskEntryPoint = "BackgroundTask.LocationBackgroundTask";
-        private IBackgroundTaskRegistration _geolocTask = null;    
+        private const string BackgroundTaskEntryPoint = "Localisation.LocationBackgroundTask";
+        private IBackgroundTaskRegistration _geolocTask = null;
+
         public ConfigPage()
         {
             this.InitializeComponent();
+            var settings = ApplicationData.Current.LocalSettings;
+            ObservableCollection<Jeedom.Model.Command> GeolocCmd = new ObservableCollection<Jeedom.Model.Command>();
+            foreach (var Equipement in Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("geoloc")))
+            {
+                foreach (var Cmd in Equipement.GetInformationsCmds())
+                    GeolocCmd.Add(Cmd);
+            }
+            MobilePosition_Cmd.ItemsSource = GeolocCmd;
+            var GeolocObjectId = settings.Values["GeolocObjectId"];
+            if (GeolocObjectId != null)
+            {
+                foreach (var ObjectsSelect in GeolocCmd.Where(w => w.id.Equals(GeolocObjectId)))
+                {
+                    MobilePosition_Cmd.SelectedItem = ObjectsSelect;
+                }
+            }
+            MobileNotification.ItemsSource = Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
+             var NotificationId = settings.Values["NotificationObjectId"];
+            if (NotificationId != null)
+            {
+                foreach (var ObjectsSelect in Jeedom.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
+                {
+                    MobileNotification.SelectedItem = ObjectsSelect;
+                }
+            }
+            
+            if (settings.Values["Status"] != null)
+            {
+                Status.Text = settings.Values["Status"].ToString();
+            }
+
+            // Extract and display location data set by the background task if not null
+            MobilePosition_Latitude.Text = (settings.Values["Latitude"] == null) ? "No data" : settings.Values["Latitude"].ToString();
+            MobilePosition_Longitude.Text = (settings.Values["Longitude"] == null) ? "No data" : settings.Values["Longitude"].ToString();
+            MobilePosition_Accuracy.Text = (settings.Values["Accuracy"] == null) ? "No data" : settings.Values["Accuracy"].ToString();
+
             menu.NavigateToPage += Menu_NavigateToPage;
         }
+
         private void Menu_NavigateToPage(object sender, Controls.NavigateEventArgs e)
         {
             Frame.Navigate(e.Page);
         }
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             // Loop through all background tasks to see if SampleBackgroundTaskName is already registered
@@ -49,23 +91,18 @@ namespace Domojee.Views
                     {
                         case BackgroundAccessStatus.Unspecified:
                         case BackgroundAccessStatus.Denied:
-                           Status.Text = "Not able to run in background. Application must be added to the lock screen.";
+                            Status.Text = "Impossible de fonctionner en arrière-plan. La demande doit être ajouté à l'écran de verrouillage.";
                             break;
 
                         default:
-                            Status.Text = "Background task is already registered. Waiting for next update...";
+                            Status.Text = "La tâche de fond est déjà enregistré. Attendez la prochaine mise à jour ...";
                             break;
                     }
                 }
                 catch (Exception ex)
                 {
-                  //  _rootPage.NotifyUser(ex.ToString(), NotifyType.ErrorMessage);
+                    Status.Text = ex.Message.ToString();
                 }
-                UpdateButtonStates(/*registered:*/ true);
-            }
-            else
-            {
-                UpdateButtonStates(/*registered:*/ false);
             }
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
@@ -79,6 +116,7 @@ namespace Domojee.Views
 
             base.OnNavigatedTo(e);
         }
+
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             if (_geolocTask != null)
@@ -88,65 +126,7 @@ namespace Domojee.Views
             }
             base.OnNavigatingFrom(e);
         }
-        async private void RegisterBackgroundTask(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Get permission for a background task from the user. If the user has already answered once,
-                // this does nothing and the user must manually update their preference via PC Settings.
-                BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
 
-                // Regardless of the answer, register the background task. If the user later adds this application
-                // to the lock screen, the background task will be ready to run.
-                // Create a new background task builder
-                BackgroundTaskBuilder geolocTaskBuilder = new BackgroundTaskBuilder();
-
-                geolocTaskBuilder.Name = BackgroundTaskName;
-                geolocTaskBuilder.TaskEntryPoint = BackgroundTaskEntryPoint;
-
-                // Create a new timer triggering at a 15 minute interval
-                var trigger = new TimeTrigger(15, false);
-
-                // Associate the timer trigger with the background task builder
-                geolocTaskBuilder.SetTrigger(trigger);
-
-                // Register the background task
-                _geolocTask = geolocTaskBuilder.Register();
-
-                // Associate an event handler with the new background task
-                _geolocTask.Completed += OnCompleted;
-
-                UpdateButtonStates(/*registered*/ true);
-
-                switch (backgroundAccessStatus)
-                {
-                    case BackgroundAccessStatus.Unspecified:
-                    case BackgroundAccessStatus.Denied:
-                       Status.Text = "Not able to run in background. Application must be added to the lock screen.";
-                        break;
-
-                    default:
-                        // BckgroundTask is allowed
-                        Status.Text = "Background task registered.";
-
-                        // Need to request access to location
-                        // This must be done with the background task registeration
-                        // because the background task cannot display UI.
-                        RequestLocationAccess();
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Status.Text = ex.ToString();
-                UpdateButtonStates(/*registered:*/ false);
-            }
-        }
-
-        /// <summary>
-        /// Get permission for location from the user. If the user has already answered once,
-        /// this does nothing and the user must manually update their preference via Settings.
-        /// </summary>
         private async void RequestLocationAccess()
         {
             // Request permission to access location
@@ -158,41 +138,15 @@ namespace Domojee.Views
                     break;
 
                 case GeolocationAccessStatus.Denied:
-                    Status.Text = "Access to location is denied.";
+                    Status.Text = "L'accès au GPS est refusé.";
                     break;
 
                 case GeolocationAccessStatus.Unspecified:
-                    Status.Text = "Unspecificed error!";
+                    Status.Text = "Erreur non spécifiée!";
                     break;
             }
         }
 
-        /// <summary>
-        /// This is the click handler for the 'Unregister' button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UnregisterBackgroundTask(object sender, RoutedEventArgs e)
-        {
-            // Unregister the background task
-            if (null != _geolocTask)
-            {
-                _geolocTask.Unregister(true);
-                _geolocTask = null;
-            }
-
-            ScenarioOutput_Latitude.Text = "No data";
-            ScenarioOutput_Longitude.Text = "No data";
-            ScenarioOutput_Accuracy.Text = "No data";
-            UpdateButtonStates(/*registered:*/ false);
-          //  _rootPage.NotifyUser("Background task unregistered", NotifyType.StatusMessage);
-        }
-
-        /// <summary>
-        /// Event handle to be raised when the background task is completed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void OnCompleted(IBackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs e)
         {
             if (sender != null)
@@ -207,7 +161,7 @@ namespace Domojee.Views
                         e.CheckResult();
 
                         // Update the UI with the completion status of the background task
-                        // The Run method of the background task sets this status. 
+                        // The Run method of the background task sets this status.
                         var settings = ApplicationData.Current.LocalSettings;
                         if (settings.Values["Status"] != null)
                         {
@@ -215,9 +169,9 @@ namespace Domojee.Views
                         }
 
                         // Extract and display location data set by the background task if not null
-                        ScenarioOutput_Latitude.Text = (settings.Values["Latitude"] == null) ? "No data" : settings.Values["Latitude"].ToString();
-                        ScenarioOutput_Longitude.Text = (settings.Values["Longitude"] == null) ? "No data" : settings.Values["Longitude"].ToString();
-                        ScenarioOutput_Accuracy.Text = (settings.Values["Accuracy"] == null) ? "No data" : settings.Values["Accuracy"].ToString();
+                        MobilePosition_Latitude.Text = (settings.Values["Latitude"] == null) ? "No data" : settings.Values["Latitude"].ToString();
+                        MobilePosition_Longitude.Text = (settings.Values["Longitude"] == null) ? "No data" : settings.Values["Longitude"].ToString();
+                        MobilePosition_Accuracy.Text = (settings.Values["Accuracy"] == null) ? "No data" : settings.Values["Accuracy"].ToString();
                     }
                     catch (Exception ex)
                     {
@@ -228,17 +182,100 @@ namespace Domojee.Views
             }
         }
 
-        /// <summary>
-        /// Update the enable state of the register/unregister buttons.
-        /// 
-        private async void UpdateButtonStates(bool registered)
+        async private void activePush_Toggled(object sender, RoutedEventArgs e)
         {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                () =>
+            var settings = ApplicationData.Current.LocalSettings;
+            //if (activePush.IsOn == true && settings.Values["channelUri"] == null)
+           // {
+                var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+                await Jeedom.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
+                settings.Values["channelUri"] = channel.Uri.ToString();
+           // }
+        }
+
+        async private void activeLocation_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (activeLocation.IsOn == true && _geolocTask == null)
+            {
+                try
                 {
-                    RegisterBackgroundTaskButton.IsEnabled = !registered;
-                    UnregisterBackgroundTaskButton.IsEnabled = registered;
-                });
+                    // Get permission for a background task from the user. If the user has already answered once,
+                    // this does nothing and the user must manually update their preference via PC Settings.
+                    BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
+                    // Regardless of the answer, register the background task. If the user later adds this application
+                    // to the lock screen, the background task will be ready to run.
+                    // Create a new background task builder
+                    BackgroundTaskBuilder geolocTaskBuilder = new BackgroundTaskBuilder();
+
+                    geolocTaskBuilder.Name = BackgroundTaskName;
+                    geolocTaskBuilder.TaskEntryPoint = BackgroundTaskEntryPoint;
+
+                    // Create a new timer triggering at a 15 minute interval
+                    var trigger = new TimeTrigger(15, false);
+
+                    // Associate the timer trigger with the background task builder
+                    geolocTaskBuilder.SetTrigger(trigger);
+
+                    // Register the background task
+                    _geolocTask = geolocTaskBuilder.Register();
+
+                    // Associate an event handler with the new background task
+                    _geolocTask.Completed += OnCompleted;
+
+                    switch (backgroundAccessStatus)
+                    {
+                        case BackgroundAccessStatus.Unspecified:
+                        case BackgroundAccessStatus.Denied:
+                            Status.Text = "Impossible de fonctionner en arrière-plan. La demande doit être ajouté à l'écran de verrouillage.";
+                            break;
+
+                        default:
+                            // BckgroundTask is allowed
+                            Status.Text = "Enregister.";
+
+                            // Need to request access to location
+                            // This must be done with the background task registeration
+                            // because the background task cannot display UI.
+                            RequestLocationAccess();
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Status.Text = ex.ToString();
+                }
+            }
+            if (activeLocation.IsOn == false)
+            {
+                if (null != _geolocTask)
+                {
+                    _geolocTask.Unregister(true);
+                    _geolocTask = null;
+                }
+                MobilePosition_Latitude.Text = "Pas dedata";
+                MobilePosition_Longitude.Text = "Pas de data";
+                MobilePosition_Accuracy.Text = "Pas de data";
+            }
+        }
+
+        private void MobilePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MobilePosition_Cmd.SelectedItem != null)
+            {
+                var settings = ApplicationData.Current.LocalSettings;
+                Jeedom.Model.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as Jeedom.Model.Command;
+                settings.Values["GeolocObjectId"] = ObjectsSelect.id;
+            }
+        }
+
+        private void MobileNotification_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MobileNotification.SelectedItem != null)
+            {
+                var settings = ApplicationData.Current.LocalSettings;
+                Jeedom.Model.EqLogic EqLogicSelect = MobileNotification.SelectedItem as Jeedom.Model.EqLogic;
+                settings.Values["NotificationObjectId"] = EqLogicSelect.id;
+            }
         }
     }
 }
