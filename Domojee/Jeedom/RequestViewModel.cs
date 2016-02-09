@@ -401,6 +401,7 @@ namespace Jeedom
 
         public async Task ExecuteCommand(Command cmd)
         {
+            cmd.Updating = true;
             var parameters = new Parameters();
             parameters.id = cmd.id;
             parameters.name = cmd.name;
@@ -415,6 +416,7 @@ namespace Jeedom
             {
                 cmd._value = "N/A";
             }
+            cmd.Updating = false;
         }
     }
 }

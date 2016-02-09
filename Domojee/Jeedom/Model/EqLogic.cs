@@ -217,10 +217,15 @@ namespace Jeedom.Model
                 {
                     // Cherche la commande
                     var cmd = cmds.Where(c => c.name.ToLower() == parameters.ToString().ToLower()).First();
-                    cmd.Updating = true;
-                    await RequestViewModel.GetInstance().ExecuteCommand(cmd);
-                    cmd.Updating = false;
-                    Debug.WriteLine(parameters);
+                    if (cmd != null)
+                    {
+                        this.Updating = true;
+                        await RequestViewModel.GetInstance().ExecuteCommand(cmd);
+                        //await Task.Delay(TimeSpan.FromSeconds(3));
+                        await RequestViewModel.GetInstance().UpdateEqLogic(this);
+                        NotifyPropertyChanged("cmds");
+                        this.Updating = false;
+                    }
                 });
                 return this._execCommand;
             }
