@@ -15,6 +15,8 @@ namespace Domojee.Selectors
         {
             var eq = item as EqLogic;
             var element = container as FrameworkElement;
+
+            // Cherche si on a spécifié un Template dans les customParameters
             if (eq.display != null)
                 if (eq.display.customParameters != null)
                     if (eq.display.customParameters.DomojeeTemplate != null)
@@ -29,6 +31,9 @@ namespace Domojee.Selectors
                             default:
                                 return EqLogicTemplate;
                         }
+
+            // Cherche par rapport aux commandes
+            //TODO : Voir "generic_type" : https://www.jeedom.com/forum/viewtopic.php?f=112&t=15155#p278226
 
             switch (eq.eqType_name)
             {
