@@ -111,11 +111,14 @@
     <Compile Include="Converters\EqLogicNotUpdatingConverter.cs" />
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
+    <Compile Include="Converters\EqLogicCmdInfoConverter.cs" />
     <Compile Include="Converters\EqLogicUpdatingConverter.cs" />
+    <Compile Include="Converters\ValueConverterGroup.cs" />
     <Compile Include="Models\Command.cs" />
     <Compile Include="Models\CommandResult.cs" />
     <Compile Include="Models\DisplayInfo.cs" />
     <Compile Include="Models\EqLogic.cs" />
+    <Compile Include="Models\EqLogicDisplay.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\JdObject.cs" />
     <Compile Include="Models\Message.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Models\ResponseScene.cs" />
     <Compile Include="Models\ResponseSceneList.cs" />
     <Compile Include="Models\Scene.cs" />
+    <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selectors\EqLogicTemplateSelector.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
