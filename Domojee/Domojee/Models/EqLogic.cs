@@ -1,14 +1,17 @@
-﻿using System;
-using System.Linq;
+﻿using Domojee.Models;
+using Domojee.Mvvm;
+using Domojee.ViewModels;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Domojee.Models;
-using System.Runtime.CompilerServices;
 
 namespace Domojee.Models
 {
@@ -36,6 +39,7 @@ namespace Domojee.Models
         }
 
         private string _eqtype_name;
+
         [DataMember]
         public String eqType_name
         {
@@ -51,9 +55,11 @@ namespace Domojee.Models
                     case "openzwave":
                         ColSpan = 2;
                         break;
+
                     case "energy":
                         ColSpan = 1;
                         break;
+
                     default:
                         break;
                 }
@@ -61,8 +67,48 @@ namespace Domojee.Models
             }
         }
 
+        private EqLogicDisplay _display;
+
         [DataMember]
-        public ObservableCollection<Command> cmds;
+        public EqLogicDisplay display
+        {
+            get
+            {
+                return _display;
+            }
+            set
+            {
+                _display = value;
+                if (_display != null)
+                {
+                    if (_display.customParameters != null)
+                    {
+                        if (_display.customParameters.DomojeeColSpan != 0)
+                            ColSpan = _display.customParameters.DomojeeColSpan;
+                        if (_display.customParameters.DomojeeRowSpan != 0)
+                            RowSpan = _display.customParameters.DomojeeRowSpan;
+                    }
+                }
+                NotifyPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Command> _cmds;
+
+        [DataMember]
+        public ObservableCollection<Command> cmds
+        {
+            get
+            {
+                return _cmds;
+            }
+
+            set
+            {
+                _cmds = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         [DataMember]
         public string isVisible;
@@ -77,6 +123,7 @@ namespace Domojee.Models
         public string isEnable;
 
         private string _state;
+
         public string State
         {
             get
@@ -91,6 +138,7 @@ namespace Domojee.Models
         }
 
         private string _consommation;
+
         public string Consommation
         {
             get
@@ -105,6 +153,7 @@ namespace Domojee.Models
         }
 
         private string _puissance;
+
         public string Puissance
         {
             get
@@ -119,6 +168,7 @@ namespace Domojee.Models
         }
 
         private bool _onVisibility = false;
+
         public bool OnVisibility
         {
             get
@@ -143,6 +193,7 @@ namespace Domojee.Models
         public JdObject Parent;
 
         private bool _updating;
+
         public bool Updating
         {
             get
@@ -158,6 +209,25 @@ namespace Domojee.Models
 
         public int ColSpan = 1;
         public int RowSpan = 1;
+
+        private RelayCommand<object> _execCommand;
+
+        public RelayCommand<object> ExecCommand
+        {
+            get
+            {
+                this._execCommand = this._execCommand ?? new RelayCommand<object>(async parameters =>
+                {
+                    // Cherche la commande
+                    var cmd = cmds.Where(c => c.name.ToLower() == parameters.ToString().ToLower()).First();
+                    cmd.Updating = true;
+                    await RequestViewModel.GetInstance().ExecuteCommand(cmd);
+                    cmd.Updating = false;
+                    Debug.WriteLine(parameters);
+                });
+                return this._execCommand;
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
