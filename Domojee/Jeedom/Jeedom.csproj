@@ -114,6 +114,7 @@
     <Compile Include="Model\EqLogic.cs" />
     <Compile Include="Model\EqLogicDisplay.cs" />
     <Compile Include="Model\Error.cs" />
+    <Compile Include="Model\GenericTypeEnum.cs" />
     <Compile Include="Model\JdObject.cs" />
     <Compile Include="Api\Json\JsonRpcClient.cs" />
     <Compile Include="Model\Message.cs" />
