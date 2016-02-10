@@ -87,6 +87,11 @@ namespace Jeedom
                     UpdateObjectImage(o);
                 }
 
+                JdObject fakeobj = new JdObject();
+                fakeobj.name = "Equipements sans objet parent";
+                UpdateObjectImage(fakeobj);
+                ObjectList.Add(fakeobj);
+
                 // Efface les images inutiles
                 var files = await ImageFolder.GetFilesAsync();
                 foreach (StorageFile f in files)
@@ -96,10 +101,6 @@ namespace Jeedom
                         await f.DeleteAsync();
                     }
                 }
-
-                JdObject fakeobj = new JdObject();
-                fakeobj.name = "Equipements sans objet parent";
-                ObjectList.Add(fakeobj);
             }
 
             return jsonrpc.Error;
@@ -201,7 +202,7 @@ namespace Jeedom
             {
                 CommandList.Clear();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseCommandList>();
-                if (response!=null)
+                if (response != null)
                     CommandList = response.result;
                 foreach (Command cmd in CommandList)
                 {
