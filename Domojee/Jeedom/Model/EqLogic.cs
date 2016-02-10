@@ -15,27 +15,113 @@ namespace Jeedom.Model
     [DataContract]
     public class EqLogic : INotifyPropertyChanged
     {
-        [DataMember]
-        public string id { get; set; }
+        #region Public Fields
 
+        public int ColSpan = 1;
+
+        [DataMember]
+        public string isEnable;
+
+        [DataMember]
+        public string isVisible;
+
+        [DataMember]
+        public string logicalId;
+
+        [DataMember]
+        public string object_id;
+
+        public JdObject Parent;
+
+        public int RowSpan = 1;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private ObservableCollection<Command> _cmds;
+
+        private string _consommation;
+
+        private EqLogicDisplay _display;
+
+        private string _eqtype_name;
+
+        private RelayCommand<object> _execCommandByLogicalID;
+        private RelayCommand<object> _execCommandByName;
+
+        private RelayCommand<object> _execCommandByType;
         private string _name;
 
+        private bool _onVisibility = false;
+
+        private string _puissance;
+
+        private string _state;
+
+        private bool _updating;
+
+        #endregion Private Fields
+
+        #region Public Events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion Public Events
+
+        #region Public Properties
+
         [DataMember]
-        public string name
+        public ObservableCollection<Command> cmds
         {
             get
             {
-                return _name;
+                return _cmds;
             }
 
             set
             {
-                _name = value;
+                _cmds = value;
                 NotifyPropertyChanged();
             }
         }
 
-        private string _eqtype_name;
+        public string Consommation
+        {
+            get
+            {
+                return _consommation;
+            }
+            set
+            {
+                _consommation = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [DataMember]
+        public EqLogicDisplay display
+        {
+            get
+            {
+                return _display;
+            }
+            set
+            {
+                _display = value;
+                if (_display != null)
+                {
+                    if (_display.customParameters != null)
+                    {
+                        if (_display.customParameters.DomojeeColSpan != 0)
+                            ColSpan = _display.customParameters.DomojeeColSpan;
+                        if (_display.customParameters.DomojeeRowSpan != 0)
+                            RowSpan = _display.customParameters.DomojeeRowSpan;
+                    }
+                }
+                NotifyPropertyChanged();
+            }
+        }
 
         [DataMember]
         public String eqType_name
@@ -64,107 +150,74 @@ namespace Jeedom.Model
             }
         }
 
-        private EqLogicDisplay _display;
-
-        [DataMember]
-        public EqLogicDisplay display
+        /// <summary>
+        /// Exécute une commande à partir de son "logical_id"
+        /// </summary>
+        public RelayCommand<object> ExecCommandByLogicalID
         {
             get
             {
-                return _display;
+                this._execCommandByLogicalID = this._execCommandByLogicalID ?? new RelayCommand<object>(async parameters =>
+                 {
+                     // Cherche la commande par son generic_type
+                     var cmd = cmds.Where(c => c.logicalId.ToLower() == parameters.ToString().ToLower()).First();
+                     await ExecCommand(cmd);
+                 });
+                return this._execCommandByLogicalID;
             }
-            set
+        }
+
+        /// <summary>
+        /// Exécute une commande à partir de son nom
+        /// </summary>
+        public RelayCommand<object> ExecCommandByName
+        {
+            get
             {
-                _display = value;
-                if (_display != null)
+                this._execCommandByName = this._execCommandByName ?? new RelayCommand<object>(async parameters =>
                 {
-                    if (_display.customParameters != null)
-                    {
-                        if (_display.customParameters.DomojeeColSpan != 0)
-                            ColSpan = _display.customParameters.DomojeeColSpan;
-                        if (_display.customParameters.DomojeeRowSpan != 0)
-                            RowSpan = _display.customParameters.DomojeeRowSpan;
-                    }
-                }
-                NotifyPropertyChanged();
+                    // Cherche la commande par son nom
+                    var cmd = cmds.Where(c => c.name.ToLower() == parameters.ToString().ToLower()).First();
+                    await ExecCommand(cmd);
+                });
+                return this._execCommandByName;
             }
         }
 
-        private ObservableCollection<Command> _cmds;
-
-        [DataMember]
-        public ObservableCollection<Command> cmds
+        /// <summary>
+        /// Exécute une commande à partir de son "generic_type"
+        /// </summary>
+        public RelayCommand<object> ExecCommandByType
         {
             get
             {
-                return _cmds;
+                this._execCommandByType = this._execCommandByType ?? new RelayCommand<object>(async parameters =>
+                {
+                    // Cherche la commande par son generic_type
+                    var cmd = cmds.Where(c => c.generic_type == parameters.ToString()).First();
+                    await ExecCommand(cmd);
+                });
+                return this._execCommandByType;
+            }
+        }
+
+        [DataMember]
+        public string id { get; set; }
+
+        [DataMember]
+        public string name
+        {
+            get
+            {
+                return _name;
             }
 
             set
             {
-                _cmds = value;
+                _name = value;
                 NotifyPropertyChanged();
             }
         }
-
-        [DataMember]
-        public string isVisible;
-
-        [DataMember]
-        public string object_id;
-
-        [DataMember]
-        public string logicalId;
-
-        [DataMember]
-        public string isEnable;
-
-        private string _state;
-
-        public string State
-        {
-            get
-            {
-                return _state;
-            }
-            set
-            {
-                _state = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private string _consommation;
-
-        public string Consommation
-        {
-            get
-            {
-                return _consommation;
-            }
-            set
-            {
-                _consommation = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private string _puissance;
-
-        public string Puissance
-        {
-            get
-            {
-                return _puissance;
-            }
-            set
-            {
-                _puissance = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private bool _onVisibility = false;
 
         public bool OnVisibility
         {
@@ -179,17 +232,31 @@ namespace Jeedom.Model
             }
         }
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        public string Puissance
         {
-            if (PropertyChanged != null)
+            get
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                return _puissance;
+            }
+            set
+            {
+                _puissance = value;
+                NotifyPropertyChanged();
             }
         }
 
-        public JdObject Parent;
-
-        private bool _updating;
+        public string State
+        {
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                _state = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public bool Updating
         {
@@ -204,34 +271,9 @@ namespace Jeedom.Model
             }
         }
 
-        public int ColSpan = 1;
-        public int RowSpan = 1;
+        #endregion Public Properties
 
-        private RelayCommand<object> _execCommand;
-
-        public RelayCommand<object> ExecCommand
-        {
-            get
-            {
-                this._execCommand = this._execCommand ?? new RelayCommand<object>(async parameters =>
-                {
-                    // Cherche la commande
-                    var cmd = cmds.Where(c => c.generic_type == parameters.ToString()).First();
-                    if (cmd != null)
-                    {
-                        this.Updating = true;
-                        await RequestViewModel.GetInstance().ExecuteCommand(cmd);
-                        //await Task.Delay(TimeSpan.FromSeconds(3));
-                        await RequestViewModel.GetInstance().UpdateEqLogic(this);
-                        NotifyPropertyChanged("cmds");
-                        this.Updating = false;
-                    }
-                });
-                return this._execCommand;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        #region Public Methods
 
         public ObservableCollection<Command> GetActionsCmds()
         {
@@ -249,5 +291,32 @@ namespace Jeedom.Model
             else
                 return new ObservableCollection<Command>();
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private async Task ExecCommand(Command cmd)
+        {
+            if (cmd != null)
+            {
+                this.Updating = true;
+                await RequestViewModel.GetInstance().ExecuteCommand(cmd);
+                //await Task.Delay(TimeSpan.FromSeconds(3));
+                await RequestViewModel.GetInstance().UpdateEqLogic(this);
+                NotifyPropertyChanged("cmds");
+                this.Updating = false;
+            }
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion Private Methods
     }
 }

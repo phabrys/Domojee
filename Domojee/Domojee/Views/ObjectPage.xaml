@@ -16,22 +16,46 @@
         <converter:EqLogicUpdatingConverter x:Key="EqLogicUpdatingConverter" />
         <converter:EqLogicNotUpdatingConverter x:Key="EqLogicNotUpdatingConverter" />
         <converter:EqLogicState2BrushConverter x:Key="EqLogicState2BrushConverter" />
-        <converter:EqLogicCmdInfoConverter x:Key="EqLogicCmdInfoConverter" />
-        <converter:ValueConverterGroup x:Key="TestConverter">
-            <converter:EqLogicCmdInfoConverter />
+        <converter:EqLogicCmdInfoByNameConverter x:Key="EqLogicCmdInfoByNameConverter" />
+        <converter:EqLogicCmdInfoByTypeConverter x:Key="EqLogicCmdInfoByTypeConverter" />
+        <converter:ValueConverterGroup x:Key="GroupState2BrushConverter">
+            <converter:EqLogicCmdInfoByTypeConverter />
             <converter:EqLogicState2BrushConverter />
         </converter:ValueConverterGroup>
 
         <!--  Template par defaut  -->
         <DataTemplate x:Key="EqLogicTemplate">
-            <RelativePanel Background="{StaticResource SystemControlForegroundAccentBrush}">
-                <TextBlock HorizontalAlignment="Center"
+            <RelativePanel Background="#155F78"
+                           Padding="4"
+                           d:DesignHeight="150"
+                           d:DesignWidth="150">
+                <ProgressRing x:Name="PART_Updating"
+                              IsActive="True"
+                              RelativePanel.AlignRightWithPanel="True"
+                              RelativePanel.AlignTopWithPanel="True"
+                              Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" />
+                <TextBlock x:Name="PART_Name"
+                           HorizontalAlignment="Center"
                            VerticalAlignment="Center"
+                           RelativePanel.AlignHorizontalCenterWithPanel="True"
+                           RelativePanel.AlignTopWithPanel="True"
                            Text="{Binding name, FallbackValue=Name}" />
-                <TextBlock Margin="5"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Top"
+                <Viewbox x:Name="PART_Icon"
+                         Margin="4"
+                         RelativePanel.Above="PART_Caption"
+                         RelativePanel.AlignHorizontalCenterWithPanel="True"
+                         RelativePanel.Below="PART_Name">
+                    <TextBlock HorizontalAlignment="Center"
+                               FontFamily="FontAwesome"
+                               Foreground="White"
+                               Text="&#xF128;" />
+                </Viewbox>
+                <TextBlock x:Name="PART_Caption"
+                           FontFamily="Segoe UI"
                            FontSize="8"
+                           FontWeight="Light"
+                           RelativePanel.AlignBottomWithPanel="True"
+                           RelativePanel.AlignHorizontalCenterWithPanel="True"
                            Text="{Binding eqType_name, FallbackValue=Type}" />
             </RelativePanel>
         </DataTemplate>
@@ -95,23 +119,113 @@
 
         <!--  Template pour Sonos  -->
         <DataTemplate x:Key="SonosEqLogicTemplate">
-            <Grid d:DesignHeight="150" d:DesignWidth="150">
-                <Rectangle Fill="#FF30CCFF" />
-                <Image Source="{Binding cmds, Converter={StaticResource EqLogicCmdInfoConverter}, ConverterParameter=Image}" />
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Text="{Binding name, FallbackValue=Name}" />
-                <TextBlock Margin="5"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Top"
-                           FontSize="8"
-                           Text="{Binding cmds, Converter={StaticResource EqLogicCmdInfoConverter}, ConverterParameter=Album}" />
-            </Grid>
+            <RelativePanel Background="#2BC6FC"
+                           d:DesignHeight="300"
+                           d:DesignWidth="300">
+                <ProgressRing x:Name="PART_Updating"
+                              IsActive="True"
+                              RelativePanel.AlignRightWithPanel="True"
+                              RelativePanel.AlignTopWithPanel="True"
+                              Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" />
+                <Image Source="{Binding cmds, Converter={StaticResource EqLogicCmdInfoByNameConverter}, ConverterParameter=Image}" />
+                <TextBlock x:Name="PART_Pause"
+                           FontSize="80"
+                           FontWeight="ExtraBlack"
+                           Foreground="#66FFFFFF"
+                           RelativePanel.AlignHorizontalCenterWithPanel="True"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           Text="PAUSE" />
+                <Grid Background="#7FFFFFFF"
+                      Padding="0,4"
+                      RelativePanel.AlignBottomWithPanel="True"
+                      RelativePanel.AlignLeftWithPanel="True"
+                      RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ExecCommandByLogicalID}"
+                            CommandParameter="previous">
+                        <Button.Content>
+                            <TextBlock FontFamily="FontAwesome"
+                                       Foreground="White"
+                                       Text="&#xF048;" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ExecCommandByLogicalID}"
+                            CommandParameter="shuffle">
+                        <Button.Content>
+                            <TextBlock FontFamily="FontAwesome"
+                                       Foreground="White"
+                                       Text="&#xF074;" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ExecCommandByLogicalID}"
+                            CommandParameter="repeat">
+                        <Button.Content>
+                            <TextBlock FontFamily="FontAwesome"
+                                       Foreground="White"
+                                       Text="&#xF01E;" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="3"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ExecCommandByLogicalID}"
+                            CommandParameter="play">
+                        <Button.Content>
+                            <TextBlock FontFamily="FontAwesome"
+                                       Foreground="White"
+                                       Text="&#xF04B;" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="4"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ExecCommandByLogicalID}"
+                            CommandParameter="stop">
+                        <Button.Content>
+                            <TextBlock FontFamily="FontAwesome"
+                                       Foreground="White"
+                                       Text="&#xF04D;" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="5"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ExecCommandByLogicalID}"
+                            CommandParameter="mute">
+                        <Button.Content>
+                            <TextBlock FontFamily="FontAwesome"
+                                       Foreground="White"
+                                       Text="&#xF026;" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="6"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ExecCommandByLogicalID}"
+                            CommandParameter="next">
+                        <Button.Content>
+                            <TextBlock FontFamily="FontAwesome"
+                                       Foreground="White"
+                                       Text="&#xF051;" />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </RelativePanel>
         </DataTemplate>
 
         <!--  Template pour commande On Off  -->
         <DataTemplate x:Key="OnOffEqLogicTemplate">
-            <RelativePanel Background="{Binding cmds, Converter={StaticResource TestConverter}, ConverterParameter=LIGHT_STATE, Mode=TwoWay}"
+            <RelativePanel Background="{Binding cmds, Converter={StaticResource GroupState2BrushConverter}, ConverterParameter=LIGHT_STATE}"
                            Padding="4"
                            d:DesignHeight="150"
                            d:DesignWidth="150">
@@ -124,11 +238,11 @@
                             Orientation="Horizontal"
                             RelativePanel.Above="PART_Caption"
                             RelativePanel.AlignHorizontalCenterWithPanel="True">
-                    <Button Command="{Binding ExecCommand}"
+                    <Button Command="{Binding ExecCommandByType}"
                             CommandParameter="LIGHT_ON"
                             Content="On" />
                     <Button Margin="4,0,0,0"
-                            Command="{Binding ExecCommand}"
+                            Command="{Binding ExecCommandByType}"
                             CommandParameter="LIGHT_OFF"
                             Content="Off" />
                 </StackPanel>

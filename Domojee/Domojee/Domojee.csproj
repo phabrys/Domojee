@@ -112,10 +112,11 @@
       <DependentUpon>ServerState.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VariableSizedGridView.cs" />
+    <Compile Include="Converters\EqLogicCmdInfoByNameConverter.cs" />
     <Compile Include="Converters\EqLogicNotUpdatingConverter.cs" />
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
-    <Compile Include="Converters\EqLogicCmdInfoConverter.cs" />
+    <Compile Include="Converters\EqLogicCmdInfoByTypeConverter.cs" />
     <Compile Include="Converters\EqLogicUpdatingConverter.cs" />
     <Compile Include="Converters\ValueConverterGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
