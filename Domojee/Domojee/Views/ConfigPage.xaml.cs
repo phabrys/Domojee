@@ -30,6 +30,10 @@ namespace Domojee.Views
                     GeolocCmd.Add(Cmd);
             }
             MobilePosition_Cmd.ItemsSource = GeolocCmd;
+            if (GeolocCmd.Count() == 0)
+                activeLocation.IsEnabled = false;
+            else
+                activeLocation.IsEnabled = true;
             var GeolocObjectId = settings.Values["GeolocObjectId"];
             if (GeolocObjectId != null)
             {
@@ -38,8 +42,13 @@ namespace Domojee.Views
                     MobilePosition_Cmd.SelectedItem = ObjectsSelect;
                 }
             }
-            MobileNotification.ItemsSource = Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
-             var NotificationId = settings.Values["NotificationObjectId"];
+            var ObjetctPush= Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
+            MobileNotification.ItemsSource = ObjetctPush;
+            if (ObjetctPush.Count() == 0)
+                activePush.IsEnabled = false;
+            else
+                activePush.IsEnabled = true;
+            var NotificationId = settings.Values["NotificationObjectId"];
             if (NotificationId != null)
             {
                 foreach (var ObjectsSelect in Jeedom.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
@@ -185,12 +194,12 @@ namespace Domojee.Views
         async private void activePush_Toggled(object sender, RoutedEventArgs e)
         {
             var settings = ApplicationData.Current.LocalSettings;
-            //if (activePush.IsOn == true && settings.Values["channelUri"] == null)
-           // {
+            if (activePush.IsOn == true && settings.Values["channelUri"] == null)
+             {
                 var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
                 await Jeedom.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
                 settings.Values["channelUri"] = channel.Uri.ToString();
-           // }
+            }
         }
 
         async private void activeLocation_Toggled(object sender, RoutedEventArgs e)
