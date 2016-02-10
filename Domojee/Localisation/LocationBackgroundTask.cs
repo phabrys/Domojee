@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Geolocation;
 using Windows.Storage;
-using System.Net.Http.Headers;
+
 namespace Localisation
 {
     public sealed class LocationBackgroundTask : IBackgroundTask
@@ -36,7 +38,7 @@ namespace Localisation
                 DateTime currentTime = DateTime.Now;
 
                 WriteStatusToAppData("Time: " + currentTime.ToString());
-                WriteGeolocToAppData(pos);
+                await WriteGeolocToAppData(pos);
             }
             catch (UnauthorizedAccessException)
             {
@@ -55,13 +57,13 @@ namespace Localisation
             }
         }
 
-         async private void WriteGeolocToAppData(Geoposition pos)
+        async private Task WriteGeolocToAppData(Geoposition pos)
         {
             var settings = ApplicationData.Current.LocalSettings;
             settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
             settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
             settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
-            await Jeedom.RequestViewModel.GetInstance().SendPosition(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',','.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
+            await Jeedom.RequestViewModel.GetInstance().SendPosition(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',', '.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
         }
 
         private void WipeGeolocDataFromAppData()
