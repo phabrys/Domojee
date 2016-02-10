@@ -35,14 +35,12 @@ namespace Domojee.Selectors
 
                             case "onoff":
                                 return OnOffEqLogicTemplate;
-
-                            default:
-                                return EqLogicTemplate;
                         }
 
             // Cherche par rapport aux commandes de l'équipement
             //TODO : Voir "generic_type" : https://www.jeedom.com/forum/viewtopic.php?f=112&t=15155#p278226
 
+            // Lumière OnOff
             if (ContainCmd(eq, new[] { "LIGHT_STATE", "LIGHT_ON", "LIGHT_OFF" }))
                 return OnOffEqLogicTemplate;
 
@@ -52,9 +50,10 @@ namespace Domojee.Selectors
                 case "openzwave":
                     return ZWaveEqLogicTemplate;
 
-                default:
-                    return EqLogicTemplate;
+                case "sonos":
+                    return SonosEqLogicTemplate;
             }
+            return EqLogicTemplate;
         }
 
         /// <summary>
