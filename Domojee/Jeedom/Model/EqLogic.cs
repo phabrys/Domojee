@@ -151,7 +151,7 @@ namespace Jeedom.Model
         }
 
         /// <summary>
-        /// Exécute une commande à partir de son "logical_id"
+        /// Exécute une commande à partir de son "logicalId"
         /// </summary>
         public RelayCommand<object> ExecCommandByLogicalID
         {
@@ -159,16 +159,19 @@ namespace Jeedom.Model
             {
                 this._execCommandByLogicalID = this._execCommandByLogicalID ?? new RelayCommand<object>(async parameters =>
                  {
-                     // Cherche la commande par son generic_type
-                     var cmd = cmds.Where(c => c.logicalId.ToLower() == parameters.ToString().ToLower()).First();
-                     await ExecCommand(cmd);
+                     try
+                     {
+                         var cmd = cmds.Where(c => c.logicalId.ToLower() == parameters.ToString().ToLower()).First();
+                         await ExecCommand(cmd);
+                     }
+                     catch (Exception) { }
                  });
                 return this._execCommandByLogicalID;
             }
         }
 
         /// <summary>
-        /// Exécute une commande à partir de son nom
+        /// Exécute une commande à partir de son "name"
         /// </summary>
         public RelayCommand<object> ExecCommandByName
         {
@@ -176,9 +179,12 @@ namespace Jeedom.Model
             {
                 this._execCommandByName = this._execCommandByName ?? new RelayCommand<object>(async parameters =>
                 {
-                    // Cherche la commande par son nom
-                    var cmd = cmds.Where(c => c.name.ToLower() == parameters.ToString().ToLower()).First();
-                    await ExecCommand(cmd);
+                    try
+                    {
+                        var cmd = cmds.Where(c => c.name.ToLower() == parameters.ToString().ToLower()).First();
+                        await ExecCommand(cmd);
+                    }
+                    catch (Exception) { }
                 });
                 return this._execCommandByName;
             }
@@ -193,9 +199,12 @@ namespace Jeedom.Model
             {
                 this._execCommandByType = this._execCommandByType ?? new RelayCommand<object>(async parameters =>
                 {
-                    // Cherche la commande par son generic_type
-                    var cmd = cmds.Where(c => c.generic_type == parameters.ToString()).First();
-                    await ExecCommand(cmd);
+                    try
+                    {
+                        var cmd = cmds.Where(c => c.generic_type == parameters.ToString()).First();
+                        await ExecCommand(cmd);
+                    }
+                    catch (Exception) { }
                 });
                 return this._execCommandByType;
             }
