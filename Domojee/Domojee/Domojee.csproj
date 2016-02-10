@@ -97,6 +97,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Assets\Fonts\WeatherIcons.ttf" />
+    <Content Include="Assets\Fonts\FontAwesome.ttf" />
     <None Include="Domojee_StoreKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
@@ -240,6 +242,7 @@
       <Name>VoiceCommandService</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

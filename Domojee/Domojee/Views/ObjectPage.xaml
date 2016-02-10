@@ -46,7 +46,7 @@
                          RelativePanel.AlignHorizontalCenterWithPanel="True"
                          RelativePanel.Below="PART_Name">
                     <TextBlock HorizontalAlignment="Center"
-                               FontFamily="FontAwesome"
+                               FontFamily="{StaticResource FontAwesome}"
                                Foreground="White"
                                Text="&#xF128;" />
                 </Viewbox>
@@ -59,6 +59,7 @@
                            Text="{Binding eqType_name, FallbackValue=Type}" />
             </RelativePanel>
         </DataTemplate>
+     
 
         <!--  Template pour ZWave  -->
         <DataTemplate x:Key="ZWaveEqLogicTemplate">
@@ -154,7 +155,7 @@
                             Command="{Binding ExecCommandByLogicalID}"
                             CommandParameter="previous">
                         <Button.Content>
-                            <TextBlock FontFamily="FontAwesome"
+                            <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        Foreground="White"
                                        Text="&#xF048;" />
                         </Button.Content>
@@ -164,7 +165,7 @@
                             Command="{Binding ExecCommandByLogicalID}"
                             CommandParameter="shuffle">
                         <Button.Content>
-                            <TextBlock FontFamily="FontAwesome"
+                            <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        Foreground="White"
                                        Text="&#xF074;" />
                         </Button.Content>
@@ -174,7 +175,7 @@
                             Command="{Binding ExecCommandByLogicalID}"
                             CommandParameter="repeat">
                         <Button.Content>
-                            <TextBlock FontFamily="FontAwesome"
+                            <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        Foreground="White"
                                        Text="&#xF01E;" />
                         </Button.Content>
@@ -184,7 +185,7 @@
                             Command="{Binding ExecCommandByLogicalID}"
                             CommandParameter="play">
                         <Button.Content>
-                            <TextBlock FontFamily="FontAwesome"
+                            <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        Foreground="White"
                                        Text="&#xF04B;" />
                         </Button.Content>
@@ -194,7 +195,7 @@
                             Command="{Binding ExecCommandByLogicalID}"
                             CommandParameter="stop">
                         <Button.Content>
-                            <TextBlock FontFamily="FontAwesome"
+                            <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        Foreground="White"
                                        Text="&#xF04D;" />
                         </Button.Content>
@@ -204,7 +205,7 @@
                             Command="{Binding ExecCommandByLogicalID}"
                             CommandParameter="mute">
                         <Button.Content>
-                            <TextBlock FontFamily="FontAwesome"
+                            <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        Foreground="White"
                                        Text="&#xF026;" />
                         </Button.Content>
@@ -214,7 +215,7 @@
                             Command="{Binding ExecCommandByLogicalID}"
                             CommandParameter="next">
                         <Button.Content>
-                            <TextBlock FontFamily="FontAwesome"
+                            <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        Foreground="White"
                                        Text="&#xF051;" />
                         </Button.Content>
@@ -258,7 +259,7 @@
                          RelativePanel.AlignHorizontalCenterWithPanel="True"
                          RelativePanel.Below="PART_Name">
                     <TextBlock HorizontalAlignment="Center"
-                               FontFamily="FontAwesome"
+                               FontFamily="{StaticResource FontAwesome}"
                                Foreground="White"
                                Text="&#xF0EB;" />
                 </Viewbox>
