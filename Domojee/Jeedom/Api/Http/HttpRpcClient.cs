@@ -34,8 +34,10 @@ namespace Jeedom.Api.Http
                 }
 
                 var httpClient = new HttpClient(filter);
-                //httpClient.DefaultRequestHeaders.Accept.Clear();
-                //httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("text/plain"));
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("text/plain"));
+                httpClient.DefaultRequestHeaders.UserAgent.Add(new HttpProductInfoHeaderValue(new HttpProductHeaderValue("Mozilla", "5.0").ToString()));
+                httpClient.DefaultRequestHeaders.UserAgent.Add(new HttpProductInfoHeaderValue(new HttpProductHeaderValue("Firefox", "26.0").ToString()));
 
                 var reponse = await httpClient.GetAsync(uri);
                 httpClient.Dispose();
