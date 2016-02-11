@@ -156,7 +156,9 @@
                     </ListView>
                 </StackPanel>
             </SplitView.Pane>
-            <ContentPresenter x:Name="contentFrame" />
+            <SplitView.Content>
+                <ContentPresenter x:Name="contentFrame" />
+            </SplitView.Content>
         </SplitView>
     </Grid>
 </UserControl>
