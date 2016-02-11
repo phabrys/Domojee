@@ -74,7 +74,7 @@
                                Text="Tableau de Bord" />
                 </Grid>
                 <TextBlock HorizontalAlignment="Center" Text="Sélectionner un objet" />
-                <ScrollViewer>
+                <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">
                     <GridView x:Name="objectview"
                               Margin="15"
                               IsItemClickEnabled="True"

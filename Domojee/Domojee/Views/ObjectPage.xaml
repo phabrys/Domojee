@@ -285,7 +285,7 @@
                       Height="50"
                       Canvas.ZIndex="2"
                       IsActive="{x:Bind Updating, FallbackValue=False}" />
-        <ScrollViewer>
+        <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">
             <StackPanel>
                 <Grid Height="48" Background="{StaticResource BlueBase}">
                     <TextBlock HorizontalAlignment="Center"

@@ -10,7 +10,7 @@
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
     </Page.Background>
     <ctl:MainMenu x:Name="menu">
-        <ScrollViewer Tag="Scénarios">
+        <ScrollViewer Tag="Scénarios" Height="{ThemeResource AutoSuggestListMaxHeight}">
             <StackPanel>
                 <Grid Height="48" Background="{StaticResource BlueBase}">
                     <TextBlock HorizontalAlignment="Center"
