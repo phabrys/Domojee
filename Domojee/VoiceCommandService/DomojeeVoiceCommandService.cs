@@ -58,6 +58,7 @@ namespace VoiceCommandService
                             {
                                 if (Equipement.object_id == Object.id)
                                 {
+                                    await RequestViewModel.GetInstance().ExecuteCommand(Commande);
                                     userMessage.SpokenMessage = "La valeur de " + Commande.name + " de " + Object.name + " est de " + Commande.Value + Commande.unite;
                                 }
                             }

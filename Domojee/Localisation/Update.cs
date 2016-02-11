@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Geolocation;
 using Windows.Storage;
+
 namespace Localisation
 {
-    class Update
+    internal class Update
     {
         private const string SampleBackgroundTaskName = "DomojeeGeofenceBackgroundTask";
         private const string SampleBackgroundTaskEntryPoint = "Localisation.GeofenceBackgroundTask";
@@ -15,6 +16,7 @@ namespace Localisation
         private IBackgroundTaskRegistration _geofenceTask = null;
 
         public Jeedom.ConfigurationViewModel config = new Jeedom.ConfigurationViewModel();
+
         async public Task WriteGeolocToAppData(Geoposition pos)
         {
             var settings = ApplicationData.Current.LocalSettings;
@@ -28,7 +30,7 @@ namespace Localisation
             {
                 foreach (Jeedom.Model.Command Commande in Jeedom.RequestViewModel.CommandList.Where(w => w.id.Equals(HomeObjectId)))
                 {
-                    var coordonee = Commande._value.Split(',');
+                    var coordonee = Commande.Value.Split(',');
                     HomeMobile = Math.Round(Distance(Convert.ToDouble(coordonee[0]), Convert.ToDouble(coordonee[1]), pos.Coordinate.Point.Position.Latitude, pos.Coordinate.Point.Position.Longitude, 'K'), 2);
                 }
             }
@@ -42,6 +44,7 @@ namespace Localisation
                 UnregisterGeoFence();
             }
         }
+
         private double Distance(double lat1, double lon1, double lat2, double lon2, char unit)
         {
             double theta = lon1 - lon2;
@@ -64,10 +67,12 @@ namespace Localisation
         {
             return (deg * Math.PI / 180.0);
         }
+
         private double rad2deg(double rad)
         {
             return (rad / Math.PI * 180.0);
         }
+
         public void WipeGeolocDataFromAppData()
         {
             var settings = ApplicationData.Current.LocalSettings;
@@ -81,6 +86,7 @@ namespace Localisation
             var settings = ApplicationData.Current.LocalSettings;
             settings.Values["Status"] = status;
         }
+
         async private void RegisterGeoFence()
         {
             try
@@ -112,10 +118,8 @@ namespace Localisation
                 // Register the background task
                 _geofenceTask = geofenceTaskBuilder.Register();
 
-
                 switch (backgroundAccessStatus)
                 {
-
                     case BackgroundAccessStatus.Unspecified:
                     case BackgroundAccessStatus.Denied:
                         //  _rootPage.NotifyUser("Not able to run in background. Application must be added to the lock screen.", NotifyType.ErrorMessage);
@@ -123,7 +127,7 @@ namespace Localisation
 
                     default:
                         // _rootPage.NotifyUser("Geofence background task registered.", NotifyType.StatusMessage);
-                        
+
                         // RequestLocationAccess();
                         break;
                 }
@@ -133,6 +137,7 @@ namespace Localisation
                 //_rootPage.NotifyUser(ex.ToString(), NotifyType.ErrorMessage);
             }
         }
+
         private void UnregisterGeoFence()
         {
             if (null != _geofenceTask)
@@ -143,6 +148,5 @@ namespace Localisation
 
             //_rootPage.NotifyUser("Geofence background task unregistered", NotifyType.StatusMessage);
         }
-
     }
 }
