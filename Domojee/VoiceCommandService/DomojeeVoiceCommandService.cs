@@ -48,8 +48,8 @@ namespace VoiceCommandService
                     await RequestViewModel.GetInstance().DownloadObjects();
                     await RequestViewModel.GetInstance().DownloadEqLogics();
                     await RequestViewModel.GetInstance().DownloadCommands();
-                   // var Commande = voiceCommand.Properties["Commande"][0];
-                   // var Object = voiceCommand.Properties["Object"][0];
+                    var JeedomCommande = voiceCommand.Properties["Commande"][0];
+                   var JeedomObject = voiceCommand.Properties["Object"][0];
                     foreach (var Commande in RequestViewModel.CommandList.Where(w => w.name.Equals(voiceCommand.Properties["Commande"][0])))
                     {
                         foreach (var Equipement in RequestViewModel.EqLogicList.Where(w => w.id.Equals(Commande.eqLogic_id)))
