@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Geolocation;
 using Windows.Storage;
+using System.Linq;
 
 namespace Localisation
 {
     public sealed class LocationBackgroundTask : IBackgroundTask
     {
         private CancellationTokenSource _cts = null;
-
+        Update UpdateInforamtion = new Update();
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
@@ -37,18 +36,18 @@ namespace Localisation
 
                 DateTime currentTime = DateTime.Now;
 
-                WriteStatusToAppData("Time: " + currentTime.ToString());
-                await WriteGeolocToAppData(pos);
+                UpdateInforamtion.WriteStatusToAppData("Time: " + currentTime.ToString());
+                await UpdateInforamtion.WriteGeolocToAppData(pos);
             }
             catch (UnauthorizedAccessException)
             {
-                WriteStatusToAppData("Disabled");
-                WipeGeolocDataFromAppData();
+                UpdateInforamtion.WriteStatusToAppData("Disabled");
+                UpdateInforamtion.WipeGeolocDataFromAppData();
             }
             catch (Exception ex)
             {
-                WriteStatusToAppData(ex.ToString());
-                WipeGeolocDataFromAppData();
+                UpdateInforamtion.WriteStatusToAppData(ex.ToString());
+                UpdateInforamtion.WipeGeolocDataFromAppData();
             }
             finally
             {
@@ -57,29 +56,7 @@ namespace Localisation
             }
         }
 
-        async private Task WriteGeolocToAppData(Geoposition pos)
-        {
-            var settings = ApplicationData.Current.LocalSettings;
-            settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
-            settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
-            settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
-            await Jeedom.RequestViewModel.GetInstance().SendPosition(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',', '.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
-        }
-
-        private void WipeGeolocDataFromAppData()
-        {
-            var settings = ApplicationData.Current.LocalSettings;
-            settings.Values["Latitude"] = "";
-            settings.Values["Longitude"] = "";
-            settings.Values["Accuracy"] = "";
-        }
-
-        private void WriteStatusToAppData(string status)
-        {
-            var settings = ApplicationData.Current.LocalSettings;
-            settings.Values["Status"] = status;
-        }
-
+       
         private void OnCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
         {
             if (_cts != null)
@@ -88,5 +65,6 @@ namespace Localisation
                 _cts = null;
             }
         }
-    }
+
+        }
 }

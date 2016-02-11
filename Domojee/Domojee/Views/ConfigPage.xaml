@@ -61,9 +61,26 @@
         							Text="No data"
         							TextWrapping="Wrap"
         							d:LayoutOverrides="LeftPosition, RightPosition" />
+                                <ComboBox x:Name="HomePosition_Cmd"
+        							Height="64"
+                                    Header="Objet Jeedom de votre Maison"
+        							HorizontalAlignment="Stretch"
+        							VerticalAlignment="Bottom"
+        							SelectionChanged="HomePosition_Cmd_SelectionChanged"
+        							d:LayoutOverrides="LeftPosition, RightPosition">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                                 <ComboBox x:Name="MobilePosition_Cmd"
         							Height="64"
-        							Margin="0,0,20,128"
+                                          Header="Objet Jeedom de votre mobile"
         							HorizontalAlignment="Stretch"
         							VerticalAlignment="Bottom"
         							SelectionChanged="MobilePosition_Cmd_SelectionChanged"
@@ -113,6 +130,19 @@
         							Text="Latitude: "
         							TextWrapping="Wrap"
         							d:LayoutOverrides="TopPosition, BottomPosition" />
+                                <ToggleSwitch x:Name="activeGeoFence"
+        							Width="100"
+        							Height="100"
+        							HorizontalAlignment="Left"
+        							VerticalAlignment="Top"
+        							Header="Utilisation du Géorepérage"
+        							IsOn="{Binding GeoFenceActivation, Mode=TwoWay}" />
+                                <TextBox
+                     Width="250"
+                     Header="Distance d'activation du Géorepérage"
+                     Text="{Binding GeoFenceActivationDistance,
+                                    Mode=TwoWay}" />
+
                             </Grid>
                         </PivotItem>
                         <PivotItem x:Name="notify" Header="Notification">
