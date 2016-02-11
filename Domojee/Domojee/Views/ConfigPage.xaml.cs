@@ -29,8 +29,9 @@ namespace Domojee.Views
                 foreach (var Cmd in Equipement.GetInformationsCmds())
                     GeolocCmd.Add(Cmd);
             }
+            HomePosition_Cmd.ItemsSource = GeolocCmd;
             MobilePosition_Cmd.ItemsSource = GeolocCmd;
-            if (GeolocCmd.Count() == 0)
+            if (GeolocCmd.Count() == 0) 
                 activeLocation.IsEnabled = false;
             else
                 activeLocation.IsEnabled = true;
@@ -40,6 +41,14 @@ namespace Domojee.Views
                 foreach (var ObjectsSelect in GeolocCmd.Where(w => w.id.Equals(GeolocObjectId)))
                 {
                     MobilePosition_Cmd.SelectedItem = ObjectsSelect;
+                }
+            }
+            var HomeObjectId = settings.Values["HomeObjectId"];
+            if (HomeObjectId != null)
+            {
+                foreach (var ObjectsSelect in GeolocCmd.Where(w => w.id.Equals(HomeObjectId)))
+                {
+                    HomePosition_Cmd.SelectedItem = ObjectsSelect;
                 }
             }
             var ObjetctPush= Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
@@ -195,7 +204,7 @@ namespace Domojee.Views
         {
             var settings = ApplicationData.Current.LocalSettings;
             if (activePush.IsOn == true && settings.Values["channelUri"] == null)
-             {
+            {
                 var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
                 await Jeedom.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
                 settings.Values["channelUri"] = channel.Uri.ToString();
@@ -208,27 +217,18 @@ namespace Domojee.Views
             {
                 try
                 {
-                    // Get permission for a background task from the user. If the user has already answered once,
-                    // this does nothing and the user must manually update their preference via PC Settings.
                     BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-                    // Regardless of the answer, register the background task. If the user later adds this application
-                    // to the lock screen, the background task will be ready to run.
-                    // Create a new background task builder
                     BackgroundTaskBuilder geolocTaskBuilder = new BackgroundTaskBuilder();
 
                     geolocTaskBuilder.Name = BackgroundTaskName;
                     geolocTaskBuilder.TaskEntryPoint = BackgroundTaskEntryPoint;
-
-                    // Create a new timer triggering at a 15 minute interval
+                    
                     var trigger = new TimeTrigger(15, false);
-
-                    // Associate the timer trigger with the background task builder
+                    
                     geolocTaskBuilder.SetTrigger(trigger);
-
-                    // Register the background task
+                    
                     _geolocTask = geolocTaskBuilder.Register();
-
-                    // Associate an event handler with the new background task
+                    
                     _geolocTask.Completed += OnCompleted;
 
                     switch (backgroundAccessStatus)
@@ -239,12 +239,7 @@ namespace Domojee.Views
                             break;
 
                         default:
-                            // BckgroundTask is allowed
                             Status.Text = "Enregister.";
-
-                            // Need to request access to location
-                            // This must be done with the background task registeration
-                            // because the background task cannot display UI.
                             RequestLocationAccess();
                             break;
                     }
@@ -266,7 +261,7 @@ namespace Domojee.Views
                 MobilePosition_Accuracy.Text = "Pas de data";
             }
         }
-
+        
         private void MobilePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MobilePosition_Cmd.SelectedItem != null)
@@ -274,6 +269,15 @@ namespace Domojee.Views
                 var settings = ApplicationData.Current.LocalSettings;
                 Jeedom.Model.Command ObjectsSelect = MobilePosition_Cmd.SelectedItem as Jeedom.Model.Command;
                 settings.Values["GeolocObjectId"] = ObjectsSelect.id;
+            }
+        }
+        private void HomePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (HomePosition_Cmd.SelectedItem != null)
+            {
+                var settings = ApplicationData.Current.LocalSettings;
+                Jeedom.Model.Command ObjectsSelect = HomePosition_Cmd.SelectedItem as Jeedom.Model.Command;
+                settings.Values["HomeObjectId"] = ObjectsSelect.id;
             }
         }
 

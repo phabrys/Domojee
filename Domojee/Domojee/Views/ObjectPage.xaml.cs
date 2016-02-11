@@ -70,6 +70,7 @@ namespace Domojee.Views
 
         private async Task DoWork(CancellationTokenSource tokenSource)
         {
+            //TODO: DoWork ne s'arrête pas dans certaines conditions
             while (!tokenSource.IsCancellationRequested)
             {
                 Updating = true;
@@ -111,7 +112,7 @@ namespace Domojee.Views
 
                 if (eq != null)
                 {
-                    var cmd = eq.cmds.Where(command => command.name == cmdName).First();
+                    var cmd = eq.cmds?.Where(command => command.name == cmdName)?.First();
                     if (cmd != null)
                     {
                         await RequestViewModel.GetInstance().ExecuteCommand(cmd);

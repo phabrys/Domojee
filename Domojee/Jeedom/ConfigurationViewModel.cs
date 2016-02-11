@@ -107,7 +107,38 @@ namespace Jeedom
                 return _GeolocActivation;
             }
         }
+        private bool _GeoFenceActivation;
 
+        public bool GeoFenceActivation
+        {
+            set
+            {
+                _GeoFenceActivation = value;
+                LocalSettings.Values["GeoFenceActivation"] = value;
+            }
+
+            get
+            {
+                return _GeoFenceActivation;
+            }
+        }
+        private string _GeoFenceActivationDistance;
+
+        public string GeoFenceActivationDistance
+        {
+            set
+            {
+                _GeoFenceActivationDistance = value;
+                LocalSettings.Values["GeoFenceActivationDistance"] = value;
+            }
+
+            get
+            {
+                return _GeoFenceActivationDistance;
+            }
+        }
+
+        
         private bool _NotificationActivation;
 
         public bool NotificationActivation
@@ -188,10 +219,12 @@ namespace Jeedom
                 _selfSigned = Convert.ToBoolean(RoamingSettings.Values[settingSelfSigned]);
 
             _GeolocActivation = (LocalSettings.Values["GeolocActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["GeolocActivation"]);
+            _GeoFenceActivation = (LocalSettings.Values["GeoFenceActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["GeoFenceActivation"]);
             _NotificationActivation = (LocalSettings.Values["NotificationActivation"] == null) ? false : Convert.ToBoolean(LocalSettings.Values["NotificationActivation"]);
 
             _GeolocObjectId = (LocalSettings.Values["GeolocObjectId"] == null) ? "" : LocalSettings.Values["GeolocObjectId"].ToString();
             _NotificationObjectId = (LocalSettings.Values["NotificationObjectId"] == null) ? "" : LocalSettings.Values["NotificationObjectId"].ToString();
+            _GeoFenceActivationDistance = (LocalSettings.Values["GeoFenceActivationDistance"] == null) ? "" : LocalSettings.Values["GeoFenceActivationDistance"].ToString();
         }
     }
 }

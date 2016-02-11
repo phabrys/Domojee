@@ -33,13 +33,15 @@
                               IsActive="True"
                               RelativePanel.AlignRightWithPanel="True"
                               RelativePanel.AlignTopWithPanel="True"
-                              Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" />
+                              Visibility="{Binding Updating,
+                                                   Converter={StaticResource EqLogicUpdatingConverter}}" />
                 <TextBlock x:Name="PART_Name"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            RelativePanel.AlignHorizontalCenterWithPanel="True"
                            RelativePanel.AlignTopWithPanel="True"
-                           Text="{Binding name, FallbackValue=Name}" />
+                           Text="{Binding name,
+                                          FallbackValue=Name}" />
                 <Viewbox x:Name="PART_Icon"
                          Margin="4"
                          RelativePanel.Above="PART_Caption"
@@ -56,10 +58,10 @@
                            FontWeight="Light"
                            RelativePanel.AlignBottomWithPanel="True"
                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                           Text="{Binding eqType_name, FallbackValue=Type}" />
+                           Text="{Binding eqType_name,
+                                          FallbackValue=Type}" />
             </RelativePanel>
         </DataTemplate>
-     
 
         <!--  Template pour ZWave  -->
         <DataTemplate x:Key="ZWaveEqLogicTemplate">
@@ -75,7 +77,8 @@
                            FontWeight="Bold"
                            RelativePanel.AlignHorizontalCenterWithPanel="True"
                            RelativePanel.Below="txtType"
-                           Text="{Binding name, FallbackValue=Name}" />
+                           Text="{Binding name,
+                                          FallbackValue=Name}" />
                 <StackPanel x:Name="stkTools"
                             Orientation="Horizontal"
                             RelativePanel.AlignHorizontalCenterWithPanel="True"
@@ -85,17 +88,22 @@
                             Click="btnON_Click"
                             FontFamily="Segoe MDL2 Assets"
                             Tag="{Binding id}"
-                            Visibility="{Binding OnVisibility, Converter={StaticResource EqLogicUpdatingConverter}}">
+                            Visibility="{Binding OnVisibility,
+                                                 Converter={StaticResource EqLogicUpdatingConverter}}">
                         <Grid Width="20" Height="20">
                             <ProgressRing HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           IsActive="True"
-                                          Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" />
+                                          Visibility="{Binding Updating,
+                                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
                             <TextBlock HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Foreground="{Binding State, Converter={StaticResource EqLogicState2BrushConverter}}"
-                                       Text="{Binding State, Converter={StaticResource EqLogicStateConverter}}"
-                                       Visibility="{Binding Updating, Converter={StaticResource EqLogicNotUpdatingConverter}}" />
+                                       Foreground="{Binding State,
+                                                            Converter={StaticResource EqLogicState2BrushConverter}}"
+                                       Text="{Binding State,
+                                                      Converter={StaticResource EqLogicStateConverter}}"
+                                       Visibility="{Binding Updating,
+                                                            Converter={StaticResource EqLogicNotUpdatingConverter}}" />
                         </Grid>
                     </Button>
                     <StackPanel Width="100" Margin="0,0,5,0">
@@ -104,7 +112,8 @@
                                    Text="Puissance" />
                         <TextBlock HorizontalAlignment="Center"
                                    FontSize="10"
-                                   Text="{Binding Puissance, FallbackValue=N/A}" />
+                                   Text="{Binding Puissance,
+                                                  FallbackValue=N/A}" />
                     </StackPanel>
                     <StackPanel Width="100" Margin="0,0,5,0">
                         <TextBlock HorizontalAlignment="Center"
@@ -112,7 +121,8 @@
                                    Text="Consommation" />
                         <TextBlock HorizontalAlignment="Center"
                                    FontSize="10"
-                                   Text="{Binding Consommation, FallbackValue=N/A}" />
+                                   Text="{Binding Consommation,
+                                                  FallbackValue=N/A}" />
                     </StackPanel>
                 </StackPanel>
             </RelativePanel>
@@ -127,7 +137,8 @@
                               IsActive="True"
                               RelativePanel.AlignRightWithPanel="True"
                               RelativePanel.AlignTopWithPanel="True"
-                              Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" />
+                              Visibility="{Binding Updating,
+                                                   Converter={StaticResource EqLogicUpdatingConverter}}" />
                 <Image Source="{Binding cmds, Converter={StaticResource EqLogicCmdInfoByNameConverter}, ConverterParameter=Image}" />
                 <TextBlock x:Name="PART_Pause"
                            FontSize="80"
@@ -226,7 +237,9 @@
 
         <!--  Template pour commande On Off  -->
         <DataTemplate x:Key="OnOffEqLogicTemplate">
-            <RelativePanel Background="{Binding cmds, Converter={StaticResource GroupState2BrushConverter}, ConverterParameter=LIGHT_STATE}"
+            <RelativePanel Background="{Binding cmds,
+                                                Converter={StaticResource GroupState2BrushConverter},
+                                                ConverterParameter=LIGHT_STATE}"
                            Padding="4"
                            d:DesignHeight="150"
                            d:DesignWidth="150">
@@ -234,7 +247,8 @@
                               IsActive="True"
                               RelativePanel.AlignRightWithPanel="True"
                               RelativePanel.AlignTopWithPanel="True"
-                              Visibility="{Binding Updating, Converter={StaticResource EqLogicUpdatingConverter}}" />
+                              Visibility="{Binding Updating,
+                                                   Converter={StaticResource EqLogicUpdatingConverter}}" />
                 <StackPanel x:Name="PART_Commands"
                             Orientation="Horizontal"
                             RelativePanel.Above="PART_Caption"
@@ -252,7 +266,8 @@
                            VerticalAlignment="Center"
                            RelativePanel.AlignHorizontalCenterWithPanel="True"
                            RelativePanel.AlignTopWithPanel="True"
-                           Text="{Binding name, FallbackValue=Name}" />
+                           Text="{Binding name,
+                                          FallbackValue=Name}" />
                 <Viewbox x:Name="PART_Icon"
                          Margin="4"
                          RelativePanel.Above="PART_Commands"
@@ -269,7 +284,8 @@
                            FontWeight="Light"
                            RelativePanel.AlignBottomWithPanel="True"
                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                           Text="{Binding eqType_name, FallbackValue=Type}" />
+                           Text="{Binding eqType_name,
+                                          FallbackValue=Type}" />
             </RelativePanel>
         </DataTemplate>
 
@@ -285,7 +301,7 @@
                       Height="50"
                       Canvas.ZIndex="2"
                       IsActive="{x:Bind Updating, FallbackValue=False}" />
-        <ScrollViewer>
+        <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">
             <StackPanel>
                 <Grid Height="48" Background="{StaticResource BlueBase}">
                     <TextBlock HorizontalAlignment="Center"

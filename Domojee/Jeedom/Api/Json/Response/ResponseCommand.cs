@@ -8,8 +8,5 @@ namespace Jeedom.Api.Json.Response
     {
         [DataMember]
         public CommandResult result;
-
-        [DataMember]
-        public Error error;
     }
 }
