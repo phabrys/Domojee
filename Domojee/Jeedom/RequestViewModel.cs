@@ -8,8 +8,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,9 +34,9 @@ namespace Jeedom
 
         static public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
         static public ObservableCollection<Message> MessageList = new ObservableCollection<Message>();
-        static public ObservableCollection<EqLogic> EqLogicList = new ObservableCollection<EqLogic>();
-        static public ObservableCollection<Command> CommandList = new ObservableCollection<Command>();
-        static public ObservableCollection<JdObject> ObjectList = new ObservableCollection<JdObject>();
+        static public ObservableCollection<EqLogic> EqLogicList;
+        static public ObservableCollection<Command> CommandList;
+        static public ObservableCollection<JdObject> ObjectList;
         static public ObservableCollection<Scene> SceneList = new ObservableCollection<Scene>();
 
         public CancellationTokenSource tokenSource;
@@ -70,36 +68,106 @@ namespace Jeedom
             }
         }
 
+        /// <summary>
+        /// Télécharge les informations sur les JdObject, les EqLogic et les Command (sans les value)
+        /// </summary>
+        /// <returns>Le code et le message d'erreur de Jeedom</returns>
         public async Task<Error> DownloadObjects()
         {
             var jsonrpc = new JsonRpcClient();
+            EqLogicList = new ObservableCollection<EqLogic>();
+            CommandList = new ObservableCollection<Command>();
 
-            if (await jsonrpc.SendRequest("object::all"))
+            if (await jsonrpc.SendRequest("object::full"))
             {
-                ObjectList.Clear();
-
                 List<string> idList = new List<string>();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseJdObjectList>();
-                foreach (JdObject o in response.result)
+                if (response.result != null)
                 {
-                    ObjectList.Add(o);
-                    idList.Add("dmj" + o.id);
-                    UpdateObjectImage(o);
-                }
-
-                JdObject fakeobj = new JdObject();
-                fakeobj.name = "Equipements sans objet parent";
-                UpdateObjectImage(fakeobj);
-                ObjectList.Add(fakeobj);
-
-                // Efface les images inutiles
-                var files = await ImageFolder.GetFilesAsync();
-                foreach (StorageFile f in files)
-                {
-                    if (!idList.Contains(f.DisplayName))
+                    ObjectList = response.result;
+                    foreach (JdObject o in ObjectList)
                     {
-                        await f.DeleteAsync();
+                        idList.Add("dmj" + o.id);
+                        UpdateObjectImage(o);
+                        if (o.eqLogics != null)
+                        {
+                            foreach (EqLogic eq in o.eqLogics)
+                            {
+                                EqLogicList.Add(eq);
+                                if (eq.cmds != null)
+                                {
+                                    foreach (Command cmd in eq.cmds)
+                                    {
+                                        CommandList.Add(cmd);
+                                    }
+                                }
+                                else
+                                    eq.cmds = new ObservableCollection<Command>();
+                            }
+                        }
                     }
+
+                    JdObject fakeobj = new JdObject();
+                    fakeobj.name = "Equipements sans objet parent";
+                    UpdateObjectImage(fakeobj);
+                    ObjectList.Add(fakeobj);
+                    fakeobj.eqLogics = new ObservableCollection<EqLogic>();
+
+                    // Récupère les EqLogic du fake (object_id==null)
+                    if (await jsonrpc.SendRequest("eqLogic::byObjectId"))
+                    {
+                        var responseEqLogic = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
+                        if (responseEqLogic != null)
+                        {
+                            foreach (EqLogic eq in responseEqLogic.result)
+                            {
+                                var param = new Parameters();
+                                param.id = eq.id;
+                                jsonrpc.SetParameters(param);
+                                if (await jsonrpc.SendRequest("eqLogic::fullById"))
+                                {
+                                    var responseEq = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogic>();
+                                    if (responseEq.result?.cmds != null)
+                                        eq.cmds = responseEq.result.cmds;
+                                    else
+                                        eq.cmds = new ObservableCollection<Command>();
+                                    fakeobj.eqLogics.Add(eq);
+                                    EqLogicList.Add(eq);
+                                    foreach (Command cmd in eq.cmds)
+                                    {
+                                        CommandList.Add(cmd);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Efface les images inutiles
+                    var files = await ImageFolder.GetFilesAsync();
+                    foreach (StorageFile f in files)
+                    {
+                        if (!idList.Contains(f.DisplayName))
+                        {
+                            await f.DeleteAsync();
+                        }
+                    }
+                }
+                else
+                {
+                    if (ObjectList == null)
+                        ObjectList = new ObservableCollection<JdObject>();
+                    else
+                        ObjectList.Clear();
+
+                    if (EqLogicList == null)
+                        EqLogicList = new ObservableCollection<EqLogic>();
+                    else
+                        EqLogicList.Clear();
+
+                    if (CommandList == null)
+                        CommandList = new ObservableCollection<Command>();
+                    else
+                        CommandList.Clear();
                 }
             }
 
@@ -132,38 +200,43 @@ namespace Jeedom
             }
         }
 
-        public async Task<Error> DownloadEqLogics()
+        /*public async Task<Error> DownloadEqLogics()
         {
             var jsonrpc = new JsonRpcClient();
 
             if (await jsonrpc.SendRequest("eqLogic::all"))
             {
-                EqLogicList.Clear();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
-                if (response != null)
-                    EqLogicList = response.result;
-                foreach (EqLogic eq in EqLogicList)
+                if (response.result != null)
                 {
-                    // Recherche l'objet parent
-                    var _objectlist = from o in ObjectList where o.id == eq.object_id select o;
-                    var _obj = _objectlist.First();
-                    if (_obj.eqLogics == null)
-                        _obj.eqLogics = new ObservableCollection<EqLogic>();
+                    EqLogicList = response.result;
+                    foreach (EqLogic eq in EqLogicList)
+                    {
+                        // Recherche l'objet parent
+                        var _objectlist = from o in ObjectList where o.id == eq.object_id select o;
+                        var _obj = _objectlist.First();
+                        if (_obj.eqLogics == null)
+                            _obj.eqLogics = new ObservableCollection<EqLogic>();
 
-                    eq.Parent = _obj;
-                    _obj.eqLogics.Add(eq);
+                        eq.Parent = _obj;
+                        _obj.eqLogics.Add(eq);
+                    }
+
+                    // Efface le faux objet contenant les eqlogics avec object_id == null
+                    var objectlist = from o in ObjectList where o.id == null select o;
+                    var obj = objectlist.First();
+
+                    if (obj?.eqLogics == null)
+                        ObjectList.Remove(obj);
                 }
-
-                // Efface le faux objet contenant les eqlogics avec object_id == null
-                var objectlist = from o in ObjectList where o.id == null select o;
-                var obj = objectlist.First();
-
-                if (obj?.eqLogics == null)
-                    ObjectList.Remove(obj);
+                else
+                {
+                    EqLogicList.Clear();
+                }
             }
 
             return jsonrpc.Error;
-        }
+        }*/
 
         public async Task<Error> DownloadScenes()
         {
@@ -195,7 +268,7 @@ namespace Jeedom
             return jsonrpc.Error;
         }
 
-        public async Task<Error> DownloadCommands()
+        /*public async Task<Error> DownloadCommands()
         {
             var jsonrpc = new JsonRpcClient();
             if (await jsonrpc.SendRequest("cmd::all"))
@@ -221,7 +294,7 @@ namespace Jeedom
             }
 
             return jsonrpc.Error;
-        }
+        }*/
 
         public async Task<Error> DownloadInteraction()
         {
@@ -339,18 +412,23 @@ namespace Jeedom
             if (await jsonrpc.SendRequest("eqLogic::byObjectId"))
             {
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
-                foreach (EqLogic eq in response.result)
+                if (response.result != null)
                 {
-                    var lst = from e in EqLogicList where e.id == eq.id select e;
-                    if (lst.Count() != 0)
+                    foreach (EqLogic eqnew in response.result)
                     {
-                        var eqold = lst.First();
-                        eqold = eq;
-                    }
-                    else
-                    {
-                        EqLogicList.Add(eq);
-                        obj.eqLogics.Add(eq);
+                        var lst = from e in EqLogicList where e.id == eqnew.id select e;
+                        if (lst.Count() != 0)
+                        {
+                            var eqold = lst.First();
+                            eqnew.cmds = eqold.cmds;
+                            eqold = eqnew;
+                        }
+                        else
+                        {
+                            EqLogicList.Add(eqnew);
+                            obj.eqLogics.Add(eqnew);
+                        }
+                        await UpdateEqLogic(eqnew);
                     }
                 }
             }
@@ -414,11 +492,11 @@ namespace Jeedom
             if (await jsonrpc.SendRequest("cmd::execCmd"))
             {
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseCommand>();
-                cmd._value = response.result.value;
+                cmd.Value = response.result.value;
             }
             else
             {
-                cmd._value = "N/A";
+                cmd.Value = "N/A";
             }
             cmd.Updating = false;
         }

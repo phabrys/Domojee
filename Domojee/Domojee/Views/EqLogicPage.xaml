@@ -35,8 +35,8 @@
                            VerticalAlignment="Center"
                            FontSize="14"
                            Foreground="White"
-                           Text="{Binding Name,
-                                          FallbackValue=Name}"
+                           Text="{Binding name,
+                                          FallbackValue=name}"
                            TextTrimming="CharacterEllipsis" />
                 <StackPanel Grid.Row="1"
                             HorizontalAlignment="Center"
@@ -47,12 +47,12 @@
                     <TextBlock Margin="0,0,2,0"
                                FontSize="20"
                                Foreground="White"
-                               Text="{Binding _value,
+                               Text="{Binding Value,
                                               FallbackValue=Value}"
                                TextTrimming="CharacterEllipsis" />
                     <TextBlock FontSize="9"
                                Foreground="White"
-                               Text="{Binding Unite,
+                               Text="{Binding unite,
                                               FallbackValue=Unite}" />
                 </StackPanel>
             </Grid>
@@ -70,7 +70,7 @@
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Foreground="White"
-                           Text="{Binding Name,
+                           Text="{Binding name,
                                           FallbackValue=Name}" />
                 <ProgressRing Margin="0,0,5,0"
                               HorizontalAlignment="Right"

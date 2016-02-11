@@ -1,5 +1,4 @@
 ﻿using Jeedom.Model;
-using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -67,9 +66,12 @@ namespace Domojee.Selectors
             int _find = 0;
             foreach (var type in types)
             {
-                var search = eq.cmds.Where(c => c.generic_type == type);
-                if (search.Count() > 0)
-                    _find += 1;
+                if (eq.cmds != null)
+                {
+                    var search = eq.cmds.Where(c => c.generic_type == type);
+                    if (search.Count() > 0)
+                        _find += 1;
+                }
             }
             return _find == types.Count();
         }

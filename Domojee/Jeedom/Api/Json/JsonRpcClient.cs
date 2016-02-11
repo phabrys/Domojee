@@ -32,6 +32,11 @@ namespace Jeedom.Api.Json
             this.parameters = parameters;
         }
 
+        public void SetParameters(Parameters parameters)
+        {
+            this.parameters = parameters;
+        }
+
         public JsonRpcClient()
         {
             this.parameters = new Parameters();

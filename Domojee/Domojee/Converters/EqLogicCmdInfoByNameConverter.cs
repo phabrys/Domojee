@@ -17,7 +17,7 @@ namespace Domojee.Converters
             var searchcmd = cmds.Where(c => c.name.ToLower() == searchType).First();
             if (searchcmd != null)
             {
-                return searchcmd._value;
+                return searchcmd.Value;
             }
             else {
                 return "N/A";

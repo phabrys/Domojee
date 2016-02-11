@@ -8,8 +8,9 @@ namespace Jeedom.Model
     [DataContract]
     public class Command : INotifyPropertyChanged
     {
-        [DataMember]
-        public string name;
+        #region Propriétés sans notification de changement
+
+        private string _name;
 
         [DataMember]
         public string logicalId;
@@ -26,27 +27,51 @@ namespace Jeedom.Model
         [DataMember]
         public string subType;
 
-        [DataMember]
-        private string unite;
+        private string _unite;
 
         [DataMember]
         public string isVisible;
 
+        private string _generic_type;
+
         [DataMember]
-        public string generic_type;
-
-        private string __value;
-
-        [DataMember(Name = "value")]
-        public string _value
+        public string generic_type
         {
             get
             {
-                return __value;
+                if (_generic_type == null)
+                    return "NONE";
+                else
+                    return _generic_type;
             }
+
             set
             {
-                __value = value;
+                _generic_type = value;
+            }
+        }
+
+        [DataMember(Name = "value")]
+        private string _value;
+
+        private bool _updating = false;
+
+        public EqLogic Parent;
+
+        #endregion Propriétés sans notification de changement
+
+        #region Propriétés avec notification de changement
+
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+
+            set
+            {
+                _value = value;
                 NotifyPropertyChanged();
                 if (Parent != null)
                 {
@@ -68,32 +93,20 @@ namespace Jeedom.Model
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public EqLogic Parent { get; set; }
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public string Name
+        [DataMember]
+        public String name
         {
             get
             {
-                return name;
+                return _name;
             }
 
             set
             {
-                name = value;
+                _name = value;
+                NotifyPropertyChanged();
             }
         }
-
-        private bool _updating = false;
 
         public bool Updating
         {
@@ -109,16 +122,30 @@ namespace Jeedom.Model
             }
         }
 
-        public string Unite
+        [DataMember]
+        public string unite
         {
             get
             {
-                return unite;
+                return _unite;
             }
 
             set
             {
-                unite = value;
+                _unite = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        #endregion Propriétés avec notification de changement
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Domojee.Converters
 
             if (searchcmd != null)
             {
-                return searchcmd._value;
+                return searchcmd.Value;
             }
             else {
                 return "N/A";
