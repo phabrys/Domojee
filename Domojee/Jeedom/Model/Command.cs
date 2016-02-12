@@ -24,6 +24,26 @@ namespace Jeedom.Model
         [DataMember]
         public string type;
 
+        [DataMember(Name = "display")]
+        private CommandDisplay _display;
+
+        public CommandDisplay display
+
+        {
+            get
+            {
+                if (_display == null)
+                    return new CommandDisplay();
+                else
+                    return _display;
+            }
+
+            set
+            {
+                _display = value;
+            }
+        }
+
         [DataMember]
         public string subType;
 
@@ -31,25 +51,6 @@ namespace Jeedom.Model
 
         [DataMember]
         public string isVisible;
-
-        private string _generic_type;
-
-        [DataMember]
-        public string generic_type
-        {
-            get
-            {
-                if (_generic_type == null)
-                    return "NONE";
-                else
-                    return _generic_type;
-            }
-
-            set
-            {
-                _generic_type = value;
-            }
-        }
 
         [DataMember(Name = "value")]
         private string _value;
