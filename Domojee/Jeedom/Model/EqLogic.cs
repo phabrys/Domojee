@@ -201,7 +201,7 @@ namespace Jeedom.Model
                 {
                     try
                     {
-                        var cmd = cmds.Where(c => c.generic_type == parameters.ToString()).First();
+                        var cmd = cmds.Where(c => c.display.generic_type == parameters.ToString()).First();
                         await ExecCommand(cmd);
                     }
                     catch (Exception) { }
