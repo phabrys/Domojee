@@ -1,81 +1,9 @@
-﻿<Application x:Class="Domojee.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:Domojee"
-             RequestedTheme="Dark">
+﻿<common:BootStrapper x:Class="Domojee.App"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:common="using:Template10.Common"
+                     RequestedTheme="Dark">
     <Application.Resources>
-        <VisualStateGroup x:Key="menuVSG">
-            <VisualState x:Name="None">
-                <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="0" />
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="False" />
-                    <Setter Target="splitView.(SplitView.DisplayMode)" Value="Overlay" />
-                </VisualState.Setters>
-            </VisualState>
-            <VisualState x:Name="Compact">
-                <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="960" />
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="False" />
-                    <Setter Target="splitView.(SplitView.DisplayMode)" Value="CompactInline" />
-                </VisualState.Setters>
-            </VisualState>
-            <VisualState x:Name="Wide">
-                <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="1280" />
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="splitView.(SplitView.DisplayMode)" Value="CompactInline" />
-                    <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="True" />
-                </VisualState.Setters>
-            </VisualState>
-        </VisualStateGroup>
-        <SolidColorBrush x:Key="BlueBase" Color="#FF0088AA" />
-        <SolidColorBrush x:Key="Blue10" Color="#FF19BBB2" />
-        <SolidColorBrush x:Key="Blue20" Color="#FF33A0BB" />
-        <SolidColorBrush x:Key="Blue20Alpha" Color="#AA4c81ad" />
-        <SolidColorBrush x:Key="Blue30" Color="#FF4CABC3" />
-        <SolidColorBrush x:Key="Blue40" Color="#FF66B8CC" />
-        <SolidColorBrush x:Key="BlackBack" Color="#7F000000" />
-        <FontFamily x:Key="FontAwesome">/Assets/Fonts/FontAwesome.ttf#FontAwesome</FontFamily>
-        <FontFamily x:Key="WheatherIcons">/Assets/Fonts/WeatherIcons.ttf#Wheather Icons</FontFamily>
-
-        <DataTemplate x:Key="SceneTemplate">
-            <Grid Width="120" Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Rectangle Grid.RowSpan="2"
-                           Grid.ColumnSpan="2"
-                           Width="120"
-                           Height="70"
-                           Fill="{StaticResource SystemControlForegroundAccentBrush}"
-                           Opacity="0.5"
-                           RadiusX="2"
-                           RadiusY="2" />
-                <TextBlock Grid.ColumnSpan="2"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Text="{Binding Name, FallbackValue=Name}" />
-                <ProgressRing Grid.Row="1"
-                              Margin="5,0,0,0"
-                              IsActive="{Binding Updating, FallbackValue=False}" />
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           Margin="0,0,5,0"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center"
-                           FontSize="10"
-                           Text="{Binding LastLaunch, FallbackValue=none}" />
-            </Grid>
-        </DataTemplate>
+        <ResourceDictionary Source="Styles\Custom.xaml" />
     </Application.Resources>
-</Application>
+</common:BootStrapper>
