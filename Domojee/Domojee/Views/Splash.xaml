@@ -44,6 +44,6 @@
                 <CompositeTransform x:Name="ProgressTransform" TranslateY="120" />
             </ProgressRing.RenderTransform>
         </ProgressRing>
-        <TextBlock Text="Coucouc" />
+        <TextBlock x:Name="tbInformation" Text="Coucouc" />
     </Grid>
 </UserControl>

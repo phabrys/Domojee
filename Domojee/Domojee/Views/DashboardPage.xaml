@@ -4,7 +4,7 @@
       xmlns:Behaviors="using:Template10.Behaviors"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:c="using:Domojee.Converters"
-      xmlns:controls10="using:Template10.Controls"
+      xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -74,11 +74,11 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls10:PageHeader Content="Tableau de bord" Frame="{x:Bind Frame}">
+        <controls:PageHeader Content="Tableau de bord" Frame="{x:Bind Frame}">
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
-        </controls10:PageHeader>
+        </controls:PageHeader>
         <StackPanel Grid.Row="1">
             <TextBlock HorizontalAlignment="Center" Text="Sélectionner un objet" />
             <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">

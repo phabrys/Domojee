@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Template10.Services.NavigationService;
 using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -83,7 +84,7 @@ namespace Domojee.Views
 
         private void objectview_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(ObjectPage), e.ClickedItem);
+            App.Current.NavigationService.Navigate(typeof(ObjectPage), e.ClickedItem);
         }
 
         private void Grid_RightTapped(object sender, RightTappedRoutedEventArgs e)

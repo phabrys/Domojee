@@ -38,15 +38,8 @@
         </controls:PageHeader>
 
         <!--  content  -->
-        <ScrollViewer>
+        <ScrollViewer Grid.Row="1">
             <StackPanel>
-                <Grid Height="48" Background="{StaticResource BlueBase}">
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="18"
-                               FontWeight="Bold"
-                               Text="Serveur JEEDOM" />
-                </Grid>
                 <TextBlock HorizontalAlignment="Center"
                            FontSize="20"
                            Text="Actions sur le serveur" />
