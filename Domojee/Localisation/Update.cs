@@ -23,7 +23,7 @@ namespace Localisation
             settings.Values["Latitude"] = pos.Coordinate.Point.Position.Latitude.ToString();
             settings.Values["Longitude"] = pos.Coordinate.Point.Position.Longitude.ToString();
             settings.Values["Accuracy"] = pos.Coordinate.Accuracy.ToString();
-            await Jeedom.RequestViewModel.GetInstance().SendPosition(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',', '.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
+            await Jeedom.RequestViewModel.Instance.SendPosition(pos.Coordinate.Point.Position.Latitude.ToString().Replace(',', '.') + ',' + pos.Coordinate.Point.Position.Longitude.ToString().Replace(',', '.'));
             double HomeMobile = 0;
             var HomeObjectId = settings.Values["HomeObjectId"];
             if (HomeObjectId != null)

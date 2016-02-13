@@ -33,12 +33,12 @@ namespace Domojee.Views
         }
 
         private ActionItem[] Actions = new ActionItem[] {
-            new ActionItem { message = "Objets",        function = RequestViewModel.GetInstance().DownloadObjects },
-            //new ActionItem { message = "Equipements",   function = RequestViewModel.GetInstance().DownloadEqLogics },
-            //new ActionItem { message = "Commandes",     function = RequestViewModel.GetInstance().DownloadCommands },
-            new ActionItem { message = "Scénarios",     function = RequestViewModel.GetInstance().DownloadScenes },
-            new ActionItem { message = "Messages",      function = RequestViewModel.GetInstance().DownloadMessages },
-            new ActionItem { message = "Interaction",   function = RequestViewModel.GetInstance().DownloadInteraction },
+            new ActionItem { message = "Objets",        function = RequestViewModel.Instance.DownloadObjects },
+            //new ActionItem { message = "Equipements",   function = RequestViewModel.Instance.DownloadEqLogics },
+            //new ActionItem { message = "Commandes",     function = RequestViewModel.Instance.DownloadCommands },
+            new ActionItem { message = "Scénarios",     function = RequestViewModel.Instance.DownloadScenes },
+            new ActionItem { message = "Messages",      function = RequestViewModel.Instance.DownloadMessages },
+            new ActionItem { message = "Interaction",   function = RequestViewModel.Instance.DownloadInteraction },
         };
 
         private async Task<bool> Action(ActionItem item, NavigationEventArgs e)

@@ -75,7 +75,7 @@ namespace Domojee.Views
             {
                 Updating = true;
                 Bindings.Update();
-                await RequestViewModel.GetInstance().UpdateObject(this.Object);
+                await RequestViewModel.Instance.UpdateObject(this.Object);
                 Updating = false;
                 Bindings.Update();
 
@@ -115,9 +115,9 @@ namespace Domojee.Views
                     var cmd = eq.cmds?.Where(command => command.name == cmdName)?.First();
                     if (cmd != null)
                     {
-                        await RequestViewModel.GetInstance().ExecuteCommand(cmd);
+                        await RequestViewModel.Instance.ExecuteCommand(cmd);
                         await Task.Delay(TimeSpan.FromSeconds(3));
-                        await RequestViewModel.GetInstance().UpdateEqLogic(cmd.Parent);
+                        await RequestViewModel.Instance.UpdateEqLogic(cmd.Parent);
                     }
                 }
                 eq.Updating = false;

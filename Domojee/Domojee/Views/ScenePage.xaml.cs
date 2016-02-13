@@ -42,7 +42,7 @@ namespace Domojee.Views
         {
             Scene scene = e.ClickedItem as Scene;
             scene.Updating = true;
-            await RequestViewModel.GetInstance().RunScene(scene);
+            await RequestViewModel.Instance.RunScene(scene);
             scene.Updating = false;
         }
     }

@@ -45,7 +45,7 @@ namespace VoiceCommandService
                     VoiceCommand voiceCommand = await voiceServiceConnection.GetVoiceCommandAsync();
                     var userMessage = new VoiceCommandUserMessage();
 
-                    await RequestViewModel.GetInstance().DownloadObjects();
+                    await RequestViewModel.Instance.DownloadObjects();
                     //await RequestViewModel.GetInstance().DownloadEqLogics();
                     //await RequestViewModel.GetInstance().DownloadCommands();
                     var JeedomCommande = voiceCommand.Properties["Commande"][0];
@@ -58,7 +58,7 @@ namespace VoiceCommandService
                             {
                                 if (Equipement.object_id == Object.id)
                                 {
-                                    await RequestViewModel.GetInstance().ExecuteCommand(Commande);
+                                    await RequestViewModel.Instance.ExecuteCommand(Commande);
                                     userMessage.SpokenMessage = "La valeur de " + Commande.name + " de " + Object.name + " est de " + Commande.Value + Commande.unite;
                                 }
                             }

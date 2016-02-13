@@ -23,13 +23,16 @@ namespace Jeedom
         private RequestViewModel()
         { }
 
-        static public RequestViewModel GetInstance()
+        static public RequestViewModel Instance
         {
-            if (_instance == null)
+            get
             {
-                _instance = new RequestViewModel();
+                if (_instance == null)
+                {
+                    _instance = new RequestViewModel();
+                }
+                return _instance;
             }
-            return _instance;
         }
 
         static public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
@@ -56,6 +59,21 @@ namespace Jeedom
             }
         }
 
+        private string _loadingMessage;
+
+        public string LoadingMessage
+        {
+            get
+            {
+                return _loadingMessage;
+            }
+            set
+            {
+                _loadingMessage = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public bool Populated = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -66,6 +84,29 @@ namespace Jeedom
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public async Task<Error> DownloadAll()
+        {
+            Updating = true;
+
+            LoadingMessage = "Chargment des Objets";
+            var error = await DownloadObjects();
+            if (error != null)
+                return error;
+
+            LoadingMessage = "Chargement des Scénarios";
+            error = await DownloadScenes();
+            if (error != null)
+                return error;
+
+            LoadingMessage = "Chargement des Messages";
+            error = await DownloadMessages();
+            if (error != null)
+                return error;
+
+            Updating = false;
+            return null;
         }
 
         /// <summary>

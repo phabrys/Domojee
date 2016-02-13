@@ -199,7 +199,7 @@ namespace Domojee.Views
             if (activePush.IsOn == true && settings.Values["channelUri"] == null)
             {
                 var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-                await Jeedom.RequestViewModel.GetInstance().SendNotificationUri(channel.Uri.ToString());
+                await Jeedom.RequestViewModel.Instance.SendNotificationUri(channel.Uri.ToString());
                 settings.Values["channelUri"] = channel.Uri.ToString();
             }
         }

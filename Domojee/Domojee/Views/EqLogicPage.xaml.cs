@@ -72,7 +72,7 @@ namespace Domojee.Views
             {
                 Updating = true;
                 Bindings.Update();
-                await RequestViewModel.GetInstance().UpdateEqLogic(eqLogic);
+                await RequestViewModel.Instance.UpdateEqLogic(eqLogic);
                 Updating = false;
                 Bindings.Update();
 
@@ -91,7 +91,7 @@ namespace Domojee.Views
         {
             Command cmd = e.ClickedItem as Command;
             cmd.Updating = true;
-            await RequestViewModel.GetInstance().ExecuteCommand(cmd);
+            await RequestViewModel.Instance.ExecuteCommand(cmd);
             cmd.Updating = false;
         }
     }

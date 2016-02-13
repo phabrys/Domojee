@@ -10,10 +10,9 @@
              xmlns:vm="using:Domojee.ViewModels"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <vm:SplashscreenViewModel x:Name="ViewModel" />
+        <vm:SplashscreenViewModel />
     </UserControl.DataContext>
-
-    <Grid Background="{StaticResource ExtendedSplashBackground}">
+    <Grid Background="Blue">
 
         <Canvas x:Name="MyCanvas"
                 HorizontalAlignment="Stretch"
@@ -42,12 +41,12 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Foreground="{StaticResource ExtendedSplashForeground}"
-                      IsActive="True"
+                      IsActive="{Binding Updating}"
                       RenderTransformOrigin="0.5,0.5">
             <ProgressRing.RenderTransform>
                 <CompositeTransform x:Name="ProgressTransform" TranslateY="120" />
             </ProgressRing.RenderTransform>
         </ProgressRing>
-        <TextBlock x:Name="tbInformation" Text="Coucouc" />
+        <TextBlock x:Name="tbInformation" Text="{Binding LoadingMessage, FallbackValue='Chargement en cours'}" />
     </Grid>
 </UserControl>

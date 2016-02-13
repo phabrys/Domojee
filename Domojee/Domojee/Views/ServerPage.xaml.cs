@@ -72,7 +72,7 @@ namespace Domojee.Views
             ContentDialogResult r = await diag.ShowAsync();
             if (r == ContentDialogResult.Primary)
             {
-                var instance = RequestViewModel.GetInstance();
+                var instance = RequestViewModel.Instance;
                 switch (tag)
                 {
                     case "update":

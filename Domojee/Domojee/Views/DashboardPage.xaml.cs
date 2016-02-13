@@ -27,7 +27,7 @@ namespace Domojee.Views
     public sealed partial class DashboardPage : Page
     {
         public ObservableCollection<JdObject> ObjectList = RequestViewModel.ObjectList;
-        public RequestViewModel RqViewModel = RequestViewModel.GetInstance();
+        public RequestViewModel RqViewModel = RequestViewModel.Instance;
         public bool Updating;
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
 
@@ -67,7 +67,7 @@ namespace Domojee.Views
             {
                 Updating = true;
                 Bindings.Update();
-                await RequestViewModel.GetInstance().UpdateObjectList();
+                await RequestViewModel.Instance.UpdateObjectList();
                 Updating = false;
                 Bindings.Update();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jeedom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Domojee.ViewModels
 {
     internal class SplashscreenViewModel : ViewModelBase
     {
-        private bool Updating => Jeedom.RequestViewModel.GetInstance().Updating;
+        public bool Updating => RequestViewModel.Instance.Updating;
+        public string Message => RequestViewModel.Instance.LoadingMessage;
     }
 }

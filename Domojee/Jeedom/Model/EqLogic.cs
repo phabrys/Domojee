@@ -310,9 +310,9 @@ namespace Jeedom.Model
             if (cmd != null)
             {
                 this.Updating = true;
-                await RequestViewModel.GetInstance().ExecuteCommand(cmd);
+                await RequestViewModel.Instance.ExecuteCommand(cmd);
                 //await Task.Delay(TimeSpan.FromSeconds(3));
-                await RequestViewModel.GetInstance().UpdateEqLogic(this);
+                await RequestViewModel.Instance.UpdateEqLogic(this);
                 NotifyPropertyChanged("cmds");
                 this.Updating = false;
             }
