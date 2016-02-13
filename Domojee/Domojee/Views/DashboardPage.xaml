@@ -1,16 +1,24 @@
 ﻿<Page x:Class="Domojee.Views.DashboardPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:ctl="using:Domojee.Controls"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:c="using:Domojee.Converters"
+      xmlns:controls10="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:selector="using:Domojee.Selectors"
+      xmlns:vm="using:Domojee.ViewModels"
       mc:Ignorable="d">
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
     </Page.Background>
+    <Page.DataContext>
+        <vm:DashboardPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
     <Page.Resources>
+        <c:VisibleWhenDesktop x:Name="VisibleWhenDesktop" />
         <DataTemplate x:Key="ObjectTemplate">
             <Grid CornerRadius="2"
                   Holding="Grid_Holding"
@@ -58,31 +66,30 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    <ctl:MainMenu x:Name="menu">
-        <Grid>
-            <ProgressRing x:Name="progressUpdating"
-                          Width="50"
-                          Height="50"
-                          Canvas.ZIndex="2"
-                          IsActive="{x:Bind Updating, FallbackValue=False}" />
-            <StackPanel>
-                <Grid Height="48" Background="{StaticResource BlueBase}">
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="18"
-                               FontWeight="Bold"
-                               Text="Tableau de Bord" />
-                </Grid>
-                <TextBlock HorizontalAlignment="Center" Text="Sélectionner un objet" />
-                <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">
-                    <GridView x:Name="objectview"
-                              Margin="15"
-                              IsItemClickEnabled="True"
-                              ItemClick="objectview_ItemClick"
-                              ItemTemplate="{StaticResource ObjectTemplate}"
-                              ItemsSource="{x:Bind ObjectList}" HorizontalAlignment="Center" />
-                </ScrollViewer>
-            </StackPanel>
-        </Grid>
-    </ctl:MainMenu>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  header  -->
+        <controls10:PageHeader Content="Tableau de bord" Frame="{x:Bind Frame}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Auto" />
+            </Interactivity:Interaction.Behaviors>
+        </controls10:PageHeader>
+        <StackPanel Grid.Row="1">
+            <TextBlock HorizontalAlignment="Center" Text="Sélectionner un objet" />
+            <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">
+                <GridView x:Name="objectview"
+                          Margin="15"
+                          HorizontalAlignment="Center"
+                          IsItemClickEnabled="True"
+                          ItemClick="objectview_ItemClick"
+                          ItemTemplate="{StaticResource ObjectTemplate}"
+                          ItemsSource="{x:Bind ObjectList}" />
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
 </Page>

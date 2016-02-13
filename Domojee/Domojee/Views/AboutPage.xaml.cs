@@ -17,15 +17,9 @@ namespace Domojee.Views
         public AboutPage()
         {
             this.InitializeComponent();
-            menu.NavigateToPage += Menu_NavigateToPage;
             PackageVersion version = Package.Current.Id.Version;
             tbVersion.Text = String.Format(": {0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
             Logo.Begin();
-        }
-
-        private void Menu_NavigateToPage(object sender, Controls.NavigateEventArgs e)
-        {
-            Frame.Navigate(e.Page);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

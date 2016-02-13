@@ -33,12 +33,6 @@ namespace Domojee.Views
         public DashboardPage()
         {
             this.InitializeComponent();
-            menu.NavigateToPage += Menu_NavigateToPage;
-        }
-
-        private void Menu_NavigateToPage(object sender, Controls.NavigateEventArgs e)
-        {
-            Frame.Navigate(e.Page);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

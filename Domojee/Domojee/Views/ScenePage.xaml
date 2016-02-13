@@ -1,7 +1,9 @@
 ﻿<Page x:Class="Domojee.Views.ScenePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:ctl="using:Domojee.Controls"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls10="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,16 +11,22 @@
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
     </Page.Background>
-    <ctl:MainMenu x:Name="menu">
-        <ScrollViewer Tag="Scénarios" Height="{ThemeResource AutoSuggestListMaxHeight}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  header  -->
+        <controls10:PageHeader Content="Scénarios" Frame="{x:Bind Frame}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Auto" />
+            </Interactivity:Interaction.Behaviors>
+        </controls10:PageHeader>
+
+        <!--  content  -->
+        <ScrollViewer Grid.Row="1" Height="{ThemeResource AutoSuggestListMaxHeight}">
             <StackPanel>
-                <Grid Height="48" Background="{StaticResource BlueBase}">
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="18"
-                               FontWeight="Bold"
-                               Text="Scénarios" />
-                </Grid>
                 <GridView x:Name="gridview"
                           Margin="15"
                           IsItemClickEnabled="True"
@@ -28,5 +36,5 @@
                           SelectionMode="None" />
             </StackPanel>
         </ScrollViewer>
-    </ctl:MainMenu>
+    </Grid>
 </Page>

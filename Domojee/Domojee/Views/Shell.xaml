@@ -29,6 +29,30 @@
                                        Text="Home" />
                         </StackPanel>
                     </Controls:HamburgerButtonInfo>
+
+                    <!--  scenepage button  -->
+                    <Controls:HamburgerButtonInfo PageType="views:ScenePage">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48"
+                                        Height="48"
+                                        Symbol="Home" />
+                            <TextBlock Margin="12,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Text="Scénarios" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
+
+                    <!--  serverpage button  -->
+                    <Controls:HamburgerButtonInfo PageType="views:ServerPage">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48"
+                                        Height="48"
+                                        Symbol="Home" />
+                            <TextBlock Margin="12,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Text="Serveur" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
                 </Controls:HamburgerMenu.PrimaryButtons>
 
                 <Controls:HamburgerMenu.SecondaryButtons>
@@ -44,6 +68,36 @@
                             <TextBlock Margin="12,0,0,0"
                                        VerticalAlignment="Center"
                                        Text="Settings" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
+
+                    <!--  aboutpage button  -->
+                    <Controls:HamburgerButtonInfo x:Name="ConfigButton" PageType="views:ConfigPage">
+                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                            <SuppressNavigationTransitionInfo />
+                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48"
+                                        Height="48"
+                                        Symbol="Setting" />
+                            <TextBlock Margin="12,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Text="Configuration" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
+
+                    <!--  aboutpage button  -->
+                    <Controls:HamburgerButtonInfo x:Name="AboutButton" PageType="views:AboutPage">
+                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                            <SuppressNavigationTransitionInfo />
+                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48"
+                                        Height="48"
+                                        Symbol="Setting" />
+                            <TextBlock Margin="12,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Text="A propos" />
                         </StackPanel>
                     </Controls:HamburgerButtonInfo>
                 </Controls:HamburgerMenu.SecondaryButtons>

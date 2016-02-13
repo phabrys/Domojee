@@ -22,14 +22,8 @@ namespace Domojee.Views
         public ServerPage()
         {
             this.InitializeComponent();
-            menu.NavigateToPage += Menu_NavigateToPage;
             if (MessageList.Count == 0)
                 messageText.Visibility = Visibility.Collapsed;
-        }
-
-        private void Menu_NavigateToPage(object sender, Controls.NavigateEventArgs e)
-        {
-            Frame.Navigate(e.Page);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

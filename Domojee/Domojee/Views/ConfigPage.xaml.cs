@@ -31,7 +31,7 @@ namespace Domojee.Views
             }
             HomePosition_Cmd.ItemsSource = GeolocCmd;
             MobilePosition_Cmd.ItemsSource = GeolocCmd;
-            if (GeolocCmd.Count() == 0) 
+            if (GeolocCmd.Count() == 0)
                 activeLocation.IsEnabled = false;
             else
                 activeLocation.IsEnabled = true;
@@ -51,7 +51,7 @@ namespace Domojee.Views
                     HomePosition_Cmd.SelectedItem = ObjectsSelect;
                 }
             }
-            var ObjetctPush= Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
+            var ObjetctPush = Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
             MobileNotification.ItemsSource = ObjetctPush;
             if (ObjetctPush.Count() == 0)
                 activePush.IsEnabled = false;
@@ -65,7 +65,7 @@ namespace Domojee.Views
                     MobileNotification.SelectedItem = ObjectsSelect;
                 }
             }
-            
+
             if (settings.Values["Status"] != null)
             {
                 Status.Text = settings.Values["Status"].ToString();
@@ -75,13 +75,6 @@ namespace Domojee.Views
             MobilePosition_Latitude.Text = (settings.Values["Latitude"] == null) ? "No data" : settings.Values["Latitude"].ToString();
             MobilePosition_Longitude.Text = (settings.Values["Longitude"] == null) ? "No data" : settings.Values["Longitude"].ToString();
             MobilePosition_Accuracy.Text = (settings.Values["Accuracy"] == null) ? "No data" : settings.Values["Accuracy"].ToString();
-
-            menu.NavigateToPage += Menu_NavigateToPage;
-        }
-
-        private void Menu_NavigateToPage(object sender, Controls.NavigateEventArgs e)
-        {
-            Frame.Navigate(e.Page);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -222,13 +215,13 @@ namespace Domojee.Views
 
                     geolocTaskBuilder.Name = BackgroundTaskName;
                     geolocTaskBuilder.TaskEntryPoint = BackgroundTaskEntryPoint;
-                    
+
                     var trigger = new TimeTrigger(15, false);
-                    
+
                     geolocTaskBuilder.SetTrigger(trigger);
-                    
+
                     _geolocTask = geolocTaskBuilder.Register();
-                    
+
                     _geolocTask.Completed += OnCompleted;
 
                     switch (backgroundAccessStatus)
@@ -261,7 +254,7 @@ namespace Domojee.Views
                 MobilePosition_Accuracy.Text = "Pas de data";
             }
         }
-        
+
         private void MobilePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MobilePosition_Cmd.SelectedItem != null)
@@ -271,6 +264,7 @@ namespace Domojee.Views
                 settings.Values["GeolocObjectId"] = ObjectsSelect.id;
             }
         }
+
         private void HomePosition_Cmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (HomePosition_Cmd.SelectedItem != null)
