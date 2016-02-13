@@ -127,6 +127,7 @@
     <Compile Include="ViewModels\ScenePageViewModel.cs" />
     <Compile Include="ViewModels\ServerPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="ViewModels\SplashscreenViewModel.cs" />
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
     </Compile>

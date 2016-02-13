@@ -71,7 +71,6 @@ namespace Domojee
         // runs only when not restored from state
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            await Task.Delay(TimeSpan.FromSeconds(5));
             ConfigurationViewModel config = new ConfigurationViewModel();
             if (config.Populated)
             {
