@@ -18,53 +18,7 @@
         <vm:DashboardPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
     <Page.Resources>
-        <c:VisibleWhenDesktop x:Name="VisibleWhenDesktop" />
-        <DataTemplate x:Key="ObjectTemplate">
-            <Grid CornerRadius="2"
-                  Holding="Grid_Holding"
-                  RightTapped="Grid_RightTapped">
-                <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Click="MenuFlyoutItem_Click"
-                                        Tag="{Binding id}"
-                                        Text="Modifier l'image" />
-                        <MenuFlyoutItem Click="MenuFlyoutItem_Click_1"
-                                        Tag="{Binding id}"
-                                        Text="Réinitialiser l'image" />
-                        <MenuFlyoutItem Click="MenuFlyoutItem_Click_Epingler"
-                                        Tag="{Binding id}"
-                                        Text="Epingler" />
-                    </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
-
-                <Image Width="300"
-                       Height="108"
-                       Source="{Binding Image}"
-                       Stretch="UniformToFill" />
-                <Rectangle Width="300"
-                           Height="48"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Bottom"
-                           Fill="{StaticResource BlueBase}"
-                           Opacity="0.8" />
-                <StackPanel VerticalAlignment="Bottom">
-                    <TextBlock x:Name="txtName"
-                               HorizontalAlignment="Center"
-                               FontSize="18"
-                               FontWeight="Bold"
-                               Text="{Binding Name,
-                                              FallbackValue=Name}"
-                               TextTrimming="CharacterEllipsis"
-                               TextWrapping="Wrap" />
-                    <TextBlock x:Name="txtCount"
-                               Margin="0,0,5,5"
-                               HorizontalAlignment="Right"
-                               FontSize="10"
-                               Text="{Binding Count,
-                                              FallbackValue=0}" />
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
+        <ResourceDictionary Source="../Styles/ObjectPageResources.xaml" />
     </Page.Resources>
 
     <Grid>
@@ -79,7 +33,14 @@
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
         </controls:PageHeader>
-        <StackPanel Grid.Row="1">
+
+        <!--  content  -->
+        <ScrollViewer Grid.Row="1">
+            <Pivot HeaderTemplate="{StaticResource ObjectHeaderTemplate}"
+                   ItemTemplate="{StaticResource ObjectPageTemplate}"
+                   ItemsSource="{Binding ObjectList}" />
+        </ScrollViewer>
+        <!--<StackPanel Grid.Row="1">
             <TextBlock HorizontalAlignment="Center" Text="Sélectionner un objet" />
             <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">
                 <GridView x:Name="objectview"
@@ -90,6 +51,6 @@
                           ItemTemplate="{StaticResource ObjectTemplate}"
                           ItemsSource="{Binding ObjectList}" />
             </ScrollViewer>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Page>

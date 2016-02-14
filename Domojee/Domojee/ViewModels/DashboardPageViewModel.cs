@@ -65,7 +65,7 @@ namespace Domojee.ViewModels
 
                 try
                 {
-                    await Task.Delay(TimeSpan.FromMinutes(1), tokenSource.Token);
+                    await Task.Delay(TimeSpan.FromMinutes(2), tokenSource.Token);
                 }
                 catch (Exception)
                 {
@@ -124,7 +124,7 @@ namespace Domojee.ViewModels
                     }
 
                     JdObject fakeobj = new JdObject();
-                    fakeobj.name = "Equipements sans objet parent";
+                    fakeobj.name = "Autres";
                     UpdateObjectImage(fakeobj);
                     ObjectList.Add(fakeobj);
                     fakeobj.eqLogics = new ObservableCollection<EqLogic>();
