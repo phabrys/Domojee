@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domojee.ViewModels;
+using Jeedom;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,11 +25,11 @@ namespace Domojee.Views
         public Splash(SplashScreen splashScreen)
         {
             this.InitializeComponent();
-            Window.Current.SizeChanged += (s, e) => Resize(splashScreen);
-            Resize(splashScreen);
+            //Window.Current.SizeChanged += (s, e) => Resize(splashScreen);
+            //Resize(splashScreen);
         }
 
-        private void Resize(SplashScreen splashScreen)
+        /*private void Resize(SplashScreen splashScreen)
         {
             if (splashScreen.ImageLocation.Top == 0)
             {
@@ -44,6 +46,6 @@ namespace Domojee.Views
             MyImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);
             MyImage.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.Left);
             ProgressTransform.TranslateY = MyImage.Height / 2;
-        }
+        }*/
     }
 }

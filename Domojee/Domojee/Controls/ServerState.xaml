@@ -11,7 +11,7 @@
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock HorizontalAlignment="Left"
                    FontSize="20"
-                   Text="{x:Bind MessageCount, FallbackValue=10}"
+                   Text="{x:Bind MessageCount, FallbackValue=0}"
                    TextTrimming="CharacterEllipsis" />
         <TextBlock HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"

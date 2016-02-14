@@ -67,7 +67,8 @@ namespace Jeedom
             {
                 return _loadingMessage;
             }
-            set
+
+            private set
             {
                 _loadingMessage = value;
                 NotifyPropertyChanged();
@@ -86,11 +87,24 @@ namespace Jeedom
             }
         }
 
+        public async Task<Error> PingJeedom()
+        {
+            var jsonrpc = new JsonRpcClient();
+            if (await jsonrpc.SendRequest("ping"))
+            {
+                var response = jsonrpc.GetRequestResponseDeserialized<ResponseString>();
+                if (response.result == "pong")
+                    return null;
+            }
+
+            return jsonrpc.Error;
+        }
+
         public async Task<Error> DownloadAll()
         {
             Updating = true;
 
-            LoadingMessage = "Chargment des Objets";
+            LoadingMessage = "Chargement des Objets";
             var error = await DownloadObjects();
             if (error != null)
                 return error;
@@ -99,9 +113,15 @@ namespace Jeedom
             error = await DownloadScenes();
             if (error != null)
                 return error;
+            Updating = false;
 
             LoadingMessage = "Chargement des Messages";
             error = await DownloadMessages();
+            if (error != null)
+                return error;
+
+            LoadingMessage = "Chargement des Interactions";
+            error = await DownloadInteraction();
             if (error != null)
                 return error;
 

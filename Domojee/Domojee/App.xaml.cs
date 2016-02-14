@@ -50,10 +50,10 @@ namespace Domojee
             ConfigurationViewModel config = new ConfigurationViewModel();
             if (config.Populated)
             {
-                var req = RequestViewModel.Instance;
-                if (await req.DownloadAll() != null)
+                if (await RequestViewModel.Instance.PingJeedom() != null)
                 {
-                    NavigationService.Navigate(typeof(Views.ConnectPage));
+                    NavigationService.Navigate(typeof(ConnectPage));
+                    return;
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(2));
@@ -61,7 +61,7 @@ namespace Domojee
             }
             else
             {
-                NavigationService.Navigate(typeof(Views.ConnectPage));
+                NavigationService.Navigate(typeof(ConnectPage));
             }
 
             return;// Task.CompletedTask;

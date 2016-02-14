@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Api\Http\HttpRpcClient.cs" />
     <Compile Include="Api\Json\Response\ResponseEqLogic.cs" />
+    <Compile Include="Api\Json\Response\ResponseString.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\CommandDisplay.cs" />
     <Compile Include="Model\CommandResult.cs" />

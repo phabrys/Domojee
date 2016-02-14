@@ -13,7 +13,7 @@ using Windows.Web.Http.Headers;
 
 namespace Jeedom.Api.Json
 {
-    internal class JsonRpcClient
+    public class JsonRpcClient
     {
         static private int Id;
         private Parameters parameters;

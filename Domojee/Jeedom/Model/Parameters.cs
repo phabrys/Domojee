@@ -3,7 +3,7 @@
 namespace Jeedom.Model
 {
     [DataContract]
-    internal class Parameters
+    public class Parameters
     {
         [DataMember]
         public string apikey;

@@ -1,4 +1,5 @@
-﻿using Jeedom;
+﻿using Domojee.ViewModels;
+using Jeedom;
 using Jeedom.Model;
 using System;
 using System.Collections.ObjectModel;
@@ -26,60 +27,9 @@ namespace Domojee.Views
     /// </summary>
     public sealed partial class DashboardPage : Page
     {
-        public ObservableCollection<JdObject> ObjectList = RequestViewModel.ObjectList;
-        public RequestViewModel RqViewModel = RequestViewModel.Instance;
-        public bool Updating;
-        private CancellationTokenSource tokenSource = new CancellationTokenSource();
-
         public DashboardPage()
         {
             this.InitializeComponent();
-        }
-
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
-            }
-
-            if (Frame.CanGoBack && Frame.BackStack.Last()?.SourcePageType.Name != "LoadingPage")
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            else
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-
-            var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            await taskFactory.StartNew(() => DoWork(tokenSource), tokenSource.Token);
-
-            base.OnNavigatedTo(e);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            tokenSource.Cancel();
-            tokenSource.Dispose();
-            base.OnNavigatedFrom(e);
-        }
-
-        private async Task DoWork(CancellationTokenSource tokenSource)
-        {
-            while (!tokenSource.IsCancellationRequested)
-            {
-                Updating = true;
-                Bindings.Update();
-                await RequestViewModel.Instance.UpdateObjectList();
-                Updating = false;
-                Bindings.Update();
-
-                try
-                {
-                    await Task.Delay(TimeSpan.FromMinutes(15), tokenSource.Token);
-                }
-                catch (Exception)
-                {
-                    return;
-                }
-            }
         }
 
         private void objectview_ItemClick(object sender, ItemClickEventArgs e)
