@@ -16,9 +16,7 @@
         <converter:EqLogicCmdInfoByTypeConverter />
         <converter:EqLogicState2BrushConverter />
     </converter:ValueConverterGroup>
-    <DataTemplate x:Key="ObjectHeaderTemplate">
-        <TextBlock Text="{Binding Name}" />
-    </DataTemplate>
+
     <DataTemplate x:Key="ObjectTemplate">
         <Grid CornerRadius="2"
               Holding="Grid_Holding"
@@ -338,28 +336,34 @@
                                       SonosEqLogicTemplate="{StaticResource SonosEqLogicTemplate}"
                                       ZWaveEqLogicTemplate="{StaticResource ZWaveEqLogicTemplate}" />
 
+    <DataTemplate x:Key="ObjectHeaderTemplate">
+        <TextBlock Text="{Binding name}" />
+    </DataTemplate>
+
     <DataTemplate x:Key="ObjectPageTemplate">
-        <ctl:VariableSizedGridView x:Name="eqlogicview"
-                                   IsItemClickEnabled="True"
-                                   ItemClick="eqlogicview_ItemClick"
-                                   ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
-                                   ItemsSource="{Binding eqLogics}"
-                                   Padding="15"
-                                   SelectionMode="None">
-            <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                </Style>
-            </GridView.ItemContainerStyle>
-            <ctl:VariableSizedGridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid ItemHeight="150"
-                                           ItemWidth="150"
-                                           MaximumRowsOrColumns="5"
-                                           Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ctl:VariableSizedGridView.ItemsPanel>
-        </ctl:VariableSizedGridView>
+        <Grid>
+            <ctl:VariableSizedGridView x:Name="eqlogicview"
+                                       IsItemClickEnabled="True"
+                                       ItemClick="eqlogicview_ItemClick"
+                                       ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
+                                       ItemsSource="{Binding eqLogics}"
+                                       Padding="15"
+                                       SelectionMode="None">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <ctl:VariableSizedGridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VariableSizedWrapGrid ItemHeight="150"
+                                               ItemWidth="150"
+                                               MaximumRowsOrColumns="5"
+                                               Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ctl:VariableSizedGridView.ItemsPanel>
+            </ctl:VariableSizedGridView>
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>

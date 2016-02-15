@@ -24,31 +24,88 @@ namespace Jeedom.Model
             }
         }
 
-        [DataMember]
-        public string name;
+        private string _name;
 
         [DataMember]
-        public string isVisible;
-
-        [DataMember]
-        public string father_id;
-
-        [DataMember]
-        public ObservableCollection<EqLogic> eqLogics;
-
-        [DataMember]
-        public DisplayInfo display;
-
-        public string Name
+        public string name
         {
             get
             {
-                return name;
+                return _name;
             }
 
             set
             {
-                name = value;
+                _name = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _isVisible;
+
+        [DataMember]
+        public string isVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+
+            set
+            {
+                _isVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _father_id;
+
+        [DataMember]
+        public string father_id
+        {
+            get
+            {
+                return _father_id;
+            }
+
+            set
+            {
+                _father_id = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<EqLogic> _eqLogics;
+
+        [DataMember]
+        public ObservableCollection<EqLogic> eqLogics
+        {
+            get
+            {
+                return _eqLogics;
+            }
+
+            set
+            {
+                _eqLogics = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private DisplayInfo _display;
+
+        [DataMember]
+        public DisplayInfo display
+        {
+            get
+            {
+                return _display;
+            }
+
+            set
+            {
+                _display = value;
+                NotifyPropertyChanged();
             }
         }
 

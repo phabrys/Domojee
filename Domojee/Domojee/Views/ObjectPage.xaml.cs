@@ -52,7 +52,7 @@ namespace Domojee.Views
             this.Object = e.Parameter as JdObject;
 
             EqLogicList = this.Object.eqLogics;
-            ObjectName = this.Object.Name;
+            ObjectName = this.Object.name;
             ImagePath = this.Object.Image;
 
             var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());

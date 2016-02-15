@@ -90,7 +90,7 @@ namespace Domojee.Views
                 {
                     var Tile = new SecondaryTile(objs.id)
                     {
-                        DisplayName = objs.Name,
+                        DisplayName = objs.name,
                         Arguments = "Object",
                     };
                     var succes = await Tile.RequestCreateAsync();

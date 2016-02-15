@@ -117,8 +117,6 @@ namespace Domojee.ViewModels
                                         CommandList.Add(cmd);
                                     }
                                 }
-                                else
-                                    eq.cmds = new ObservableCollection<Command>();
                             }
                         }
                     }
