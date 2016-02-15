@@ -40,17 +40,5 @@
                    ItemTemplate="{StaticResource ObjectPageTemplate}"
                    ItemsSource="{Binding ObjectList}" />
         </ScrollViewer>
-        <!--<StackPanel Grid.Row="1">
-            <TextBlock HorizontalAlignment="Center" Text="Sélectionner un objet" />
-            <ScrollViewer Height="{ThemeResource AutoSuggestListMaxHeight}">
-                <GridView x:Name="objectview"
-                          Margin="15"
-                          HorizontalAlignment="Center"
-                          IsItemClickEnabled="True"
-                          ItemClick="objectview_ItemClick"
-                          ItemTemplate="{StaticResource ObjectTemplate}"
-                          ItemsSource="{Binding ObjectList}" />
-            </ScrollViewer>
-        </StackPanel>-->
     </Grid>
 </Page>

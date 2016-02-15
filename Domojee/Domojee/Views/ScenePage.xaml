@@ -7,10 +7,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Domojee.ViewModels"
       mc:Ignorable="d">
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
     </Page.Background>
+    <Page.DataContext>
+        <vm:ScenePageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -25,14 +29,14 @@
         </controls10:PageHeader>
 
         <!--  content  -->
-        <ScrollViewer Grid.Row="1" Height="{ThemeResource AutoSuggestListMaxHeight}">
+        <ScrollViewer Grid.Row="1">
             <StackPanel>
                 <GridView x:Name="gridview"
                           Margin="15"
                           IsItemClickEnabled="True"
                           ItemClick="gridview_ItemClick"
                           ItemTemplate="{StaticResource SceneTemplate}"
-                          ItemsSource="{x:Bind SceneList}"
+                          ItemsSource="{Binding SceneList}"
                           SelectionMode="None" />
             </StackPanel>
         </ScrollViewer>

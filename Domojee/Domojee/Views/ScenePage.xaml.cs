@@ -16,26 +16,9 @@ namespace Domojee.Views
     /// </summary>
     public sealed partial class ScenePage : Page
     {
-        private ObservableCollection<Scene> SceneList = RequestViewModel.SceneList;
-
         public ScenePage()
         {
             this.InitializeComponent();
-        }
-
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
-            }
-
-            if (Frame.CanGoBack)
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            else
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-
-            base.OnNavigatedTo(e);
         }
 
         private async void gridview_ItemClick(object sender, ItemClickEventArgs e)

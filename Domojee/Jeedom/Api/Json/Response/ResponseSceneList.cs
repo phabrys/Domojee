@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Jeedom.Api.Json.Response
 {
     [DataContract]
-    internal class ResponseSceneList : Response
+    public class ResponseSceneList : Response
     {
         [DataMember]
         public ObservableCollection<Scene> result;

@@ -1,10 +1,10 @@
-﻿using Jeedom;
-using Jeedom.Api.Json;
+﻿using Jeedom.Api.Json;
 using Jeedom.Api.Json.Response;
 using Jeedom.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Template10.Mvvm;
@@ -23,7 +23,9 @@ namespace Domojee.ViewModels
         public ObservableCollection<EqLogic> EqLogicList { get; set; }
         public ObservableCollection<Command> CommandList { get; set; }
 
-        public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
+        //public StorageFolder ImageFolder;
+        private string ImageFolderName = "Images";
+
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         public DashboardPageViewModel()
@@ -41,6 +43,22 @@ namespace Domojee.ViewModels
             {
                 await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             }
+
+            /*try
+            {
+                ImageFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync(ImageFolderName);
+            }
+            catch (FileNotFoundException)
+            {
+                try
+                {
+                    await ApplicationData.Current.LocalFolder.CreateFolderAsync(ImageFolderName);
+                }
+                catch (Exception)
+                {
+                    //TODO: désactiver l'utilisation des images dans le cas où on ne peut pas créer le dossier Images
+                }
+            }*/
 
             var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             await taskFactory.StartNew(() => DoWork(tokenSource), tokenSource.Token);
@@ -74,7 +92,7 @@ namespace Domojee.ViewModels
             }
         }
 
-        private async void UpdateObjectImage(JdObject obj)
+        /*private async void UpdateObjectImage(JdObject obj)
         {
             try
             {
@@ -85,7 +103,7 @@ namespace Domojee.ViewModels
             {
                 obj.Image = "ms-appx:///Images/WP.jpg";
             }
-        }
+        }*/
 
         public async Task<Error> DownloadObjects()
         {
@@ -104,7 +122,7 @@ namespace Domojee.ViewModels
                     {
                         ObjectList.Add(o);
                         idList.Add("dmj" + o.id);
-                        UpdateObjectImage(o);
+                        //UpdateObjectImage(o);
                         if (o.eqLogics != null)
                         {
                             foreach (EqLogic eq in o.eqLogics)
@@ -123,7 +141,7 @@ namespace Domojee.ViewModels
 
                     JdObject fakeobj = new JdObject();
                     fakeobj.name = "Autres";
-                    UpdateObjectImage(fakeobj);
+                    //UpdateObjectImage(fakeobj);
                     ObjectList.Add(fakeobj);
                     fakeobj.eqLogics = new ObservableCollection<EqLogic>();
 
@@ -157,14 +175,14 @@ namespace Domojee.ViewModels
                     }
 
                     // Efface les images inutiles
-                    var files = await ImageFolder.GetFilesAsync();
+                    /*var files = await ImageFolder.GetFilesAsync();
                     foreach (StorageFile f in files)
                     {
                         if (!idList.Contains(f.DisplayName))
                         {
                             await f.DeleteAsync();
                         }
-                    }
+                    }*/
                 }
                 else
                 {

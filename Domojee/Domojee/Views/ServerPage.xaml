@@ -99,7 +99,7 @@
                            FontSize="20"
                            Text="Liste des messages" />
                 <ListView x:Name="messageView"
-                          ItemsSource="{x:Bind MessageList}"
+                          ItemsSource="{Binding MessageList}"
                           SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>

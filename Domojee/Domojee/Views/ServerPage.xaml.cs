@@ -26,21 +26,6 @@ namespace Domojee.Views
                 messageText.Visibility = Visibility.Collapsed;
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
-            }
-
-            if (Frame.CanGoBack)
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            else
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-
-            base.OnNavigatedTo(e);
-        }
-
         private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Grid item = e.ClickedItem as Grid;
