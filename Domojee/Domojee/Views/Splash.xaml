@@ -12,9 +12,6 @@
              mc:Ignorable="d">
 
     <Grid Background="{StaticResource BlueBase}">
-        <Grid.DataContext>
-            <vm:SplashViewModel x:Name="ViewModel" />
-        </Grid.DataContext>
 
         <TextBlock x:Name="tbInformation"
                    Margin="0,0,0,100"
