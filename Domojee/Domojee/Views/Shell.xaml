@@ -72,21 +72,6 @@
                     </Controls:HamburgerButtonInfo>
 
                     <!--  aboutpage button  -->
-                    <Controls:HamburgerButtonInfo x:Name="ConfigButton" PageType="views:ConfigPage">
-                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                            <SuppressNavigationTransitionInfo />
-                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon Width="48"
-                                        Height="48"
-                                        Symbol="Setting" />
-                            <TextBlock Margin="12,0,0,0"
-                                       VerticalAlignment="Center"
-                                       Text="Configuration" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
-
-                    <!--  aboutpage button  -->
                     <Controls:HamburgerButtonInfo x:Name="AboutButton" PageType="views:AboutPage">
                         <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                             <SuppressNavigationTransitionInfo />
