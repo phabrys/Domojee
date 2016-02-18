@@ -48,6 +48,7 @@ namespace Domojee
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             ConfigurationViewModel config = new ConfigurationViewModel();
+            SettingsService.Instance.UseShellBackButton = true;
             if (config.Populated)
             {
                 if (await RequestViewModel.Instance.PingJeedom() != null)

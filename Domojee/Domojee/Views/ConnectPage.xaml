@@ -27,7 +27,6 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:4" Value="1" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-
         <Style x:Key="RoundButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />

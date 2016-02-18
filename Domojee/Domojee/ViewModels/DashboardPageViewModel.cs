@@ -24,7 +24,7 @@ namespace Domojee.ViewModels
         public ObservableCollection<Command> CommandList { get; set; }
 
         //public StorageFolder ImageFolder;
-        private string ImageFolderName = "Images";
+        //private string ImageFolderName = "Images";
 
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
 

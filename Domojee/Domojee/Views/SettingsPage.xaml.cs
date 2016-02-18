@@ -1,5 +1,4 @@
-﻿using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+﻿using Domojee.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,11 +8,13 @@ using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+
 namespace Domojee.Views
 {
     public sealed partial class SettingsPage : Page
     {
-
         private const string BackgroundTaskName = "LocationBackgroundTask";
         private const string BackgroundTaskEntryPoint = "Localisation.LocationBackgroundTask";
         private IBackgroundTaskRegistration _geolocTask = null;
@@ -25,7 +26,7 @@ namespace Domojee.Views
             InitializeComponent();
             _SerializationService = Template10.Services.SerializationService.SerializationService.Json; var settings = ApplicationData.Current.LocalSettings;
             ObservableCollection<Jeedom.Model.Command> GeolocCmd = new ObservableCollection<Jeedom.Model.Command>();
-            foreach (var Equipement in Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("geoloc")))
+            foreach (var Equipement in DashboardPageViewModel.Instance.EqLogicList.Where(w => w.eqType_name.Equals("geoloc")))
             {
                 foreach (var Cmd in Equipement.GetInformationsCmds())
                     GeolocCmd.Add(Cmd);
@@ -52,7 +53,7 @@ namespace Domojee.Views
                     HomePosition_Cmd.SelectedItem = ObjectsSelect;
                 }
             }
-            var ObjetctPush = Jeedom.RequestViewModel.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
+            var ObjetctPush = DashboardPageViewModel.Instance.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
             MobileNotification.ItemsSource = ObjetctPush;
             if (ObjetctPush.Count() == 0)
                 activePush.IsEnabled = false;
@@ -61,7 +62,7 @@ namespace Domojee.Views
             var NotificationId = settings.Values["NotificationObjectId"];
             if (NotificationId != null)
             {
-                foreach (var ObjectsSelect in Jeedom.RequestViewModel.EqLogicList.Where(w => w.id.Equals(NotificationId)))
+                foreach (var ObjectsSelect in DashboardPageViewModel.Instance.EqLogicList.Where(w => w.id.Equals(NotificationId)))
                 {
                     MobileNotification.SelectedItem = ObjectsSelect;
                 }
@@ -274,6 +275,5 @@ namespace Domojee.Views
                 settings.Values["NotificationObjectId"] = EqLogicSelect.id;
             }
         }
-
     }
 }
