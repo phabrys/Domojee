@@ -519,8 +519,7 @@
                 </GridView.ItemContainerStyle>
                 <ctl:VariableSizedGridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid ItemHeight="150"
-                                               ItemWidth="150"
+                        <VariableSizedWrapGrid 
                                                MaximumRowsOrColumns="5"
                                                Orientation="Horizontal" />
                     </ItemsPanelTemplate>
