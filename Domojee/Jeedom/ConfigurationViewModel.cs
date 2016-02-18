@@ -10,6 +10,7 @@ namespace Jeedom
         private string _apikey;
         private bool _selfSigned = false;
         private bool _useSsl = false;
+        private string _dnsuri;
 
         public Uri Uri
         {
@@ -20,7 +21,7 @@ namespace Jeedom
             }
         }
 
-        public string Pathy
+        public string Path
         {
             get
             {
@@ -91,6 +92,22 @@ namespace Jeedom
             }
         }
 
+        public string DnsUri
+        {
+            set
+            {
+                if (value != null)
+                {
+                    _dnsuri = value;
+                    RoamingSettings.Values[settingDNS] = value;
+                }
+            }
+            get
+            {
+                return _dnsuri;
+            }
+        }
+
         public bool Populated = false;
         private bool _GeolocActivation;
 
@@ -107,6 +124,7 @@ namespace Jeedom
                 return _GeolocActivation;
             }
         }
+
         private bool _GeoFenceActivation;
 
         public bool GeoFenceActivation
@@ -122,6 +140,7 @@ namespace Jeedom
                 return _GeoFenceActivation;
             }
         }
+
         private string _GeoFenceActivationDistance;
 
         public string GeoFenceActivationDistance
@@ -138,7 +157,6 @@ namespace Jeedom
             }
         }
 
-        
         private bool _NotificationActivation;
 
         public bool NotificationActivation
@@ -195,6 +213,7 @@ namespace Jeedom
         private const string settingAPIKey = "apikeySetting";
         private const string settingUseSsl = "useSslSetting";
         private const string settingSelfSigned = "selfSignedSetting";
+        private const string settingDNS = "DnsSetting";
 
         public ConfigurationViewModel()
         {

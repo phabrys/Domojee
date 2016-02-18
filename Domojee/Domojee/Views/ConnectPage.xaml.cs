@@ -32,7 +32,6 @@ namespace Domojee.Views
             {
                 await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             }
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Logo.Begin();
         }
     }
