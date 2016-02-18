@@ -43,7 +43,6 @@ namespace Jeedom.Model
                 _display = value;
             }
         }
-
         [DataMember]
         public string subType;
 

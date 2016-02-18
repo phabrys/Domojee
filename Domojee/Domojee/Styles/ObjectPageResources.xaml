@@ -275,8 +275,194 @@
         </RelativePanel>
     </DataTemplate>
 
-    <!--  Template pour commande On Off  -->
+    <!--  Template pour un equipement On Off  -->
     <DataTemplate x:Key="OnOffEqLogicTemplate">
+        <RelativePanel Background="{Binding cmds,
+                                            Converter={StaticResource GroupState2BrushConverter},
+                                            ConverterParameter=LIGHT_STATE}"
+                       Padding="4"
+                       d:DesignHeight="150"
+                       d:DesignWidth="150">
+            <ProgressRing x:Name="PART_Updating"
+                          IsActive="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          Visibility="{Binding Updating,
+                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
+            <StackPanel x:Name="PART_Commands"
+                        Orientation="Horizontal"
+                        RelativePanel.Above="PART_Caption"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <Button Command="{Binding ExecCommandByType}"
+                        CommandParameter="LIGHT_ON"
+                        Content="On" />
+                <Button Margin="4,0,0,0"
+                        Command="{Binding ExecCommandByType}"
+                        CommandParameter="LIGHT_OFF"
+                        Content="Off" />
+            </StackPanel>
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Viewbox x:Name="PART_Icon"
+                     Margin="4"
+                     RelativePanel.Above="PART_Commands"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
+                           Text="&#xF0EB;" />
+            </Viewbox>
+            <TextBlock x:Name="PART_Caption"
+                       FontFamily="Segoe UI"
+                       FontSize="8"
+                       FontWeight="Light"
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       Text="{Binding eqType_name,
+                                      FallbackValue=Type}" />
+        </RelativePanel>
+    </DataTemplate>
+    <!--  Template pour commande On Off  -->
+    <DataTemplate x:Key="LIGHT_STATE_Template">
+        <RelativePanel Background="{Binding cmds,
+                                            Converter={StaticResource GroupState2BrushConverter},
+                                            ConverterParameter=LIGHT_STATE}"
+                       Padding="4"
+                       d:DesignHeight="150"
+                       d:DesignWidth="150">
+            <ProgressRing x:Name="PART_Updating"
+                          IsActive="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          Visibility="{Binding Updating,
+                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Viewbox x:Name="PART_Icon"
+                     Margin="4"
+                     RelativePanel.Above="PART_Commands"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
+                           Text="&#xF0EB;" />
+            </Viewbox>
+            <TextBlock x:Name="PART_Caption"
+                       FontFamily="Segoe UI"
+                       FontSize="8"
+                       FontWeight="Light"
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       Text="{Binding eqType_name,
+                                      FallbackValue=Type}" />
+        </RelativePanel>
+    </DataTemplate>
+    <DataTemplate x:Key="LIGHT_ON_Template">
+        <RelativePanel Background="{Binding cmds,
+                                            Converter={StaticResource GroupState2BrushConverter},
+                                            ConverterParameter=LIGHT_STATE}"
+                       Padding="4"
+                       d:DesignHeight="150"
+                       d:DesignWidth="150">
+            <ProgressRing x:Name="PART_Updating"
+                          IsActive="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          Visibility="{Binding Updating,
+                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
+            <StackPanel x:Name="PART_Commands"
+                        Orientation="Horizontal"
+                        RelativePanel.Above="PART_Caption"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <Button Command="{Binding ExecCommandByType}"
+                        CommandParameter="LIGHT_ON"
+                        Content="On" />
+                <Button Margin="4,0,0,0"
+                        Command="{Binding ExecCommandByType}"
+                        CommandParameter="LIGHT_OFF"
+                        Content="Off" />
+            </StackPanel>
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Viewbox x:Name="PART_Icon"
+                     Margin="4"
+                     RelativePanel.Above="PART_Commands"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
+                           Text="&#xF0EB;" />
+            </Viewbox>
+            <TextBlock x:Name="PART_Caption"
+                       FontFamily="Segoe UI"
+                       FontSize="8"
+                       FontWeight="Light"
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       Text="{Binding eqType_name,
+                                      FallbackValue=Type}" />
+        </RelativePanel>
+    </DataTemplate>
+    <DataTemplate x:Key="LIGHT_OFF_Template">
+        <RelativePanel Background="{Binding cmds,
+                                            Converter={StaticResource GroupState2BrushConverter},
+                                            ConverterParameter=LIGHT_STATE}"
+                       Padding="4"
+                       d:DesignHeight="150"
+                       d:DesignWidth="150">
+            <ProgressRing x:Name="PART_Updating"
+                          IsActive="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          Visibility="{Binding Updating,
+                                               Converter={StaticResource EqLogicUpdatingConverter}}"  />
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Viewbox x:Name="PART_Icon"
+                     Margin="4"
+                     RelativePanel.Above="PART_Commands"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
+                           Text="&#xF0EB;" />
+            </Viewbox>
+            <TextBlock x:Name="PART_Caption"
+                       FontFamily="Segoe UI"
+                       FontSize="8"
+                       FontWeight="Light"
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       Text="{Binding eqType_name,
+                                      FallbackValue=Type}" />
+        </RelativePanel>
+    </DataTemplate>
+    <!--  Template pour commande On Off  -->
+    <DataTemplate x:Key="CommandeTemplate">
         <RelativePanel Background="{Binding cmds,
                                             Converter={StaticResource GroupState2BrushConverter},
                                             ConverterParameter=LIGHT_STATE}"
@@ -335,6 +521,11 @@
                                       OnOffEqLogicTemplate="{StaticResource OnOffEqLogicTemplate}"
                                       SonosEqLogicTemplate="{StaticResource SonosEqLogicTemplate}"
                                       ZWaveEqLogicTemplate="{StaticResource ZWaveEqLogicTemplate}" />
+    <selector:CmdTemplateSelector x:Key="CmdTemplateSelector"
+                                      CmdTemplate="{StaticResource CmdTemplate}"
+                                      LIGHT_STATE_Template="{StaticResource LIGHT_STATE_Template}"
+                                      LIGHT_ON_Template="{StaticResource LIGHT_ON_Template}"
+                                      LIGHT_OFF_Template="{StaticResource LIGHT_OFF_Template}" />
 
     <DataTemplate x:Key="ObjectHeaderTemplate">
         <TextBlock Text="{Binding name}" />
