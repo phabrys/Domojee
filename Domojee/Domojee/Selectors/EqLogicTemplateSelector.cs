@@ -40,8 +40,8 @@ namespace Domojee.Selectors
             //TODO : Voir "generic_type" : https://www.jeedom.com/forum/viewtopic.php?f=112&t=15155#p278226
 
             // Lumière OnOff
-            if (ContainCmd(eq, new[] { "LIGHT_STATE", "LIGHT_ON", "LIGHT_OFF" }))
-                return OnOffEqLogicTemplate;
+          /*  if (ContainCmd(eq, new[] { "LIGHT_STATE", "LIGHT_ON", "LIGHT_OFF" }))
+                return OnOffEqLogicTemplate;*/
 
             // Cherche par rapport au plugin
             switch (eq.eqType_name)

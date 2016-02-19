@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 
 namespace Domojee.Converters
 {
-    internal class EqLogicUpdatingConverter : IValueConverter
+    internal class UpdatingConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
