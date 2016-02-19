@@ -123,6 +123,7 @@
     <Compile Include="Selectors\EqLogicTemplateSelector.cs" />
     <Compile Include="Services\SettingsServices\SettingsServices.cs" />
     <Compile Include="ViewModels\AboutPageViewModel.cs" />
+    <Compile Include="ViewModels\ConnectPageViewModel.cs" />
     <Compile Include="ViewModels\DashboardPageViewModel.cs" />
     <Compile Include="ViewModels\ScenePageViewModel.cs" />
     <Compile Include="ViewModels\ServerPageViewModel.cs" />

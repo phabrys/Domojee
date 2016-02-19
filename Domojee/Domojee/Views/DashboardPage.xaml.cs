@@ -58,22 +58,22 @@ namespace Domojee.Views
                 var item = sender as MenuFlyoutItem;
                 var id = item.Tag as string;
 
-                RequestViewModel.UpdateObjectImage(id, null);
-                var onedrivefile = await RequestViewModel.ImageFolder.CreateFileAsync("dmj" + id, CreationCollisionOption.ReplaceExisting);
-                await file.CopyAndReplaceAsync(onedrivefile);
-                RequestViewModel.UpdateObjectImage(id, onedrivefile.DisplayName);
+                //RequestViewModel.Instance.UpdateObjectImage(id, null);
+                //var onedrivefile = await RequestViewModel.ImageFolder.CreateFileAsync("dmj" + id, CreationCollisionOption.ReplaceExisting);
+                //await file.CopyAndReplaceAsync(onedrivefile);
+                //RequestViewModel.UpdateObjectImage(id, onedrivefile.DisplayName);
             }
         }
 
-        private async void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        private /*async*/ void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
             try
             {
                 var item = sender as MenuFlyoutItem;
                 var id = item.Tag as string;
-                RequestViewModel.UpdateObjectImage(id, null);
-                var file = await RequestViewModel.ImageFolder.GetFileAsync("dmj" + id);
-                await file.DeleteAsync();
+                //RequestViewModel.UpdateObjectImage(id, null);
+                //var file = await RequestViewModel.ImageFolder.GetFileAsync("dmj" + id);
+                //await file.DeleteAsync();
             }
             catch (Exception) { }
         }
@@ -84,7 +84,7 @@ namespace Domojee.Views
             {
                 var item = sender as MenuFlyoutItem;
                 var id = item.Tag as string;
-                JdObject objs = RequestViewModel.ObjectList.Where(o => o.id.Equals(id)).First();
+                JdObject objs = RequestViewModel.Instance.ObjectList.Where(o => o.id.Equals(id)).First();
                 var TileExist = SecondaryTile.Exists(objs.id);
                 if (!TileExist)
                 {

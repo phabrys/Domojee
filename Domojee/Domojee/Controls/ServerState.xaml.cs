@@ -7,7 +7,7 @@ namespace Domojee.Controls
 {
     public sealed partial class ServerState : UserControl
     {
-        public int MessageCount = RequestViewModel.MessageList.Count;
+        public int MessageCount = RequestViewModel.Instance.MessageList.Count;
 
         public ServerState()
         {

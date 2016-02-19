@@ -100,7 +100,7 @@ namespace Domojee.Views
         {
             var element = sender as FrameworkElement;
             var id = element.Tag as string;
-            var eq = RequestViewModel.EqLogicList.Where(eqlogic => eqlogic.id == id).First();
+            var eq = RequestViewModel.Instance.EqLogicList.Where(eqlogic => eqlogic.id == id).First();
             string cmdName;
             if (!eq.Updating)
             {

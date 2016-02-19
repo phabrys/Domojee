@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography.Certificates;
 using Windows.Web.Http;
@@ -27,7 +24,7 @@ namespace Jeedom.Api.Http
                 var uri = new Uri(config.Uri + _path);
 
                 var filter = new HttpBaseProtocolFilter();
-                if (config.IsSelfSigned)
+                if (config.IsSelfSigned == true)
                 {
                     filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Untrusted);
                     filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.InvalidName);

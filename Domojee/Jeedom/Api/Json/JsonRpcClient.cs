@@ -67,7 +67,7 @@ namespace Jeedom.Api.Json
             var uri = new Uri(config.Uri + "/core/api/jeeApi.php");
 
             var filter = new HttpBaseProtocolFilter();
-            if (config.IsSelfSigned)
+            if (config.IsSelfSigned == true)
             {
                 filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Untrusted);
                 filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.InvalidName);

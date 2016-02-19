@@ -35,12 +35,63 @@ namespace Jeedom
             }
         }
 
-        static public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
-        static public ObservableCollection<Message> MessageList = new ObservableCollection<Message>();
-        static public ObservableCollection<EqLogic> EqLogicList;
-        static public ObservableCollection<Command> CommandList;
-        static public ObservableCollection<JdObject> ObjectList;
-        static public ObservableCollection<Scene> SceneList = new ObservableCollection<Scene>();
+        private ObservableCollection<Message> _messageList = new ObservableCollection<Message>();
+        private ObservableCollection<EqLogic> _eqLogicList = new ObservableCollection<EqLogic>();
+        private ObservableCollection<Command> _commandList = new ObservableCollection<Command>();
+        private ObservableCollection<JdObject> _objectList = new ObservableCollection<JdObject>();
+        private ObservableCollection<Scene> _sceneList = new ObservableCollection<Scene>();
+
+        public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
+
+        public ObservableCollection<Message> MessageList
+        {
+            get { return _messageList; }
+            set
+            {
+                _messageList = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<EqLogic> EqLogicList
+        {
+            get { return _eqLogicList; }
+            set
+            {
+                _eqLogicList = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Command> CommandList
+        {
+            get { return _commandList; }
+            set
+            {
+                _commandList = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<JdObject> ObjectList
+        {
+            get { return _objectList; }
+            set
+            {
+                _objectList = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Scene> SceneList
+        {
+            get { return _sceneList; }
+            set
+            {
+                _sceneList = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public CancellationTokenSource tokenSource;
 
@@ -71,6 +122,18 @@ namespace Jeedom
             private set
             {
                 _loadingMessage = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private int _progress = 0;
+
+        public int Progress
+        {
+            get { return _progress; }
+            set
+            {
+                _progress = value;
                 NotifyPropertyChanged();
             }
         }
@@ -108,22 +171,25 @@ namespace Jeedom
             var error = await DownloadObjects();
             if (error != null)
                 return error;
+            Progress += 25;
 
             LoadingMessage = "Chargement des Scénarios";
             error = await DownloadScenes();
             if (error != null)
                 return error;
-            Updating = false;
+            Progress += 25;
 
             LoadingMessage = "Chargement des Messages";
             error = await DownloadMessages();
             if (error != null)
                 return error;
+            Progress += 25;
 
             LoadingMessage = "Chargement des Interactions";
             error = await DownloadInteraction();
             if (error != null)
                 return error;
+            Progress += 25;
 
             Updating = false;
             return null;
@@ -136,20 +202,21 @@ namespace Jeedom
         public async Task<Error> DownloadObjects()
         {
             var jsonrpc = new JsonRpcClient();
-            EqLogicList = new ObservableCollection<EqLogic>();
-            CommandList = new ObservableCollection<Command>();
+            EqLogicList.Clear();
+            CommandList.Clear();
+            ObjectList.Clear();
 
             if (await jsonrpc.SendRequest("object::full"))
             {
-                List<string> idList = new List<string>();
+                //List<string> idList = new List<string>();
                 var response = jsonrpc.GetRequestResponseDeserialized<ResponseJdObjectList>();
                 if (response.result != null)
                 {
-                    ObjectList = response.result;
-                    foreach (JdObject o in ObjectList)
+                    foreach (JdObject o in response.result)
                     {
-                        idList.Add("dmj" + o.id);
-                        UpdateObjectImage(o);
+                        ObjectList.Add(o);
+                        //idList.Add("dmj" + o.id);
+                        //UpdateObjectImage(o);
                         if (o.eqLogics != null)
                         {
                             foreach (EqLogic eq in o.eqLogics)
@@ -169,8 +236,8 @@ namespace Jeedom
                     }
 
                     JdObject fakeobj = new JdObject();
-                    fakeobj.name = "Equipements sans objet parent";
-                    UpdateObjectImage(fakeobj);
+                    fakeobj.name = "Autres";
+                    //UpdateObjectImage(fakeobj);
                     ObjectList.Add(fakeobj);
                     fakeobj.eqLogics = new ObservableCollection<EqLogic>();
 
@@ -204,38 +271,21 @@ namespace Jeedom
                     }
 
                     // Efface les images inutiles
-                    var files = await ImageFolder.GetFilesAsync();
+                    /*var files = await ImageFolder.GetFilesAsync();
                     foreach (StorageFile f in files)
                     {
                         if (!idList.Contains(f.DisplayName))
                         {
                             await f.DeleteAsync();
                         }
-                    }
-                }
-                else
-                {
-                    if (ObjectList == null)
-                        ObjectList = new ObservableCollection<JdObject>();
-                    else
-                        ObjectList.Clear();
-
-                    if (EqLogicList == null)
-                        EqLogicList = new ObservableCollection<EqLogic>();
-                    else
-                        EqLogicList.Clear();
-
-                    if (CommandList == null)
-                        CommandList = new ObservableCollection<Command>();
-                    else
-                        CommandList.Clear();
+                    }*/
                 }
             }
 
             return jsonrpc.Error;
         }
 
-        private async void UpdateObjectImage(JdObject obj)
+        /*private async void UpdateObjectImage(JdObject obj)
         {
             try
             {
@@ -248,7 +298,7 @@ namespace Jeedom
             }
         }
 
-        public static void UpdateObjectImage(string id, string name)
+        /*public static void UpdateObjectImage(string id, string name)
         {
             var objs = from o in ObjectList where o.id == id select o;
             if (objs.Count() != 0)
