@@ -13,10 +13,6 @@
     xmlns:vm="using:Domojee.ViewModels"
     mc:Ignorable="d">
 
-    <Page.Background>
-        <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
-    </Page.Background>
-
     <Page.DataContext>
         <vm:DashboardPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
@@ -39,11 +35,14 @@
         </controls:PageHeader>
 
         <!--  content  -->
-        <ScrollViewer Grid.Row="1">
-            <Pivot
-                HeaderTemplate="{StaticResource ObjectHeaderTemplate}"
-                ItemTemplate="{StaticResource ObjectPageTemplate}"
-                ItemsSource="{x:Bind ViewModel.ObjectList}" />
-        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <ProgressBar IsIndeterminate="True" Visibility="{x:Bind ViewModel.Updating}" VerticalAlignment="Top" Canvas.ZIndex="2" Height="10" />
+            <ScrollViewer>
+                <Pivot
+                    HeaderTemplate="{StaticResource ObjectHeaderTemplate}"
+                    ItemTemplate="{StaticResource ObjectPageTemplate}"
+                    ItemsSource="{x:Bind ViewModel.ObjectList}" />
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

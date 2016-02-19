@@ -13,22 +13,14 @@
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource BlueBase}">
-
+        <Image x:Name="image" HorizontalAlignment="Center" Margin="0,0,0,100" VerticalAlignment="Center" Source="ms-appx:///Assets/Square150x150Logo.png" Width="150" Height="150" />
         <TextBlock
-            Margin="0,0,0,100"
+            Margin="0,0,0,-100"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="21.333"
             FontWeight="Bold"
             Text="{Binding LoadingMessage, FallbackValue='Connexion en cours'}" />
-        <ProgressBar Width="300" Value="{Binding Progress, FallbackValue=0}" />
-        <ProgressRing
-            x:Name="progressRing"
-            Width="50"
-            Height="50"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Foreground="White"
-            IsActive="True" />
+        <ProgressBar Width="300" Value="{Binding Progress, FallbackValue=0}" Foreground="White" Margin="0,0,0,-200" />
     </Grid>
 </UserControl>

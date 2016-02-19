@@ -13,12 +13,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace Jeedom
 {
     public class RequestViewModel : INotifyPropertyChanged
     {
         static private RequestViewModel _instance;
+
+        private int pass = 0;
 
         private RequestViewModel()
         { }
@@ -95,9 +98,9 @@ namespace Jeedom
 
         public CancellationTokenSource tokenSource;
 
-        private bool _updating = false;
+        private Visibility _updating;
 
-        public bool Updating
+        public Visibility Updating
         {
             get
             {
@@ -165,13 +168,13 @@ namespace Jeedom
 
         public async Task<Error> DownloadAll()
         {
-            Updating = true;
+            Updating = Visibility.Visible;
 
             LoadingMessage = "Chargement des Objets";
             var error = await DownloadObjects();
             if (error != null)
                 return error;
-            Progress += 25;
+            Progress += 50;
 
             LoadingMessage = "Chargement des Scénarios";
             error = await DownloadScenes();
@@ -185,14 +188,28 @@ namespace Jeedom
                 return error;
             Progress += 25;
 
-            LoadingMessage = "Chargement des Interactions";
+            /*LoadingMessage = "Chargement des Interactions";
             error = await DownloadInteraction();
             if (error != null)
                 return error;
-            Progress += 25;
+            Progress += 25;*/
 
-            Updating = false;
+            Updating = Visibility.Collapsed;
             return null;
+        }
+
+        public async Task FirstLaunch()
+        {
+            Updating = Visibility.Visible;
+
+            foreach (EqLogic eq in EqLogicList)
+            {
+                await UpdateEqLogic(eq);
+            }
+
+            await DownloadInteraction();
+
+            Updating = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -486,6 +503,19 @@ namespace Jeedom
                 return true;
             else
                 return false;
+        }
+
+        public async Task UpdateTask()
+        {
+            Updating = Visibility.Visible;
+            foreach (EqLogic eq in EqLogicList)
+            {
+                await UpdateEqLogic(eq);
+            }
+
+            if (pass % 15 == 14)
+                await DownloadMessages();
+            Updating = Visibility.Collapsed;
         }
 
         public async Task<bool> Reboot()

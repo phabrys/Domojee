@@ -2,6 +2,7 @@
 using Domojee.Views;
 using Jeedom;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -23,10 +24,10 @@ namespace Domojee
 
             #region App settings
 
-            var _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            CacheMaxDuration = _settings.CacheMaxDuration;
-            ShowShellBackButton = _settings.UseShellBackButton;
+            //var _settings = SettingsService.Instance;
+            //RequestedTheme = _settings.AppTheme;
+            //CacheMaxDuration = _settings.CacheMaxDuration;
+            //ShowShellBackButton = _settings.UseShellBackButton;
 
             #endregion App settings
         }
@@ -65,6 +66,10 @@ namespace Domojee
 
                 await Task.Delay(TimeSpan.FromSeconds(2));
                 NavigationService.Navigate(typeof(DashboardPage));
+
+                TaskFactory factory = new TaskFactory();
+                var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+                await taskFactory.StartNew(() => RequestViewModel.Instance.FirstLaunch());
             }
             else
             {
@@ -76,7 +81,9 @@ namespace Domojee
 
         private async void _dispatcher_Tick(object sender, object e)
         {
-            await RequestViewModel.Instance.DownloadAll();
+            //Shell.SetBusy(true, "Mise à jour");
+            await RequestViewModel.Instance.UpdateTask();
+            //Shell.SetBusy(false);
         }
     }
 }

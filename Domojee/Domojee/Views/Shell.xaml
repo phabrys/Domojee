@@ -64,6 +64,7 @@
                 </Controls:HamburgerMenu.PrimaryButtons>
 
                 <Controls:HamburgerMenu.SecondaryButtons>
+
                     <!--  settingspage button  -->
                     <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
                         <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
