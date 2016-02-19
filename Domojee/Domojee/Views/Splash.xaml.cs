@@ -22,9 +22,12 @@ namespace Domojee.Views
 {
     public sealed partial class Splash : UserControl
     {
+        public RequestViewModel ViewModel => RequestViewModel.Instance;
+
         public Splash(SplashScreen splashScreen)
         {
             this.InitializeComponent();
+            this.DataContext = RequestViewModel.Instance;
             //Window.Current.SizeChanged += (s, e) => Resize(splashScreen);
             //Resize(splashScreen);
         }

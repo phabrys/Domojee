@@ -51,11 +51,17 @@ namespace Domojee
             SettingsService.Instance.UseShellBackButton = true;
             if (config.Populated)
             {
-                if (await RequestViewModel.Instance.PingJeedom() != null)
+                if (await RequestViewModel.Instance.DownloadAll() != null)
                 {
                     NavigationService.Navigate(typeof(ConnectPage));
                     return;
                 }
+
+                //Lancer le dispatchertimer
+                var _dispatcher = new DispatcherTimer();
+                _dispatcher.Interval = TimeSpan.FromMinutes(1);
+                _dispatcher.Tick += _dispatcher_Tick;
+                _dispatcher.Start();
 
                 await Task.Delay(TimeSpan.FromSeconds(2));
                 NavigationService.Navigate(typeof(DashboardPage));
@@ -66,6 +72,11 @@ namespace Domojee
             }
 
             return;// Task.CompletedTask;
+        }
+
+        private async void _dispatcher_Tick(object sender, object e)
+        {
+            await RequestViewModel.Instance.DownloadAll();
         }
     }
 }

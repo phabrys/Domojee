@@ -17,7 +17,7 @@ namespace Domojee.Views
     /// </summary>
     public sealed partial class ServerPage : Page
     {
-        public ObservableCollection<Message> MessageList = RequestViewModel.MessageList;
+        public ObservableCollection<Message> MessageList = RequestViewModel.Instance.MessageList;
 
         public ServerPage()
         {

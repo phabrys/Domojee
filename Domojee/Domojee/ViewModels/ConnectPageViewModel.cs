@@ -1,5 +1,6 @@
 ﻿using Domojee.Services.SettingsServices;
 using Jeedom;
+using System;
 using Template10.Mvvm;
 
 namespace Domojee.ViewModels
@@ -40,13 +41,13 @@ namespace Domojee.ViewModels
             set { _config.ApiKey = value; }
         }
 
-        public bool IsSelfSigned
+        public bool? IsSelfSigned
         {
             get { return _config.IsSelfSigned; }
             set { _config.IsSelfSigned = value; }
         }
 
-        public bool UseSSL
+        public bool? UseSSL
         {
             get { return _config.UseSSL; }
             set { _config.UseSSL = value; }

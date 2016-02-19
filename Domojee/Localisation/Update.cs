@@ -28,7 +28,7 @@ namespace Localisation
             var HomeObjectId = settings.Values["HomeObjectId"];
             if (HomeObjectId != null)
             {
-                foreach (Jeedom.Model.Command Commande in Jeedom.RequestViewModel.CommandList.Where(w => w.id.Equals(HomeObjectId)))
+                foreach (Jeedom.Model.Command Commande in Jeedom.RequestViewModel.Instance.CommandList.Where(w => w.id.Equals(HomeObjectId)))
                 {
                     var coordonee = Commande.Value.Split(',');
                     HomeMobile = Math.Round(Distance(Convert.ToDouble(coordonee[0]), Convert.ToDouble(coordonee[1]), pos.Coordinate.Point.Position.Latitude, pos.Coordinate.Point.Position.Longitude, 'K'), 2);

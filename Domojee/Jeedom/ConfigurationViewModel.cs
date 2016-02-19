@@ -8,15 +8,15 @@ namespace Jeedom
         private string _host;
         private string _path;
         private string _apikey;
-        private bool _selfSigned = false;
-        private bool _useSsl = false;
+        private bool? _selfSigned = false;
+        private bool? _useSsl = false;
         private string _dnsuri;
 
         public Uri Uri
         {
             get
             {
-                var uri = new UriBuilder(_useSsl ? "https" : "http", _host, _useSsl ? 443 : 80, _path);
+                var uri = new UriBuilder(_useSsl == true ? "https" : "http", _host, _useSsl == true ? 443 : 80, _path);
                 return uri.Uri;
             }
         }
@@ -35,7 +35,7 @@ namespace Jeedom
             }
         }
 
-        public bool IsSelfSigned
+        public bool? IsSelfSigned
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Jeedom
             }
         }
 
-        public bool UseSSL
+        public bool? UseSSL
         {
             get
             {
