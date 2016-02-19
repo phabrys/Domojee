@@ -7,7 +7,7 @@
                     xmlns:selector="using:Domojee.Selectors"
                     mc:Ignorable="d">
     <converter:EqLogicStateConverter x:Key="EqLogicStateConverter" />
-    <converter:EqLogicUpdatingConverter x:Key="EqLogicUpdatingConverter" />
+    <converter:UpdatingConverter x:Key="UpdatingConverter" />
     <converter:EqLogicNotUpdatingConverter x:Key="EqLogicNotUpdatingConverter" />
     <converter:EqLogicState2BrushConverter x:Key="EqLogicState2BrushConverter" />
     <converter:EqLogicCmdInfoByNameConverter x:Key="EqLogicCmdInfoByNameConverter" />
@@ -67,7 +67,8 @@
     <DataTemplate x:Key="EqLogicTemplate">
         <Grid>
             <ctl:VariableSizedGridView x:Name="cmdview"
-                                       IsItemClickEnabled="True"
+                                       Background="#FF29EC16"
+                                       IsItemClickEnabled="False"
                                        ItemTemplateSelector="{StaticResource CmdTemplateSelector}"
                                        ItemsSource="{Binding cmds}"
                                        Padding="15"
@@ -116,13 +117,13 @@
                         FontFamily="Segoe MDL2 Assets"
                         Tag="{Binding id}"
                         Visibility="{Binding OnVisibility,
-                                             Converter={StaticResource EqLogicUpdatingConverter}}">
+                                             Converter={StaticResource UpdatingConverter}}">
                     <Grid Width="20" Height="20">
                         <ProgressRing HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       IsActive="True"
                                       Visibility="{Binding Updating,
-                                                           Converter={StaticResource EqLogicUpdatingConverter}}" />
+                                                           Converter={StaticResource UpdatingConverter}}" />
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    Foreground="{Binding State,
@@ -165,7 +166,7 @@
                           RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignTopWithPanel="True"
                           Visibility="{Binding Updating,
-                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
+                                               Converter={StaticResource UpdatingConverter}}" />
             <Image Source="{Binding cmds, Converter={StaticResource EqLogicCmdInfoByNameConverter}, ConverterParameter=Image}" />
             <TextBlock x:Name="PART_Pause"
                        FontSize="80"
@@ -275,7 +276,7 @@
                           RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignTopWithPanel="True"
                           Visibility="{Binding Updating,
-                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
+                                               Converter={StaticResource UpdatingConverter}}" />
             <StackPanel x:Name="PART_Commands"
                         Orientation="Horizontal"
                         RelativePanel.Above="PART_Caption"
@@ -328,7 +329,7 @@
                           RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignTopWithPanel="True"
                           Visibility="{Binding Updating,
-                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
+                                               Converter={StaticResource UpdatingConverter}}" />
             <TextBlock x:Name="PART_Name"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -368,7 +369,7 @@
                           RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignTopWithPanel="True"
                           Visibility="{Binding Updating,
-                                               Converter={StaticResource EqLogicUpdatingConverter}}" />
+                                               Converter={StaticResource UpdatingConverter}}" />
             <StackPanel x:Name="PART_Commands"
                         Orientation="Horizontal"
                         RelativePanel.Above="PART_Caption"
@@ -420,7 +421,7 @@
                           RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignTopWithPanel="True"
                           Visibility="{Binding Updating,
-                                               Converter={StaticResource EqLogicUpdatingConverter}}"  />
+                                               Converter={StaticResource UpdatingConverter}}"  />
             <TextBlock x:Name="PART_Name"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
