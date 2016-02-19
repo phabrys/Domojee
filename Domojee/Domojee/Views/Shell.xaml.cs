@@ -29,7 +29,7 @@ namespace Domojee.Views
         public Shell(INavigationService navigationService)
         {
             Instance = this;
-            InitializeComponent();
+            this.InitializeComponent();
             SetNavigationService(navigationService);
         }
 

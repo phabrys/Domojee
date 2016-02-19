@@ -497,9 +497,6 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Page.DataContext>
-        <vm:ConnectPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
 
     <Grid Background="{StaticResource BlueBase}">
         <Grid.ChildrenTransitions>
