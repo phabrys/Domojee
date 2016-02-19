@@ -30,7 +30,7 @@
                             <TextBlock
                                 Margin="12,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="Home" />
+                                Text="Tableau de bord" />
                         </StackPanel>
                     </Controls:HamburgerButtonInfo>
 

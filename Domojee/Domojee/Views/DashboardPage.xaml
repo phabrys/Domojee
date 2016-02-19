@@ -36,7 +36,6 @@
 
         <!--  content  -->
         <Grid Grid.Row="1">
-            <ProgressBar IsIndeterminate="True" Visibility="{x:Bind ViewModel.Updating}" VerticalAlignment="Top" Canvas.ZIndex="2" Height="10" />
             <ScrollViewer>
                 <Pivot
                     HeaderTemplate="{StaticResource ObjectHeaderTemplate}"

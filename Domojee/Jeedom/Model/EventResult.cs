@@ -5,12 +5,15 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jeedom.Api.Json.Response
+namespace Jeedom.Model
 {
     [DataContract]
-    public class ResponseString : Response
+    public class EventResult
     {
         [DataMember]
-        public string result;
+        public double datetime;
+
+        [DataMember]
+        public List<Event> result;
     }
 }

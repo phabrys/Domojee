@@ -43,6 +43,7 @@ namespace Jeedom.Model
                 _display = value;
             }
         }
+
         [DataMember]
         public string subType;
 
@@ -61,6 +62,8 @@ namespace Jeedom.Model
         #endregion Propriétés sans notification de changement
 
         #region Propriétés avec notification de changement
+
+        public double datetime;
 
         public string Value
         {

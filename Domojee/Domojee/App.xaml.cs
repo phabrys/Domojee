@@ -25,7 +25,7 @@ namespace Domojee
             #region App settings
 
             //var _settings = SettingsService.Instance;
-            //RequestedTheme = _settings.AppTheme;
+            RequestedTheme = ApplicationTheme.Light;
             //CacheMaxDuration = _settings.CacheMaxDuration;
             //ShowShellBackButton = _settings.UseShellBackButton;
 
@@ -60,11 +60,11 @@ namespace Domojee
 
                 //Lancer le dispatchertimer
                 var _dispatcher = new DispatcherTimer();
-                _dispatcher.Interval = TimeSpan.FromMinutes(1);
+                _dispatcher.Interval = TimeSpan.FromMinutes(2);
                 _dispatcher.Tick += _dispatcher_Tick;
                 _dispatcher.Start();
 
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                await Task.Delay(TimeSpan.FromSeconds(1));
                 NavigationService.Navigate(typeof(DashboardPage));
 
                 TaskFactory factory = new TaskFactory();

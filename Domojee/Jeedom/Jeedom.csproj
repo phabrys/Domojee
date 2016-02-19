@@ -108,8 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Http\HttpRpcClient.cs" />
-    <Compile Include="Api\Json\Response\ResponseEqLogic.cs" />
-    <Compile Include="Api\Json\Response\ResponseString.cs" />
+    <Compile Include="Model\EventResult.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\CommandDisplay.cs" />
     <Compile Include="Model\CommandResult.cs" />
@@ -117,20 +116,15 @@
     <Compile Include="Model\EqLogic.cs" />
     <Compile Include="Model\EqLogicDisplay.cs" />
     <Compile Include="Model\Error.cs" />
+    <Compile Include="Model\Event.cs" />
     <Compile Include="Model\JdObject.cs" />
     <Compile Include="Api\Json\JsonRpcClient.cs" />
     <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\Option.cs" />
     <Compile Include="Model\Parameters.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Api\Json\Response\Response.cs" />
-    <Compile Include="Api\Json\Response\ResponseCommand.cs" />
-    <Compile Include="Api\Json\Response\ResponseCommandList.cs" />
-    <Compile Include="Api\Json\Response\ResponseEqLogicList.cs" />
     <Compile Include="Api\Json\Response\ResponseError.cs" />
-    <Compile Include="Api\Json\Response\ResponseJdObjectList.cs" />
-    <Compile Include="Api\Json\Response\ResponseMessageList.cs" />
-    <Compile Include="Api\Json\Response\ResponseScene.cs" />
-    <Compile Include="Api\Json\Response\ResponseSceneList.cs" />
     <Compile Include="Model\Scene.cs" />
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

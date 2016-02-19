@@ -13,7 +13,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
-using Windows.UI.Xaml;
 
 namespace Jeedom
 {
@@ -43,6 +42,7 @@ namespace Jeedom
         private ObservableCollection<Command> _commandList = new ObservableCollection<Command>();
         private ObservableCollection<JdObject> _objectList = new ObservableCollection<JdObject>();
         private ObservableCollection<Scene> _sceneList = new ObservableCollection<Scene>();
+        private double _dateTime;
 
         public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
 
@@ -98,9 +98,9 @@ namespace Jeedom
 
         public CancellationTokenSource tokenSource;
 
-        private Visibility _updating;
+        private bool _updating;
 
-        public Visibility Updating
+        public bool Updating
         {
             get
             {
@@ -158,7 +158,7 @@ namespace Jeedom
             var jsonrpc = new JsonRpcClient();
             if (await jsonrpc.SendRequest("ping"))
             {
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseString>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<string>>();
                 if (response.result == "pong")
                     return null;
             }
@@ -168,13 +168,19 @@ namespace Jeedom
 
         public async Task<Error> DownloadAll()
         {
-            Updating = Visibility.Visible;
+            Updating = true;
 
-            LoadingMessage = "Chargement des Objets";
-            var error = await DownloadObjects();
+            LoadingMessage = "Contacte Jeedom";
+            var error = await DownloadDateTime();
             if (error != null)
                 return error;
-            Progress += 50;
+            Progress += 25;
+
+            LoadingMessage = "Chargement des Objets";
+            error = await DownloadObjects();
+            if (error != null)
+                return error;
+            Progress += 25;
 
             LoadingMessage = "Chargement des Scénarios";
             error = await DownloadScenes();
@@ -188,19 +194,26 @@ namespace Jeedom
                 return error;
             Progress += 25;
 
-            /*LoadingMessage = "Chargement des Interactions";
-            error = await DownloadInteraction();
-            if (error != null)
-                return error;
-            Progress += 25;*/
-
-            Updating = Visibility.Collapsed;
+            Updating = false;
             return null;
+        }
+
+        private async Task<Error> DownloadDateTime()
+        {
+            var jsonrpc = new JsonRpcClient();
+
+            if (await jsonrpc.SendRequest("datetime"))
+            {
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<double>>();
+                _dateTime = response.result;
+            }
+
+            return jsonrpc.Error;
         }
 
         public async Task FirstLaunch()
         {
-            Updating = Visibility.Visible;
+            Updating = true;
 
             foreach (EqLogic eq in EqLogicList)
             {
@@ -209,7 +222,7 @@ namespace Jeedom
 
             await DownloadInteraction();
 
-            Updating = Visibility.Collapsed;
+            Updating = false;
         }
 
         /// <summary>
@@ -226,7 +239,7 @@ namespace Jeedom
             if (await jsonrpc.SendRequest("object::full"))
             {
                 //List<string> idList = new List<string>();
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseJdObjectList>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<JdObject>>>();
                 if (response.result != null)
                 {
                     foreach (JdObject o in response.result)
@@ -261,7 +274,7 @@ namespace Jeedom
                     // Récupère les EqLogic du fake (object_id==null)
                     if (await jsonrpc.SendRequest("eqLogic::byObjectId"))
                     {
-                        var responseEqLogic = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
+                        var responseEqLogic = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<EqLogic>>>();
                         if (responseEqLogic != null)
                         {
                             foreach (EqLogic eq in responseEqLogic.result)
@@ -271,7 +284,7 @@ namespace Jeedom
                                 jsonrpc.SetParameters(param);
                                 if (await jsonrpc.SendRequest("eqLogic::fullById"))
                                 {
-                                    var responseEq = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogic>();
+                                    var responseEq = jsonrpc.GetRequestResponseDeserialized<Response<EqLogic>>();
                                     if (responseEq.result?.cmds != null)
                                         eq.cmds = responseEq.result.cmds;
                                     else
@@ -326,44 +339,6 @@ namespace Jeedom
                 else
                     obj.Image = "ms-appdata:///local/" + name;
             }
-        }
-
-        /*public async Task<Error> DownloadEqLogics()
-        {
-            var jsonrpc = new JsonRpcClient();
-
-            if (await jsonrpc.SendRequest("eqLogic::all"))
-            {
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
-                if (response.result != null)
-                {
-                    EqLogicList = response.result;
-                    foreach (EqLogic eq in EqLogicList)
-                    {
-                        // Recherche l'objet parent
-                        var _objectlist = from o in ObjectList where o.id == eq.object_id select o;
-                        var _obj = _objectlist.First();
-                        if (_obj.eqLogics == null)
-                            _obj.eqLogics = new ObservableCollection<EqLogic>();
-
-                        eq.Parent = _obj;
-                        _obj.eqLogics.Add(eq);
-                    }
-
-                    // Efface le faux objet contenant les eqlogics avec object_id == null
-                    var objectlist = from o in ObjectList where o.id == null select o;
-                    var obj = objectlist.First();
-
-                    if (obj?.eqLogics == null)
-                        ObjectList.Remove(obj);
-                }
-                else
-                {
-                    EqLogicList.Clear();
-                }
-            }
-
-            return jsonrpc.Error;
         }*/
 
         public async Task<Error> DownloadScenes()
@@ -373,7 +348,7 @@ namespace Jeedom
             if (await jsonrpc.SendRequest("scenario::all"))
             {
                 SceneList.Clear();
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseSceneList>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<Scene>>>();
                 if (response != null)
                     SceneList = response.result;
             }
@@ -388,7 +363,7 @@ namespace Jeedom
             if (await jsonrpc.SendRequest("message::all"))
             {
                 MessageList.Clear();
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseMessageList>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<Message>>>();
                 if (response != null)
                     MessageList = response.result;
             }
@@ -505,17 +480,53 @@ namespace Jeedom
                 return false;
         }
 
+        public async Task GetEventChanges()
+        {
+            var parameters = new Parameters();
+            parameters.datetime = _dateTime;
+            var jsonrpc = new JsonRpcClient(parameters);
+
+            if (await jsonrpc.SendRequest("event::changes"))
+            {
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<EventResult>>();
+                if (response.result != null)
+                {
+                    foreach (Event e in response.result.result)
+                    {
+                        switch (e.name)
+                        {
+                            case "cmd::update":
+                                var cmds = from c in CommandList where c.id == e.option.cmd_id select c;
+                                foreach (Command cmd in cmds)
+                                {
+                                    if (cmd.datetime < e.datetime)
+                                    {
+                                        cmd.Value = e.option.value;
+                                        cmd.datetime = e.datetime;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    _dateTime = response.result.datetime;
+                }
+            }
+        }
+
         public async Task UpdateTask()
         {
-            Updating = Visibility.Visible;
-            foreach (EqLogic eq in EqLogicList)
+            Updating = true;
+
+            await GetEventChanges();
+
+            /*foreach (EqLogic eq in EqLogicList)
             {
                 await UpdateEqLogic(eq);
-            }
+            }*/
 
             if (pass % 15 == 14)
                 await DownloadMessages();
-            Updating = Visibility.Collapsed;
+            Updating = false;
         }
 
         public async Task<bool> Reboot()
@@ -539,6 +550,7 @@ namespace Jeedom
                 {
                     cmd.Updating = true;
                     await ExecuteCommand(cmd);
+                    cmd.datetime = _dateTime;
                     cmd.Updating = false;
                 }
             }
@@ -552,7 +564,7 @@ namespace Jeedom
 
             if (await jsonrpc.SendRequest("eqLogic::byObjectId"))
             {
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseEqLogicList>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<EqLogic>>>();
                 if (response.result != null)
                 {
                     foreach (EqLogic eqnew in response.result)
@@ -581,7 +593,7 @@ namespace Jeedom
 
             if (await jsonrpc.SendRequest("object::all"))
             {
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseJdObjectList>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<JdObject>>>();
                 foreach (JdObject obj in response.result)
                 {
                     var lst = from o in ObjectList where o.id == obj.id select o;
@@ -604,7 +616,7 @@ namespace Jeedom
 
             if (await jsonrpc.SendRequest("scenario::byId"))
             {
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseScene>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<Scene>>();
                 scene.lastLaunch = response.result.lastLaunch;
             }
         }
@@ -632,7 +644,7 @@ namespace Jeedom
 
             if (await jsonrpc.SendRequest("cmd::execCmd"))
             {
-                var response = jsonrpc.GetRequestResponseDeserialized<ResponseCommand>();
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<CommandResult>>();
                 cmd.Value = response.result.value;
             }
             else

@@ -22,5 +22,8 @@ namespace Jeedom.Model
 
         [DataMember(IsRequired = false)]
         public string object_id;
+
+        [DataMember(IsRequired = false)]
+        public double datetime;
     }
 }

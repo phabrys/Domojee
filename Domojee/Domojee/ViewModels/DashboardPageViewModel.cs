@@ -24,7 +24,7 @@ namespace Domojee.ViewModels
         public ObservableCollection<JdObject> ObjectList => RequestViewModel.Instance.ObjectList;
         public ObservableCollection<EqLogic> EqLogicList => RequestViewModel.Instance.EqLogicList;
         public ObservableCollection<Command> CommandList => RequestViewModel.Instance.CommandList;
-        public Visibility Updating => RequestViewModel.Instance.Updating;
+        public bool Updating => RequestViewModel.Instance.Updating;
 
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
 
