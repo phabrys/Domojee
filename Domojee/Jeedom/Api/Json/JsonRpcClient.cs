@@ -1,9 +1,9 @@
-﻿using Jeedom.Api.Json.Response;
+﻿using Jeedom.Api.Json.Event;
+using Jeedom.Api.Json.Response;
 using Jeedom.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography.Certificates;
@@ -42,7 +42,7 @@ namespace Jeedom.Api.Json
             this.parameters = new Parameters();
         }
 
-        private T DeserializeFromJson<T>(string dataToDeserialize)
+        /*private T DeserializeFromJson<T>(string dataToDeserialize)
         {
             MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(dataToDeserialize));
             stream.Position = 0;
@@ -59,7 +59,7 @@ namespace Jeedom.Api.Json
             StreamReader sr = new StreamReader(stream);
 
             return sr.ReadToEnd();
-        }
+        }*/
 
         private async Task<String> Request(string command, Parameters parameters)
         {
@@ -82,7 +82,7 @@ namespace Jeedom.Api.Json
             requete.method = command;
             requete.id = Interlocked.Increment(ref Id);
 
-            var requeteJson = "request=" + SerializeToJson<Request>(requete);
+            var requeteJson = "request=" + JsonConvert.SerializeObject(requete);
             var content = new HttpStringContent(requeteJson, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/x-www-form-urlencoded");
             var response = await httpClient.PostAsync(uri, content);
             var serialized = await response.Content.ReadAsStringAsync();
@@ -100,7 +100,7 @@ namespace Jeedom.Api.Json
             {
                 rawResponse = await Request(command, parameters);
 
-                var resp = DeserializeFromJson<ResponseError>(rawResponse);
+                var resp = JsonConvert.DeserializeObject<ResponseError>(rawResponse);
                 error = resp.error;
                 if (error == null)
                     return true;
@@ -116,11 +116,48 @@ namespace Jeedom.Api.Json
             }
         }
 
+        public EventResult GetEvents()
+        {
+            try
+            {
+                JObject json = JObject.Parse(rawResponse);
+                var event_result = new EventResult();
+                var result = json["result"].Children();
+                event_result.datetime = json["result"]["datetime"].Value<double>();
+                foreach (var e in json["result"]["result"].Children())
+                {
+                    switch (e["name"].Value<string>())
+                    {
+                        case "cmd::update":
+                            var evcmd = JsonConvert.DeserializeObject<Event<Option>>(e.ToString());
+                            event_result.result.Add(evcmd);
+                            break;
+
+                        case "eqLogic::update":
+                            var eveq = JsonConvert.DeserializeObject<Event<string>>(e.ToString());
+                            event_result.result.Add(eveq);
+                            break;
+
+                        default:
+                            var evdef = JsonConvert.DeserializeObject<JdEvent>(e.ToString());
+                            event_result.result.Add(evdef);
+                            break;
+                    }
+                }
+
+                return event_result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public T GetRequestResponseDeserialized<T>()
         {
             try
             {
-                var resp = DeserializeFromJson<T>(rawResponse);
+                var resp = JsonConvert.DeserializeObject<T>(rawResponse);
                 return resp;
             }
             catch (Exception)

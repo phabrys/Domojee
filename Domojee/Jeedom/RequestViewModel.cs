@@ -1,5 +1,6 @@
 ﻿using Jeedom.Api.Http;
 using Jeedom.Api.Json;
+using Jeedom.Api.Json.Event;
 using Jeedom.Api.Json.Response;
 using Jeedom.Model;
 using System;
@@ -488,28 +489,26 @@ namespace Jeedom
 
             if (await jsonrpc.SendRequest("event::changes"))
             {
-                var response = jsonrpc.GetRequestResponseDeserialized<Response<EventResult>>();
-                if (response.result != null)
+                var response = jsonrpc.GetEvents();
+                foreach (JdEvent e in response.result)
                 {
-                    foreach (Event e in response.result.result)
+                    switch (e.name)
                     {
-                        switch (e.name)
-                        {
-                            case "cmd::update":
-                                var cmds = from c in CommandList where c.id == e.option.cmd_id select c;
-                                foreach (Command cmd in cmds)
+                        case "cmd::update":
+                            var ev = e as Event<Option>;
+                            var cmds = from c in CommandList where c.id == ev.option.cmd_id select c;
+                            foreach (Command cmd in cmds)
+                            {
+                                if (cmd.datetime < ev.datetime)
                                 {
-                                    if (cmd.datetime < e.datetime)
-                                    {
-                                        cmd.Value = e.option.value;
-                                        cmd.datetime = e.datetime;
-                                    }
+                                    cmd.Value = ev.option.value;
+                                    cmd.datetime = ev.datetime;
                                 }
-                                break;
-                        }
+                            }
+                            break;
                     }
-                    _dateTime = response.result.datetime;
                 }
+                _dateTime = response.datetime;
             }
         }
 

@@ -60,7 +60,7 @@ namespace Domojee
 
                 //Lancer le dispatchertimer
                 var _dispatcher = new DispatcherTimer();
-                _dispatcher.Interval = TimeSpan.FromMinutes(2);
+                _dispatcher.Interval = TimeSpan.FromMinutes(1);
                 _dispatcher.Tick += _dispatcher_Tick;
                 _dispatcher.Start();
 

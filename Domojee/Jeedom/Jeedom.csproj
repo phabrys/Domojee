@@ -108,7 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Http\HttpRpcClient.cs" />
-    <Compile Include="Model\EventResult.cs" />
+    <Compile Include="Api\Json\Event\Event.cs" />
+    <Compile Include="Api\Json\Event\EventEqLogic.cs" />
+    <Compile Include="Api\Json\Event\EventResult.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\CommandDisplay.cs" />
     <Compile Include="Model\CommandResult.cs" />
@@ -116,11 +118,11 @@
     <Compile Include="Model\EqLogic.cs" />
     <Compile Include="Model\EqLogicDisplay.cs" />
     <Compile Include="Model\Error.cs" />
-    <Compile Include="Model\Event.cs" />
+    <Compile Include="Api\Json\Event\JdEvent.cs" />
     <Compile Include="Model\JdObject.cs" />
     <Compile Include="Api\Json\JsonRpcClient.cs" />
     <Compile Include="Model\Message.cs" />
-    <Compile Include="Model\Option.cs" />
+    <Compile Include="Api\Json\Event\Option.cs" />
     <Compile Include="Model\Parameters.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Api\Json\Response\Response.cs" />
