@@ -9,8 +9,7 @@
     xmlns:local="using:Domojee.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:Domojee.Views"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Background="Gray">
 
     <Controls:ModalDialog
         x:Name="ModalContainer"

@@ -547,10 +547,8 @@ namespace Jeedom
             {
                 if (!cmd.Updating)
                 {
-                    cmd.Updating = true;
                     await ExecuteCommand(cmd);
                     cmd.datetime = _dateTime;
-                    cmd.Updating = false;
                 }
             }
         }
