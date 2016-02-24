@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converter="using:Domojee.Converters"
+                    xmlns:ctl="using:Domojee.Controls"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:selector="using:Domojee.Selectors"
+                    mc:Ignorable="d">
+    <converter:EqLogicStateConverter x:Key="EqLogicStateConverter" />
+    <converter:UpdatingConverter x:Key="UpdatingConverter" />
+    <converter:EqLogicNotUpdatingConverter x:Key="EqLogicNotUpdatingConverter" />
+    <converter:EqLogicState2BrushConverter x:Key="EqLogicState2BrushConverter" />
+    <converter:EqLogicCmdInfoByNameConverter x:Key="EqLogicCmdInfoByNameConverter" />
+    <converter:EqLogicCmdInfoByTypeConverter x:Key="EqLogicCmdInfoByTypeConverter" />
+    <converter:ValueConverterGroup x:Key="GroupState2BrushConverter">
+        <converter:EqLogicCmdInfoByTypeConverter />
+        <converter:EqLogicState2BrushConverter />
+    </converter:ValueConverterGroup>
+    <!--  Template pour commande On Off  -->
+    <DataTemplate x:Key="LIGHT_ON_Template">
+        <RelativePanel 
+                       Padding="4"
+                       d:DesignHeight="150"
+                       d:DesignWidth="150">
+            <ProgressRing x:Name="PART_Updating"
+                          IsActive="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          Visibility="{Binding Updating,
+                                               Converter={StaticResource UpdatingConverter}}" />
+            <StackPanel x:Name="PART_Commands"
+                        Orientation="Horizontal"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True">
+            </StackPanel>
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Viewbox x:Name="PART_Icon"
+                     Margin="4"
+                     RelativePanel.Above="PART_Commands"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
+                           Text="&#xF0EB;" />
+            </Viewbox>
+        </RelativePanel>
+    </DataTemplate>
+  </ResourceDictionary>

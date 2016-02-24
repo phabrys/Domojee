@@ -1,0 +1,280 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converter="using:Domojee.Converters"
+                    xmlns:ctl="using:Domojee.Controls"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:selector="using:Domojee.Selectors"
+                    mc:Ignorable="d">
+    <converter:EqLogicStateConverter x:Key="EqLogicStateConverter" />
+    <converter:UpdatingConverter x:Key="UpdatingConverter" />
+    <converter:EqLogicNotUpdatingConverter x:Key="EqLogicNotUpdatingConverter" />
+    <converter:EqLogicState2BrushConverter x:Key="EqLogicState2BrushConverter" />
+    <converter:EqLogicCmdInfoByNameConverter x:Key="EqLogicCmdInfoByNameConverter" />
+    <converter:EqLogicCmdInfoByTypeConverter x:Key="EqLogicCmdInfoByTypeConverter" />
+    <converter:ValueConverterGroup x:Key="GroupState2BrushConverter">
+        <converter:EqLogicCmdInfoByTypeConverter />
+        <converter:EqLogicState2BrushConverter />
+    </converter:ValueConverterGroup>
+
+
+    <DataTemplate x:Key="EqLogicTemplate">
+        <Grid>
+            <ctl:VariableSizedGridView x:Name="cmdview"
+                                       Background="#FF29EC16"
+                                       IsItemClickEnabled="False"
+                                       ItemTemplateSelector="{StaticResource CmdTemplateSelector}"
+                                       ItemsSource="{Binding cmds}"
+                                       Padding="15"
+                                       SelectionMode="None">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <ctl:VariableSizedGridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VariableSizedWrapGrid ItemHeight="150"
+                                               ItemWidth="150"
+                                               MaximumRowsOrColumns="5"
+                                               Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ctl:VariableSizedGridView.ItemsPanel>
+            </ctl:VariableSizedGridView>
+        </Grid>
+    </DataTemplate>
+
+    <!--  Template pour ZWave  -->
+    <DataTemplate x:Key="ZWaveEqLogicTemplate">
+        <RelativePanel Background="LawnGreen">
+            <TextBlock x:Name="txtType"
+                       Margin="5"
+                       FontSize="8"
+                       RelativePanel.AlignRightWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="openzwave" />
+            <TextBlock x:Name="txtName"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.Below="txtType"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <StackPanel x:Name="stkTools"
+                        Orientation="Horizontal"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True"
+                        RelativePanel.Below="txtName">
+                <Button x:Name="btnON"
+                        Margin="5,0"
+                        Click="btnON_Click"
+                        FontFamily="Segoe MDL2 Assets"
+                        Tag="{Binding id}"
+                        Visibility="{Binding OnVisibility,
+                                             Converter={StaticResource UpdatingConverter}}">
+                    <Grid Width="20" Height="20">
+                        <ProgressRing HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      IsActive="True"
+                                      Visibility="{Binding Updating,
+                                                           Converter={StaticResource UpdatingConverter}}" />
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{Binding State,
+                                                        Converter={StaticResource EqLogicState2BrushConverter}}"
+                                   Text="{Binding State,
+                                                  Converter={StaticResource EqLogicStateConverter}}"
+                                   Visibility="{Binding Updating,
+                                                        Converter={StaticResource EqLogicNotUpdatingConverter}}" />
+                    </Grid>
+                </Button>
+                <StackPanel Width="100" Margin="0,0,5,0">
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="12"
+                               Text="Puissance" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="10"
+                               Text="{Binding Puissance,
+                                              FallbackValue=N/A}" />
+                </StackPanel>
+                <StackPanel Width="100" Margin="0,0,5,0">
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="12"
+                               Text="Consommation" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="10"
+                               Text="{Binding Consommation,
+                                              FallbackValue=N/A}" />
+                </StackPanel>
+            </StackPanel>
+        </RelativePanel>
+    </DataTemplate>
+
+    <!--  Template pour Sonos  -->
+    <DataTemplate x:Key="SonosEqLogicTemplate">
+        <RelativePanel Background="#2BC6FC"
+                       d:DesignHeight="300"
+                       d:DesignWidth="300">
+            <ProgressRing x:Name="PART_Updating"
+                          IsActive="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          Visibility="{Binding Updating,
+                                               Converter={StaticResource UpdatingConverter}}" />
+            <Image Source="{Binding cmds, Converter={StaticResource EqLogicCmdInfoByNameConverter}, ConverterParameter=Image}" />
+            <TextBlock x:Name="PART_Pause"
+                       FontSize="80"
+                       FontWeight="ExtraBlack"
+                       Foreground="#66FFFFFF"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                       Text="PAUSE" />
+            <Grid Background="#7FFFFFFF"
+                  Padding="0,4"
+                  RelativePanel.AlignBottomWithPanel="True"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ExecCommandByLogicalID}"
+                        CommandParameter="previous">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                   Foreground="White"
+                                   Text="&#xF048;" />
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ExecCommandByLogicalID}"
+                        CommandParameter="shuffle">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                   Foreground="White"
+                                   Text="&#xF074;" />
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="2"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ExecCommandByLogicalID}"
+                        CommandParameter="repeat">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                   Foreground="White"
+                                   Text="&#xF01E;" />
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="3"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ExecCommandByLogicalID}"
+                        CommandParameter="play">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                   Foreground="White"
+                                   Text="&#xF04B;" />
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="4"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ExecCommandByLogicalID}"
+                        CommandParameter="stop">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                   Foreground="White"
+                                   Text="&#xF04D;" />
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ExecCommandByLogicalID}"
+                        CommandParameter="mute">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                   Foreground="White"
+                                   Text="&#xF026;" />
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="6"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ExecCommandByLogicalID}"
+                        CommandParameter="next">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                   Foreground="White"
+                                   Text="&#xF051;" />
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </RelativePanel>
+    </DataTemplate>
+
+    <!--  Template pour un equipement On Off  -->
+    <DataTemplate x:Key="OnOffEqLogicTemplate">
+        <RelativePanel Background="{Binding cmds,
+                                            Converter={StaticResource GroupState2BrushConverter},
+                                            ConverterParameter=LIGHT_STATE}"
+                       Padding="4"
+                       d:DesignHeight="150"
+                       d:DesignWidth="150">
+            <ProgressRing x:Name="PART_Updating"
+                          IsActive="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          Visibility="{Binding Updating,
+                                               Converter={StaticResource UpdatingConverter}}" />
+            <StackPanel x:Name="PART_Commands"
+                        Orientation="Horizontal"
+                        RelativePanel.Above="PART_Caption"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <Button Command="{Binding ExecCommandByType}"
+                        CommandParameter="LIGHT_ON"
+                        Content="On" />
+                <Button Margin="4,0,0,0"
+                        Command="{Binding ExecCommandByType}"
+                        CommandParameter="LIGHT_OFF"
+                        Content="Off" />
+            </StackPanel>
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Viewbox x:Name="PART_Icon"
+                     Margin="4"
+                     RelativePanel.Above="PART_Commands"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
+                           Text="&#xF0EB;" />
+            </Viewbox>
+            <TextBlock x:Name="PART_Caption"
+                       FontFamily="Segoe UI"
+                       FontSize="8"
+                       FontWeight="Light"
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       Text="{Binding eqType_name,
+                                      FallbackValue=Type}" />
+        </RelativePanel>
+    </DataTemplate>
+  
+    <!--  Selectors  -->
+    <selector:EqLogicTemplateSelector x:Key="EqLogicTemplateSelector"
+                                      EqLogicTemplate="{StaticResource EqLogicTemplate}"
+                                      OnOffEqLogicTemplate="{StaticResource OnOffEqLogicTemplate}"
+                                      SonosEqLogicTemplate="{StaticResource SonosEqLogicTemplate}"
+                                      ZWaveEqLogicTemplate="{StaticResource ZWaveEqLogicTemplate}" />
+</ResourceDictionary>
