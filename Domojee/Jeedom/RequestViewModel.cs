@@ -241,7 +241,7 @@ namespace Jeedom
             {
                 //List<string> idList = new List<string>();
                 var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<JdObject>>>();
-                if (response.result != null)
+                if (response != null)
                 {
                     foreach (JdObject o in response.result)
                     {

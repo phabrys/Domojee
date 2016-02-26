@@ -24,7 +24,7 @@ namespace Domojee.Selectors
             var element = container as FrameworkElement;
 
             // Cherche si on a spécifié un Template dans les customParameters de l'équipement
-            if (eq.display != null)
+            /*if (eq.display != null)
                 if (eq.display.customParameters != null)
                     if (eq.display.customParameters.DomojeeTemplate != null)
                         switch (eq.display.customParameters.DomojeeTemplate.ToLower())
@@ -34,7 +34,7 @@ namespace Domojee.Selectors
 
                             case "onoff":
                                 return OnOffEqLogicTemplate;
-                        }
+                        }*/
 
             // Cherche par rapport aux commandes de l'équipement
             //TODO : Voir "generic_type" : https://www.jeedom.com/forum/viewtopic.php?f=112&t=15155#p278226
