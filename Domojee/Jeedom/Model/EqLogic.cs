@@ -111,13 +111,13 @@ namespace Jeedom.Model
                 _display = value;
                 if (_display != null)
                 {
-                    if (_display.customParameters != null)
+                   /* if (_display.customParameters != null)
                     {
                         if (_display.customParameters.DomojeeColSpan != 0)
                             ColSpan = _display.customParameters.DomojeeColSpan;
                         if (_display.customParameters.DomojeeRowSpan != 0)
                             RowSpan = _display.customParameters.DomojeeRowSpan;
-                    }
+                    }*/
                 }
                 NotifyPropertyChanged();
             }
