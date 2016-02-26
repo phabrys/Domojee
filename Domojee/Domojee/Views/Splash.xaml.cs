@@ -28,27 +28,7 @@ namespace Domojee.Views
         {
             this.InitializeComponent();
             this.DataContext = RequestViewModel.Instance;
-            //Window.Current.SizeChanged += (s, e) => Resize(splashScreen);
-            //Resize(splashScreen);
+            //TODO: Modifier le splashscreen et ne plus afficher de progression
         }
-
-        /*private void Resize(SplashScreen splashScreen)
-        {
-            if (splashScreen.ImageLocation.Top == 0)
-            {
-                MyImage.Visibility = Visibility.Collapsed;
-                return;
-            }
-            else
-            {
-                MyCanvas.Background = null;
-                MyImage.Visibility = Visibility.Visible;
-            }
-            MyImage.Height = splashScreen.ImageLocation.Height;
-            MyImage.Width = splashScreen.ImageLocation.Width;
-            MyImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);
-            MyImage.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.Left);
-            ProgressTransform.TranslateY = MyImage.Height / 2;
-        }*/
     }
 }

@@ -156,6 +156,8 @@ namespace Jeedom
 
         public async Task<Error> PingJeedom()
         {
+            Updating = true;
+            LoadingMessage = "Contacte Jeedom";
             var jsonrpc = new JsonRpcClient();
             if (await jsonrpc.SendRequest("ping"))
             {
@@ -163,7 +165,7 @@ namespace Jeedom
                 if (response.result == "pong")
                     return null;
             }
-
+            Updating = false;
             return jsonrpc.Error;
         }
 
@@ -215,6 +217,7 @@ namespace Jeedom
         public async Task FirstLaunch()
         {
             Updating = true;
+            await DownloadAll();
 
             foreach (EqLogic eq in EqLogicList)
             {

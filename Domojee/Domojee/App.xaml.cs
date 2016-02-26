@@ -26,7 +26,7 @@ namespace Domojee
 
             //var _settings = SettingsService.Instance;
             RequestedTheme = ApplicationTheme.Light;
-            //CacheMaxDuration = _settings.CacheMaxDuration;
+            CacheMaxDuration = TimeSpan.FromDays(1);
             //ShowShellBackButton = _settings.UseShellBackButton;
 
             #endregion App settings
@@ -52,7 +52,7 @@ namespace Domojee
             SettingsService.Instance.UseShellBackButton = true;
             if (config.Populated)
             {
-                if (await RequestViewModel.Instance.DownloadAll() != null)
+                if (await RequestViewModel.Instance.PingJeedom() != null)
                 {
                     NavigationService.Navigate(typeof(ConnectPage));
                     return;
