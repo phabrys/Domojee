@@ -69,28 +69,11 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ObjectPageTemplate">
-        <Grid>
-            <ctl:VariableSizedGridView x:Name="eqlogicview"
-                                       IsItemClickEnabled="True"
-                                       ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
-                                       ItemsSource="{Binding eqLogics}"
-                                       Padding="15"
-                                       SelectionMode="None">
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                    </Style>
-                </GridView.ItemContainerStyle>
-                <ctl:VariableSizedGridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid 
-                                               MaximumRowsOrColumns="5"
-                                               Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ctl:VariableSizedGridView.ItemsPanel>
-            </ctl:VariableSizedGridView>
-        </Grid>
+        <ListBox
+            x:Name="eqlogicview"
+            ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
+            ItemsSource="{Binding eqLogics}"
+            Padding="15"/>
     </DataTemplate>
     <DataTemplate x:Key="EqLogicTemplate">
         <Grid>
