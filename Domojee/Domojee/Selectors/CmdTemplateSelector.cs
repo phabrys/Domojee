@@ -42,8 +42,6 @@ namespace Domojee.Selectors
                         return LIGHT_OFF_Template;
                 }
             }
-            else
-            {
                 switch(cmd.subType)
                 {
                     case "numeric":
@@ -61,7 +59,6 @@ namespace Domojee.Selectors
                     case "color":
                         return ColorCmdTemplate;
                 }
-            }
             return null;
         }
         #endregion Protected Methods

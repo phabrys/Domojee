@@ -346,92 +346,84 @@
                                       LIGHT_ON_Template="{StaticResource LIGHT_ON_Template}"
                                       LIGHT_OFF_Template="{StaticResource LIGHT_OFF_Template}" />
     <DataTemplate x:Key="NumericCmdTemplate">
-        <Grid
-            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
-            <TextBlock x:Name="PART_Name"
+        <Grid >
+            <Grid HorizontalAlignment="Left" >
+                <TextBlock x:Name="PART_Name"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       RelativePanel.AlignHorizontalCenterWithPanel="True"
-                       RelativePanel.AlignTopWithPanel="True"
-                       Text="{Binding name,
-                                      FallbackValue=Name}" />
-            <TextBlock Text="{Binding Value}"/>
-        </Grid>
-    </DataTemplate>
-    <DataTemplate x:Key="BinaryCmdTemplate">
-        <Grid
-            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
-            <TextBlock x:Name="PART_Name"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       RelativePanel.AlignHorizontalCenterWithPanel="True"
-                       RelativePanel.AlignTopWithPanel="True"
-                       Text="{Binding name,
-                                      FallbackValue=Name}" />
-            <TextBlock Text="{Binding Value}"/>
-        </Grid>
-    </DataTemplate>
-    <DataTemplate x:Key="StringCmdTemplate">
-        <Grid
-            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
-            <TextBlock x:Name="PART_Name"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       RelativePanel.AlignHorizontalCenterWithPanel="True"
-                       RelativePanel.AlignTopWithPanel="True"
-                       Text="{Binding name,
-                                      FallbackValue=Name}" />
-            <TextBlock Text="{Binding Value}"/>
-        </Grid>
-    </DataTemplate>
-    <DataTemplate x:Key="OtherCmdTemplate">
-        <Grid
-            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
-            <TextBlock x:Name="PART_Name"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       RelativePanel.AlignHorizontalCenterWithPanel="True"
-                       RelativePanel.AlignTopWithPanel="True"
-                       Text="{Binding name,
-                                      FallbackValue=Name}" />
-            <Button Content="{Binding name}" />
-        </Grid>
-    </DataTemplate>
-    <DataTemplate x:Key="SliderCmdTemplate">
-        <Grid
-            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
-            <TextBlock x:Name="PART_Name"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       RelativePanel.AlignHorizontalCenterWithPanel="True"
-                       RelativePanel.AlignTopWithPanel="True"
-                       Text="{Binding name,
-                                      FallbackValue=Name}" />
-            <Slider/>
-        </Grid>
-    </DataTemplate>
-    <DataTemplate x:Key="MessageCmdTemplate">
-        <Grid
-            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
-            <TextBlock x:Name="PART_Name"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
+                       VerticalAlignment="Top"
                        RelativePanel.AlignHorizontalCenterWithPanel="True"
                        RelativePanel.AlignTopWithPanel="True"
                        Text="{Binding name,FallbackValue=Name}" />
-            <TextBox></TextBox>
+                <TextBlock Text="{Binding Value}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="BinaryCmdTemplate">
+        <Grid HorizontalAlignment="Left" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,FallbackValue=Name}" />
+            <TextBlock Text="{Binding Value}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="StringCmdTemplate">
+        <Grid >
+            <Grid HorizontalAlignment="Left" >
+                <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,FallbackValue=Name}" />
+                <TextBlock Text="{Binding Value}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="OtherCmdTemplate">
+        <Grid HorizontalAlignment="Left" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,FallbackValue=Name}" />
+            <Button Content="{Binding name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="SliderCmdTemplate">
+        <Grid HorizontalAlignment="Left" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,FallbackValue=Name}" />
+            <Slider VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="MessageCmdTemplate">
+        <Grid HorizontalAlignment="Left" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,FallbackValue=Name}" />
+            <TextBox  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBox  VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
-        <Grid
-            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
+        <Grid HorizontalAlignment="Left" >
             <TextBlock x:Name="PART_Name"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
+                       VerticalAlignment="Top"
                        RelativePanel.AlignHorizontalCenterWithPanel="True"
                        RelativePanel.AlignTopWithPanel="True"
-                       Text="{Binding name, FallbackValue=Name}" />
-
+                       Text="{Binding name,FallbackValue=Name}" />
         </Grid>
     </DataTemplate>
 
