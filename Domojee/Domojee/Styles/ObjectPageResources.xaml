@@ -334,15 +334,20 @@
                                       OnOffEqLogicTemplate="{StaticResource OnOffEqLogicTemplate}"
                                       SonosEqLogicTemplate="{StaticResource SonosEqLogicTemplate}"
                                       ZWaveEqLogicTemplate="{StaticResource ZWaveEqLogicTemplate}" />
-    <DataTemplate x:Key="CmdTemplate">
-        <RelativePanel Background="#155F78"
-                       Padding="4"
-                       d:DesignHeight="150"
-                       d:DesignWidth="150">
-            <ProgressRing x:Name="PART_Updating"
-                          IsActive="True"
-                          RelativePanel.AlignRightWithPanel="True"
-                          RelativePanel.AlignTopWithPanel="True"/>
+    <selector:CmdTemplateSelector x:Key="CmdTemplateSelector"
+                                      NumericCmdTemplate="{StaticResource NumericCmdTemplate}"
+                                      BinaryCmdTemplate="{StaticResource BinaryCmdTemplate}"
+                                      StringCmdTemplate="{StaticResource StringCmdTemplate}"
+                                      OtherCmdTemplate="{StaticResource OtherCmdTemplate}"
+                                      SliderCmdTemplate="{StaticResource SliderCmdTemplate}"
+                                      MessageCmdTemplate="{StaticResource MessageCmdTemplate}"
+                                      ColorCmdTemplate="{StaticResource ColorCmdTemplate}"
+                                      LIGHT_STATE_Template="{StaticResource LIGHT_STATE_Template}"
+                                      LIGHT_ON_Template="{StaticResource LIGHT_ON_Template}"
+                                      LIGHT_OFF_Template="{StaticResource LIGHT_OFF_Template}" />
+    <DataTemplate x:Key="NumericCmdTemplate">
+        <Grid
+            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
             <TextBlock x:Name="PART_Name"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -350,34 +355,88 @@
                        RelativePanel.AlignTopWithPanel="True"
                        Text="{Binding name,
                                       FallbackValue=Name}" />
-            <Viewbox x:Name="PART_Icon"
-                     Margin="4"
-                     RelativePanel.Above="PART_Caption"
-                     RelativePanel.AlignHorizontalCenterWithPanel="True"
-                     RelativePanel.Below="PART_Name">
-                <TextBlock HorizontalAlignment="Center"
-                           FontFamily="{StaticResource FontAwesome}"
-                           Foreground="White"
-                           Text="&#xF128;" />
-            </Viewbox>
-            <TextBlock x:Name="PART_Caption"
-                       FontFamily="Segoe UI"
-                       FontSize="8"
-                       FontWeight="Light"
-                       RelativePanel.AlignBottomWithPanel="True"
+            <TextBlock Text="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="BinaryCmdTemplate">
+        <Grid
+            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        RelativePanel.AlignHorizontalCenterWithPanel="True"
-                       Text="{Binding eqType_name,
-                                      FallbackValue=Type}" />
-        </RelativePanel>
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <TextBlock Text="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="StringCmdTemplate">
+        <Grid
+            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <TextBlock Text="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="OtherCmdTemplate">
+        <Grid
+            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Button Content="{Binding name}" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="SliderCmdTemplate">
+        <Grid
+            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,
+                                      FallbackValue=Name}" />
+            <Slider/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="MessageCmdTemplate">
+        <Grid
+            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name,FallbackValue=Name}" />
+            <TextBox></TextBox>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="ColorCmdTemplate">
+        <Grid
+            Visibility="{Binding Updating,Converter={StaticResource UpdatingConverter}}" >
+            <TextBlock x:Name="PART_Name"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name, FallbackValue=Name}" />
+
+        </Grid>
     </DataTemplate>
 
-    <selector:CmdTemplateSelector x:Key="CmdTemplateSelector"
-                                      CmdTemplate="{StaticResource CmdTemplate}"
-                                      LIGHT_STATE_Template="{StaticResource LIGHT_STATE_Template}"
-                                      LIGHT_ON_Template="{StaticResource LIGHT_ON_Template}"
-                                      LIGHT_OFF_Template="{StaticResource LIGHT_OFF_Template}" />
     <DataTemplate x:Key="LIGHT_OFF_Template">
-        <RelativePanel Background="{Binding cmds,
+        <Grid Background="{Binding cmds,
                                             Converter={StaticResource GroupState2BrushConverter},
                                             ConverterParameter=LIGHT_STATE}"
                        Padding="4"
@@ -410,10 +469,10 @@
                            Foreground="White"
                            Text="&#xF0EB;" />
             </Viewbox>
-        </RelativePanel>
+        </Grid>
     </DataTemplate>
     <DataTemplate x:Key="LIGHT_ON_Template">
-        <RelativePanel 
+        <Grid 
                        Padding="4"
                        d:DesignHeight="150"
                        d:DesignWidth="150">
@@ -444,10 +503,10 @@
                            Foreground="White"
                            Text="&#xF0EB;" />
             </Viewbox>
-        </RelativePanel>
+        </Grid>
     </DataTemplate>
     <DataTemplate x:Key="LIGHT_STATE_Template">
-        <RelativePanel 
+        <Grid 
                        Padding="4"
                        d:DesignHeight="150"
                        d:DesignWidth="150">
@@ -478,6 +537,6 @@
                            Foreground="White"
                            Text="&#xF0EB;" />
             </Viewbox>
-        </RelativePanel>
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>

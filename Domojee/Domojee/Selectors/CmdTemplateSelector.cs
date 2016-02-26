@@ -9,7 +9,13 @@ namespace Domojee.Selectors
     {
         #region Public Properties
 
-        public DataTemplate CmdTemplate { get; set; }
+        public DataTemplate NumericCmdTemplate { get; set; }
+        public DataTemplate BinaryCmdTemplate { get; set; }
+        public DataTemplate StringCmdTemplate { get; set; }
+        public DataTemplate OtherCmdTemplate { get; set; }
+        public DataTemplate SliderCmdTemplate { get; set; }
+        public DataTemplate MessageCmdTemplate { get; set; }
+        public DataTemplate ColorCmdTemplate { get; set; }
         public DataTemplate LIGHT_STATE_Template { get; set; }
         public DataTemplate LIGHT_ON_Template { get; set; }
         public DataTemplate LIGHT_OFF_Template { get; set; }
@@ -36,7 +42,27 @@ namespace Domojee.Selectors
                         return LIGHT_OFF_Template;
                 }
             }
-            return CmdTemplate;
+            else
+            {
+                switch(cmd.subType)
+                {
+                    case "numeric":
+                        return NumericCmdTemplate;
+                    case "binary":
+                        return BinaryCmdTemplate;
+                    case "string":
+                        return StringCmdTemplate;
+                    case "other":
+                        return OtherCmdTemplate;
+                    case "slider":
+                        return SliderCmdTemplate;
+                    case "message":
+                        return MessageCmdTemplate;
+                    case "color":
+                        return ColorCmdTemplate;
+                }
+            }
+            return null;
         }
         #endregion Protected Methods
     }
