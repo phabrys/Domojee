@@ -123,13 +123,11 @@
     <Compile Include="Selectors\CmdTemplateSelector.cs" />
     <Compile Include="Selectors\EqLogicTemplateSelector.cs" />
     <Compile Include="Services\SettingsServices\SettingsServices.cs" />
-    <Compile Include="ViewModels\AboutPageViewModel.cs" />
     <Compile Include="ViewModels\ConnectPageViewModel.cs" />
     <Compile Include="ViewModels\DashboardPageViewModel.cs" />
     <Compile Include="ViewModels\ScenePageViewModel.cs" />
     <Compile Include="ViewModels\ServerPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
-    <Compile Include="ViewModels\VirtualizedCollection.cs" />
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
     </Compile>

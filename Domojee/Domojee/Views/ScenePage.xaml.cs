@@ -19,6 +19,7 @@ namespace Domojee.Views
         public ScenePage()
         {
             this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         private async void gridview_ItemClick(object sender, ItemClickEventArgs e)

@@ -30,6 +30,7 @@ namespace Domojee.Views
         public DashboardPage()
         {
             this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         private void objectview_ItemClick(object sender, ItemClickEventArgs e)
@@ -65,7 +66,7 @@ namespace Domojee.Views
             }
         }
 
-        private /*async*/ void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        /*private /*async void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -102,6 +103,6 @@ namespace Domojee.Views
         private void Grid_Holding(object sender, HoldingRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
-        }
+        }*/
     }
 }

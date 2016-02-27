@@ -13,10 +13,6 @@
     xmlns:vm="using:Domojee.ViewModels"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <vm:AboutPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
     <Page.Resources>
         <c:VisibleWhenDesktop x:Name="VisibleWhenDesktop" />
         <Storyboard x:Name="Logo" RepeatBehavior="Forever">
@@ -34,9 +30,6 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
-    <Page.Background>
-        <ImageBrush ImageSource="ms-appx:///Images/WP.jpg" Stretch="UniformToFill" />
-    </Page.Background>
 
     <Grid>
         <Grid.RowDefinitions>

@@ -22,6 +22,7 @@ namespace Domojee.Views
         public ServerPage()
         {
             this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
             if (MessageList.Count == 0)
                 messageText.Visibility = Visibility.Collapsed;
         }

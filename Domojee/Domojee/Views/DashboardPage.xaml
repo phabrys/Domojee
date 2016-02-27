@@ -28,14 +28,16 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader Content="Tableau de bord" Frame="{x:Bind Frame}">
-            <Interactivity:Interaction.Behaviors>
-                <Behaviors:EllipsisBehavior Visibility="Auto" />
-            </Interactivity:Interaction.Behaviors>
-        </controls:PageHeader>
+        <controls:PageHeader x:Name="pageHeader" Text="Tableau de bord" />
 
         <!--  content  -->
         <Grid Grid.Row="1">
+            <ProgressBar
+                Height="8"
+                VerticalAlignment="Top"
+                Foreground="White"
+                IsIndeterminate="True"
+                Visibility="{Binding Updating, Converter={StaticResource UpdatingVisibilityConverter}}" />
             <ScrollViewer>
                 <Pivot
                     HeaderTemplate="{StaticResource ObjectHeaderTemplate}"

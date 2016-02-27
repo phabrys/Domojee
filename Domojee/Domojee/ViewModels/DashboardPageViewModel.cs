@@ -26,8 +26,6 @@ namespace Domojee.ViewModels
         public ObservableCollection<Command> CommandList => RequestViewModel.Instance.CommandList;
         public bool Updating => RequestViewModel.Instance.Updating;
 
-        private CancellationTokenSource tokenSource = new CancellationTokenSource();
-
         public DashboardPageViewModel()
         {
             Instance = this;
@@ -41,13 +39,6 @@ namespace Domojee.ViewModels
             }
 
             return;
-        }
-
-        public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
-        {
-            tokenSource.Cancel();
-            tokenSource.Dispose();
-            return base.OnNavigatingFromAsync(args);
         }
     }
 }

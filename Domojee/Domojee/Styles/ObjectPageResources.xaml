@@ -19,6 +19,7 @@
         <converter:EqLogicCmdInfoByTypeConverter />
         <converter:EqLogicState2BrushConverter />
     </converter:ValueConverterGroup>
+    <converter:UpdatingConverter x:Key="UpdatingVisibilityConverter" />
 
     <DataTemplate x:Key="ObjectTemplate">
         <Grid CornerRadius="2"
