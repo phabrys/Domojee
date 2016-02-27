@@ -17,7 +17,7 @@
         <vm:SettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

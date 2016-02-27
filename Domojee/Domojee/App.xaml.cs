@@ -69,7 +69,12 @@ namespace Domojee
 
                 TaskFactory factory = new TaskFactory();
                 var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-                await taskFactory.StartNew(() => RequestViewModel.Instance.FirstLaunch());
+                await taskFactory.StartNew(async () =>
+                {
+                    //Shell.SetBusy(true, "Mise à jour");
+                    await RequestViewModel.Instance.FirstLaunch();
+                    //Shell.SetBusy(false);
+                });
             }
             else
             {
