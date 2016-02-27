@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-
+using System.Threading.Tasks;
 namespace Jeedom.Model
 {
     [DataContract]
@@ -24,6 +24,25 @@ namespace Jeedom.Model
         [DataMember]
         public string type;
 
+      /*  [DataMember(Name = "configuration")]
+        private CommandConfiguration _configuration;
+
+        public CommandConfiguration configuration
+
+        {
+            get
+            {
+                if (_configuration == null)
+                    return new CommandConfiguration();
+                else
+                    return _configuration;
+            }
+
+            set
+            {
+                _configuration = value;
+            }
+        }*/
         [DataMember(Name = "display")]
         private CommandDisplay _display;
 
@@ -75,6 +94,7 @@ namespace Jeedom.Model
             set
             {
                 _value = value;
+               // ExecCommand();
                 NotifyPropertyChanged();
                 if (Parent != null)
                 {
@@ -142,6 +162,16 @@ namespace Jeedom.Model
 
         #endregion Propriétés avec notification de changement
 
+
+        #region Private Methods
+        private async Task ExecCommand()
+        {
+                this.Updating = true;
+                await RequestViewModel.Instance.ExecuteCommand(this);
+                this.Updating = false;
+            
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -151,5 +181,7 @@ namespace Jeedom.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+   
+        #endregion Private Methods
     }
 }
