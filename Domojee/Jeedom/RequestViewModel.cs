@@ -99,9 +99,9 @@ namespace Jeedom
 
         public CancellationTokenSource tokenSource;
 
-        private bool _updating;
+        private Boolean _updating;
 
-        public bool Updating
+        public Boolean Updating
         {
             get
             {
@@ -169,38 +169,6 @@ namespace Jeedom
             return jsonrpc.Error;
         }
 
-        public async Task<Error> DownloadAll()
-        {
-            Updating = true;
-
-            LoadingMessage = "Contacte Jeedom";
-            var error = await DownloadDateTime();
-            if (error != null)
-                return error;
-            Progress += 25;
-
-            LoadingMessage = "Chargement des Objets";
-            error = await DownloadObjects();
-            if (error != null)
-                return error;
-            Progress += 25;
-
-            LoadingMessage = "Chargement des Scénarios";
-            error = await DownloadScenes();
-            if (error != null)
-                return error;
-            Progress += 25;
-
-            LoadingMessage = "Chargement des Messages";
-            error = await DownloadMessages();
-            if (error != null)
-                return error;
-            Progress += 25;
-
-            Updating = false;
-            return null;
-        }
-
         private async Task<Error> DownloadDateTime()
         {
             var jsonrpc = new JsonRpcClient();
@@ -217,15 +185,36 @@ namespace Jeedom
         public async Task FirstLaunch()
         {
             Updating = true;
-            await DownloadAll();
 
+            int pg = 100 / 5;
+
+            LoadingMessage = "Contacte Jeedom";
+            var error = await DownloadDateTime();
+            Progress += pg;
+
+            LoadingMessage = "Chargement des Objets";
+            error = await DownloadObjects();
+            Progress += pg;
+
+            LoadingMessage = "Chargement des Scénarios";
+            error = await DownloadScenes();
+            Progress += pg;
+
+            LoadingMessage = "Chargement des Messages";
+            error = await DownloadMessages();
+            Progress += pg;
+
+            LoadingMessage = "Chargement des informations des Commandes";
             foreach (EqLogic eq in EqLogicList)
             {
                 await UpdateEqLogic(eq);
             }
 
+            LoadingMessage = "Chargement des Interactions";
             await DownloadInteraction();
+            Progress += pg;
 
+            LoadingMessage = "Prêt";
             Updating = false;
         }
 
@@ -519,15 +508,26 @@ namespace Jeedom
         {
             Updating = true;
 
-            await GetEventChanges();
-
-            /*foreach (EqLogic eq in EqLogicList)
+            if (ObjectList.Count == 0)
             {
-                await UpdateEqLogic(eq);
-            }*/
+                LoadingMessage = "Contacte Jeedom";
+                await DownloadDateTime();
+                LoadingMessage = "Chargement des Objets";
+                await DownloadObjects();
+            }
+            else
+            {
+                LoadingMessage = "Chargements des evènements";
+                await GetEventChanges();
+            }
 
             if (pass % 15 == 14)
+            {
+                LoadingMessage = "Chargement des Messages";
                 await DownloadMessages();
+            }
+
+            LoadingMessage = "Prêt";
             Updating = false;
         }
 

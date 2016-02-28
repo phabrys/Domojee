@@ -7,7 +7,9 @@
     xmlns:c="using:Domojee.Converters"
     xmlns:controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:jdm="using:Jeedom"
     xmlns:local="using:Domojee.Views"
+    xmlns:localctl="using:Domojee.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:selector="using:Domojee.Selectors"
     xmlns:vm="using:Domojee.ViewModels"
@@ -25,10 +27,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" Text="Tableau de bord" />
+        <controls:PageHeader x:Name="pageHeader" Text="Tableau de bord">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Auto" />
+            </Interactivity:Interaction.Behaviors>
+        </controls:PageHeader>
 
         <!--  content  -->
         <Grid Grid.Row="1">
@@ -37,13 +44,18 @@
                 VerticalAlignment="Top"
                 Foreground="White"
                 IsIndeterminate="True"
-                Visibility="{Binding Updating, Converter={StaticResource UpdatingVisibilityConverter}}" />
+                Visibility="{x:Bind ViewModel.Request.Updating, Converter={StaticResource UpdatingVisibilityConverter}, FallbackValue=False}" />
             <ScrollViewer>
                 <Pivot
                     HeaderTemplate="{StaticResource ObjectHeaderTemplate}"
                     ItemTemplate="{StaticResource ObjectPageTemplate}"
-                    ItemsSource="{x:Bind ViewModel.ObjectList}" />
+                    ItemsSource="{x:Bind ViewModel.Request.ObjectList}" />
             </ScrollViewer>
+        </Grid>
+
+        <!--  statusbar  -->
+        <Grid Grid.Row="2">
+            <localctl:StatusBar />
         </Grid>
     </Grid>
 </Page>

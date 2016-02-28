@@ -1,11 +1,9 @@
-﻿using Domojee.ViewModels;
-using Jeedom;
+﻿using Jeedom;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -18,17 +16,14 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace Domojee.Views
+namespace Domojee.Controls
 {
-    public sealed partial class Splash : UserControl
+    public sealed partial class StatusBar : UserControl
     {
-        //public RequestViewModel ViewModel => RequestViewModel.Instance;
-
-        public Splash(SplashScreen splashScreen)
+        public StatusBar()
         {
             this.InitializeComponent();
             this.DataContext = RequestViewModel.Instance;
-            //TODO: Modifier le splashscreen et ne plus afficher de progression
         }
     }
 }

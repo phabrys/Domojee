@@ -1,5 +1,6 @@
 ﻿using Domojee.ViewModels;
 using Jeedom;
+using Jeedom.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Domojee.Views
         private const string BackgroundTaskName = "LocationBackgroundTask";
         private const string BackgroundTaskEntryPoint = "Localisation.LocationBackgroundTask";
         private IBackgroundTaskRegistration _geolocTask = null;
+        public ObservableCollection<Message> MessageList = RequestViewModel.Instance.MessageList;
 
         private Template10.Services.SerializationService.ISerializationService _SerializationService;
 
@@ -275,6 +277,18 @@ namespace Domojee.Views
                 Jeedom.Model.EqLogic EqLogicSelect = MobileNotification.SelectedItem as Jeedom.Model.EqLogic;
                 settings.Values["NotificationObjectId"] = EqLogicSelect.id;
             }
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void RebootButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ShutdownButton_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

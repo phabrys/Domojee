@@ -21,10 +21,11 @@ namespace Domojee.ViewModels
     {
         public static DashboardPageViewModel Instance { get; private set; }
 
+        public RequestViewModel Request => RequestViewModel.Instance;
         public ObservableCollection<JdObject> ObjectList => RequestViewModel.Instance.ObjectList;
         public ObservableCollection<EqLogic> EqLogicList => RequestViewModel.Instance.EqLogicList;
         public ObservableCollection<Command> CommandList => RequestViewModel.Instance.CommandList;
-        public bool Updating => RequestViewModel.Instance.Updating;
+        public Boolean Updating => RequestViewModel.Instance.Updating;
 
         public DashboardPageViewModel()
         {

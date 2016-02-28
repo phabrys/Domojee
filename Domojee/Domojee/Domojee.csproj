@@ -109,6 +109,9 @@
     <Compile Include="Controls\ServerState.xaml.cs">
       <DependentUpon>ServerState.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StatusBar.xaml.cs">
+      <DependentUpon>StatusBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VariableSizedGridView.cs" />
     <Compile Include="Converters\EqLogicCmdInfoByNameConverter.cs" />
     <Compile Include="Converters\EqLogicNotUpdatingConverter.cs" />
@@ -190,6 +193,10 @@
     <Page Include="Controls\ServerState.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\StatusBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Custom.xaml">
       <SubType>Designer</SubType>
