@@ -112,6 +112,7 @@
     <Compile Include="Api\Json\Event\EventEqLogic.cs" />
     <Compile Include="Api\Json\Event\EventResult.cs" />
     <Compile Include="Model\Command.cs" />
+    <Compile Include="Model\CommandConfiguration.cs" />
     <Compile Include="Model\CommandDisplay.cs" />
     <Compile Include="Model\CommandResult.cs" />
     <Compile Include="Model\DisplayInfo.cs" />
