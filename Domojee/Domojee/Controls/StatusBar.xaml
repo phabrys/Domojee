@@ -9,7 +9,7 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <RelativePanel Height="24" Background="Brown">
+    <RelativePanel Height="24" Background="SteelBlue">
         <ProgressRing
             x:Name="ProgressStatus"
             Foreground="White"
