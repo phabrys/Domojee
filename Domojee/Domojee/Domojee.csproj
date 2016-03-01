@@ -113,6 +113,7 @@
       <DependentUpon>StatusBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VariableSizedGridView.cs" />
+    <Compile Include="Converters\EqLogicCmdInfoByIdConverter.cs" />
     <Compile Include="Converters\EqLogicCmdInfoByNameConverter.cs" />
     <Compile Include="Converters\EqLogicNotUpdatingConverter.cs" />
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />

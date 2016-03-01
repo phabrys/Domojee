@@ -7,6 +7,7 @@
                     xmlns:selector="using:Domojee.Selectors"
                     xmlns:Converters="using:Template10.Converters"
                     mc:Ignorable="d">
+    <converter:EqLogicCmdInfoByIdConverter x:Key="EqLogicCmdInfoByIdConverter"/>
     <converter:StateToFontAwesomeConverter x:Key="StateToFontAwesomeConverter"/>
     <Converters:ChangeTypeConverter x:Key="ChangeTypeConverter"/>
     <converter:EqLogicStateConverter x:Key="EqLogicStateConverter" />
@@ -94,17 +95,17 @@
                 </ctl:VariableSizedGridView.ItemContainerStyle>
                 <ctl:VariableSizedGridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid ItemHeight="150"
+                        <VariableSizedWrapGrid 
 							ItemWidth="150"
 							MaximumRowsOrColumns="5"
 							Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ctl:VariableSizedGridView.ItemsPanel>
-                <ProgressRing x:Name="PART_Updating"
-					IsActive="True"
+                <!--ProgressRing x:Name="PART_Updating"
+					IsActive="false"
 					RelativePanel.AlignRightWithPanel="True"
 					RelativePanel.AlignTopWithPanel="True"
-					Visibility="{Binding Updating, Converter={StaticResource UpdatingConverter}}"  />
+					Visibility="{Binding Updating, Converter={StaticResource UpdatingConverter}}"  /-->
             </ctl:VariableSizedGridView>
         </Grid>
     </DataTemplate>
@@ -325,16 +326,14 @@
 		LIGHT_ON_Template="{StaticResource LIGHT_ON_Template}"
 		LIGHT_OFF_Template="{StaticResource LIGHT_OFF_Template}" />
     <DataTemplate x:Key="NumericCmdTemplate">
-        <RelativePanel Padding="4"
-			d:DesignHeight="150"
-			d:DesignWidth="150">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
             <TextBlock x:Name="PART_Name"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.AlignTopWithPanel="True"
 				Text="{Binding name, FallbackValue=Name}" />
-            <StackPanel
+            <Viewbox
 				Margin="4"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.Below="PART_Name">
@@ -343,24 +342,12 @@
 					Width="150"
 					Minimum="0" 
 					Maximum="255" 
-					Value="{Binding value,
-                                    Converter={StaticResource ChangeTypeConverter}}" 
-                    IsDoubleTapEnabled="False" 
-                    IsHoldingEnabled="False"
-                    IsRightTapEnabled="False" 
-                    IsTapEnabled="False" 
-                    ManipulationMode="None"/>
-                <TextBlock HorizontalAlignment="Center"
-					Foreground="White"
-					Width="150"
-					Text="{Binding value}" />
-            </StackPanel>
+					Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}" />
+            </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="BinaryCmdTemplate">
-        <RelativePanel Padding="4"
-			d:DesignHeight="150"
-			d:DesignWidth="150">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
             <TextBlock x:Name="PART_Name"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
@@ -374,14 +361,12 @@
                 <TextBlock HorizontalAlignment="Center"
 					FontFamily="{StaticResource FontAwesome}"
 					Foreground="White"
-					Text="{Binding value, Converter={StaticResource StateToFontAwesomeConverter}}" />
+					Text="{Binding Value, Converter={StaticResource StateToFontAwesomeConverter}}" />
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="StringCmdTemplate">
-        <RelativePanel Padding="4"
-			d:DesignHeight="150"
-			d:DesignWidth="150">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
             <TextBlock x:Name="PART_Name"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
@@ -395,14 +380,12 @@
                 <TextBlock HorizontalAlignment="Center"
 					Foreground="White"
 					Width="150"
-					Text="{Binding value}" />
+					Text="{Binding Value}" />
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="OtherCmdTemplate">
-        <RelativePanel Padding="4"
-			d:DesignHeight="150"
-			d:DesignWidth="150">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
             <TextBlock x:Name="PART_Name"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
@@ -422,9 +405,7 @@
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="SliderCmdTemplate">
-        <RelativePanel Padding="4"
-			d:DesignHeight="150"
-			d:DesignWidth="150">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
             <TextBlock x:Name="PART_Name"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
@@ -439,15 +420,12 @@
 					Foreground="White"
 					Width="150"
 					Minimum="0" 
-					Maximum="255" 
-					Value="{Binding value, ConverterParameter=ToDouble, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					Maximum="255"  />
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="MessageCmdTemplate">
-        <RelativePanel Padding="4"
-			d:DesignHeight="150"
-			d:DesignWidth="150">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
             <TextBlock x:Name="PART_Name"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
@@ -461,14 +439,14 @@
                 <TextBox HorizontalAlignment="Center"
 					Foreground="White"
 					Width="150"
-					Text="{Binding value}"/>
+					Text="{Binding eqLogic_id, 
+                            ConverterParameter={Binding Value}, 
+                            Converter={StaticResource EqLogicCmdInfoByIdConverter}}"/>
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
-        <RelativePanel Padding="4"
-			d:DesignHeight="150"
-			d:DesignWidth="150">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
             <TextBlock x:Name="PART_Name"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"

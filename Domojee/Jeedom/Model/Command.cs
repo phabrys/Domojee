@@ -69,7 +69,20 @@ namespace Jeedom.Model
         private string _unite;
 
         [DataMember]
-        public string isVisible;
+        private bool _isVisible = true;
+        public bool isVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+
+            set
+            {
+                _isVisible = Convert.ToBoolean(value);
+
+            }
+        }
 
         [DataMember(Name = "value")]
         private string _value;
@@ -93,8 +106,8 @@ namespace Jeedom.Model
 
             set
             {
-                _value = value;
-               // ExecCommand();
+                 _value = value;
+                // ExecCommand();
                 NotifyPropertyChanged();
                 if (Parent != null)
                 {
