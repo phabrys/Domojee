@@ -119,6 +119,7 @@
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
     <Compile Include="Converters\EqLogicCmdInfoByTypeConverter.cs" />
+    <Compile Include="Converters\MailVisibilityConverter.cs" />
     <Compile Include="Converters\UpdatingConverter.cs" />
     <Compile Include="Converters\ValueConverterGroup.cs" />
     <Compile Include="Converters\VisibleWhenDesktop.cs" />
