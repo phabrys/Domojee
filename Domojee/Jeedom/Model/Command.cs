@@ -66,7 +66,7 @@ namespace Jeedom.Model
         [DataMember]
         public string subType;
 
-        private string _unite;
+        //private string _unite;
 
         [DataMember]
         private bool _isVisible = true;
@@ -114,11 +114,11 @@ namespace Jeedom.Model
                     switch (name)
                     {
                         case "Consommation":
-                            Parent.Consommation = value + " " + unite;
+                            Parent.Consommation = value + " ";// + unite;
                             break;
 
                         case "Puissance":
-                            Parent.Puissance = value + " " + unite;
+                            Parent.Puissance = value + " ";// + unite;
                             break;
 
                         case "Etat":
@@ -158,7 +158,7 @@ namespace Jeedom.Model
             }
         }
 
-        [DataMember]
+      /*  [DataMember]
         public string unite
         {
             get
@@ -171,7 +171,7 @@ namespace Jeedom.Model
                 _unite = value;
                 NotifyPropertyChanged();
             }
-        }
+        }*/
 
         #endregion Propriétés avec notification de changement
 

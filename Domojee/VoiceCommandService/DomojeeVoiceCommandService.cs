@@ -7,6 +7,7 @@ using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.ApplicationModel.VoiceCommands;
+using System.Collections.Generic;
 
 namespace VoiceCommandService
 {
@@ -44,30 +45,29 @@ namespace VoiceCommandService
 
                     VoiceCommand voiceCommand = await voiceServiceConnection.GetVoiceCommandAsync();
                     var userMessage = new VoiceCommandUserMessage();
+                    string message = "";
 
-                    await RequestViewModel.Instance.DownloadObjects();
-                    //await RequestViewModel.GetInstance().DownloadEqLogics();
-                    //await RequestViewModel.GetInstance().DownloadCommands();
-                    var JeedomCommande = voiceCommand.Properties["Commande"][0];
-                    var JeedomObject = voiceCommand.Properties["Object"][0];
-                    foreach (var Commande in RequestViewModel.Instance.CommandList.Where(w => w.name.Equals(voiceCommand.Properties["Commande"][0])))
-                    {
-                        foreach (var Equipement in RequestViewModel.Instance.EqLogicList.Where(w => w.id.Equals(Commande.eqLogic_id)))
-                        {
-                            foreach (var Object in RequestViewModel.Instance.ObjectList.Where(w => w.name.Equals(voiceCommand.Properties["Object"][0])))
-                            {
-                                if (Equipement.object_id == Object.id)
-                                {
-                                    await RequestViewModel.Instance.ExecuteCommand(Commande);
-                                    userMessage.SpokenMessage = "La valeur de " + Commande.name + " de " + Object.name + " est de " + Commande.Value + Commande.unite;
-                                }
-                            }
-                        }
-                    }
+
                     // Ajout d'une requet jeedom pour retrouver la commande
                     switch (voiceCommand.CommandName)
                     {
                         case "cmdInObjectValue":
+                            await RequestViewModel.Instance.DownloadObjects();
+                            //await RequestViewModel.GetInstance().DownloadEqLogics();
+                            //await RequestViewModel.GetInstance().DownloadCommands();
+                            var JeedomCommande = voiceCommand.Properties["Commande"][0];
+                            var JeedomObject = voiceCommand.Properties["Object"][0];
+                            foreach (var Object in RequestViewModel.Instance.ObjectList.Where(w => w.name.Equals(JeedomObject)))
+                            {
+                                foreach (var Equipement in Object.eqLogics)
+                                {
+                                    foreach (var Commande in Equipement.cmds.Where(cmd => cmd.name.Equals(JeedomCommande)))
+                                    {
+                                        // await RequestViewModel.Instance.ExecuteCommand(Commande);
+                                        message = "La valeur de " + Commande.name + " de " + Object.name + " est de " + Commande.Value;//+ Commande.unite;
+                                    }
+                                }
+                            }
                             break;
 
                         case "cmdInObject":
@@ -78,12 +78,16 @@ namespace VoiceCommandService
                             break;
                     }
 
-                    var response = VoiceCommandResponse.CreateResponse(userMessage);
+                    userMessage.DisplayMessage = message;
+                    userMessage.SpokenMessage = message;
+                    
 
-                    response.AppLaunchArgument = "";
+            var response = VoiceCommandResponse.CreateResponse(userMessage);
+            response.AppLaunchArgument = message;
 
-                    await voiceServiceConnection.RequestAppLaunchAsync(response);
-                }
+
+                await voiceServiceConnection.ReportSuccessAsync(response);
+            }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine("Handling Voice Command failed " + ex.ToString());
