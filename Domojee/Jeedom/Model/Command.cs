@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using System.Linq;
+
 namespace Jeedom.Model
 {
     [DataContract]
@@ -101,7 +103,17 @@ namespace Jeedom.Model
         {
             get
             {
-                return _value;
+                if(type == "info")
+                {
+                    return _value;
+                }
+                else
+                {
+                    if (_value != "")
+                        return RequestViewModel.Instance.CommandList.Where(cmd => cmd.id.Equals(_value.Remove('#'))).First().Value;
+                    else
+                        return null;
+                }
             }
 
             set
