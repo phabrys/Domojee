@@ -9,22 +9,8 @@
       <Feedback>Je consulte Jeedom </Feedback>
       <VoiceCommandService Target="DomojeeVoiceCommandService"/>
     </Command>
-    <Command Name="cmdInObjectValue">
-      <Example>Quel est la température réel de la chambre bleu?</Example>
-      <ListenFor>Quel est la {Commande} de la {Object}?</ListenFor>
-      <Feedback>Je consulte Jeedom </Feedback>
-      <VoiceCommandService Target="DomojeeVoiceCommandService"/>
-    </Command> 
-    <Command Name="cmdInObject">
-      <Example>Allume la lumiere du salon?</Example>
-      <ListenFor>Allume la {Commande} du {Object}?</ListenFor>
-      <Feedback>J'envoie la commande a Jeedom </Feedback>
-      <VoiceCommandService Target="DomojeeVoiceCommandService"/>
-    </Command>
     
     <PhraseList Label="InteractList"/>
-    <PhraseList Label="Commande"/>
-    <PhraseList Label="Object"/>
   </CommandSet>
 
 </VoiceCommands>

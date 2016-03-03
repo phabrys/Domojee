@@ -51,28 +51,6 @@ namespace VoiceCommandService
                     // Ajout d'une requet jeedom pour retrouver la commande
                     switch (voiceCommand.CommandName)
                     {
-                        case "cmdInObjectValue":
-                            await RequestViewModel.Instance.DownloadObjects();
-                            //await RequestViewModel.GetInstance().DownloadEqLogics();
-                            //await RequestViewModel.GetInstance().DownloadCommands();
-                            var JeedomCommande = voiceCommand.Properties["Commande"][0];
-                            var JeedomObject = voiceCommand.Properties["Object"][0];
-                            foreach (var Object in RequestViewModel.Instance.ObjectList.Where(w => w.name.Equals(JeedomObject)))
-                            {
-                                foreach (var Equipement in Object.eqLogics)
-                                {
-                                    foreach (var Commande in Equipement.cmds.Where(cmd => cmd.name.Equals(JeedomCommande)))
-                                    {
-                                        // await RequestViewModel.Instance.ExecuteCommand(Commande);
-                                        message = "La valeur de " + Commande.name + " de " + Object.name + " est de " + Commande.Value;//+ Commande.unite;
-                                    }
-                                }
-                            }
-                            break;
-
-                        case "cmdInObject":
-                            break;
-
                         case "JeedomInteractList":
                             string CortanaVoiceCommande= voiceCommand.Properties["InteractList"][0];
                             await Jeedom.RequestViewModel.Instance.interactTryToReply(CortanaVoiceCommande);

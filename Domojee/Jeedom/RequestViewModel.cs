@@ -43,6 +43,7 @@ namespace Jeedom
         private ObservableCollection<Command> _commandList = new ObservableCollection<Command>();
         private ObservableCollection<JdObject> _objectList = new ObservableCollection<JdObject>();
         private ObservableCollection<Scene> _sceneList = new ObservableCollection<Scene>();
+        private ObservableCollection<Interact> _interactList = new ObservableCollection<Interact>();
         private double _dateTime;
         public string InteractReply;
 
@@ -54,6 +55,15 @@ namespace Jeedom
             set
             {
                 _messageList = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public ObservableCollection<Interact> InteractList
+        {
+            get { return _interactList; }
+            set
+            {
+                _interactList = value;
                 NotifyPropertyChanged();
             }
         }
@@ -402,10 +412,9 @@ namespace Jeedom
             jsonrpc.SetParameters(parameters);
             if (await jsonrpc.SendRequest("interact::tryToReply"))
             {
-                //Jeedom code
-                /* if ($jsonrpc->getMethod() == 'interact::tryToReply') {
-                 $jsonrpc->makeSuccess(interactQuery::tryToReply($params['query']));
-                 }*/
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<string>>();
+                if (response != null)
+                InteractReply= response.result;
             }
 
             return jsonrpc.Error;
@@ -430,29 +439,21 @@ namespace Jeedom
 
                 if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("DomojeeCommandSet_" + countryCode, out commandDefinitions))
                 {
-                    List<string> ObjectsList = new List<string>();
-                    foreach (var jdObject in ObjectList)
-                    {
-                        ObjectsList.Add(jdObject.name);
-                    }
-                    await commandDefinitions.SetPhraseListAsync("Object", ObjectsList);
-                    List<string> CommandesList = new List<string>();
-                    foreach (var jdCommand in CommandList)
-                    {
-                        ObjectsList.Add(jdCommand.name);
-                    }
-                    await commandDefinitions.SetPhraseListAsync("Commande", ObjectsList);
-                    List<string> InteractList = new List<string>();
+                    List<string> InteractsList = new List<string>();
                     //Ajouter liaison avec jeedom
-               /*     if (await jsonrpc.SendRequest("interact::all"))
+                    if (await jsonrpc.SendRequest("interact::all"))
                     {
                         InteractList.Clear();
-                        var response = jsonrpc.GetRequestResponseDeserialized<Response<List<string>>>();
+                        var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<Interact>>>();
                         if (response != null)
                             InteractList = response.result;
-                    }*/
-                    
-                    await commandDefinitions.SetPhraseListAsync("InteractList", InteractList);
+                    }
+
+                    foreach (var Iteract in InteractList)
+                    {
+                        InteractsList.Add(Iteract.query);
+                    }
+                    await commandDefinitions.SetPhraseListAsync("InteractList", InteractsList);
                     
                 }
             }
