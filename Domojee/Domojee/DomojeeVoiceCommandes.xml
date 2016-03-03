@@ -3,7 +3,12 @@
   <CommandSet xml:lang="fr-fr" Name="DomojeeCommandSet_fr-fr">
     <CommandPrefix>Domojee, </CommandPrefix>
     <Example> Quel est la température réel de la chambre bleu? </Example>
-
+    <Command Name="JeedomInteractList">
+      <Example>Quel est la température réel de la chambre bleu?</Example>
+      <ListenFor>{InteractList}</ListenFor>
+      <Feedback>Je consulte Jeedom </Feedback>
+      <VoiceCommandService Target="DomojeeVoiceCommandService"/>
+    </Command>
     <Command Name="cmdInObjectValue">
       <Example>Quel est la température réel de la chambre bleu?</Example>
       <ListenFor>Quel est la {Commande} de la {Object}?</ListenFor>
@@ -16,16 +21,10 @@
       <Feedback>J'envoie la commande a Jeedom </Feedback>
       <VoiceCommandService Target="DomojeeVoiceCommandService"/>
     </Command>
-	
-    <PhraseList Label="Commande">
-      <Item> température réel </Item>
-      <Item> température consigne </Item>
-    </PhraseList>
-    <PhraseList Label="Object">
-      <Item> chambre grise </Item>
-      <Item> chambre bleu </Item>
-      <Item> salon </Item>
-    </PhraseList>
+    
+    <PhraseList Label="InteractList"/>
+    <PhraseList Label="Commande"/>
+    <PhraseList Label="Object"/>
   </CommandSet>
 
 </VoiceCommands>

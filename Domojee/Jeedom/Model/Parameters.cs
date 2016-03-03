@@ -16,6 +16,8 @@ namespace Jeedom.Model
 
         [DataMember]
         public string name;
+        [DataMember]
+        public string query;
 
         [DataMember(IsRequired = false)]
         public string state;

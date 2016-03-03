@@ -44,6 +44,7 @@ namespace Jeedom
         private ObservableCollection<JdObject> _objectList = new ObservableCollection<JdObject>();
         private ObservableCollection<Scene> _sceneList = new ObservableCollection<Scene>();
         private double _dateTime;
+        public string InteractReply;
 
         public StorageFolder ImageFolder = ApplicationData.Current.LocalFolder;
 
@@ -392,6 +393,24 @@ namespace Jeedom
             return jsonrpc.Error;
         }*/
 
+        public async Task<Error> interactTryToReply(string query)
+        {
+            InteractReply = "";
+            var jsonrpc = new JsonRpcClient();
+            Parameters parameters = new Parameters();
+            parameters.query = query;
+            jsonrpc.SetParameters(parameters);
+            if (await jsonrpc.SendRequest("interact::tryToReply"))
+            {
+                //Jeedom code
+                /* if ($jsonrpc->getMethod() == 'interact::tryToReply') {
+                 $jsonrpc->makeSuccess(interactQuery::tryToReply($params['query']));
+                 }*/
+            }
+
+            return jsonrpc.Error;
+        }
+
         public async Task<Error> DownloadInteraction()
         {
             var jsonrpc = new JsonRpcClient();
@@ -423,6 +442,18 @@ namespace Jeedom
                         ObjectsList.Add(jdCommand.name);
                     }
                     await commandDefinitions.SetPhraseListAsync("Commande", ObjectsList);
+                    List<string> InteractList = new List<string>();
+                    //Ajouter liaison avec jeedom
+               /*     if (await jsonrpc.SendRequest("interact::all"))
+                    {
+                        InteractList.Clear();
+                        var response = jsonrpc.GetRequestResponseDeserialized<Response<List<string>>>();
+                        if (response != null)
+                            InteractList = response.result;
+                    }*/
+                    
+                    await commandDefinitions.SetPhraseListAsync("InteractList", InteractList);
+                    
                 }
             }
             catch (Exception ex)

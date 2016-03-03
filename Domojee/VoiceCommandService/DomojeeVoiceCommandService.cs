@@ -73,6 +73,11 @@ namespace VoiceCommandService
                         case "cmdInObject":
                             break;
 
+                        case "JeedomInteractList":
+                            string CortanaVoiceCommande= voiceCommand.Properties["InteractList"][0];
+                            await Jeedom.RequestViewModel.Instance.interactTryToReply(CortanaVoiceCommande);
+                            message = Jeedom.RequestViewModel.Instance.InteractReply;
+                            break;
                         default:
                             LaunchAppInForeground();
                             break;
