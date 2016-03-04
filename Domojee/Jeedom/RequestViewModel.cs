@@ -440,8 +440,7 @@ namespace Jeedom
                 if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("DomojeeCommandSet_" + countryCode, out commandDefinitions))
                 {
                     List<string> InteractsList = new List<string>();
-                    //Ajouter liaison avec jeedom
-                    if (await jsonrpc.SendRequest("interact::all"))
+                    if (await jsonrpc.SendRequest("interactQuery::all"))
                     {
                         InteractList.Clear();
                         var response = jsonrpc.GetRequestResponseDeserialized<Response<ObservableCollection<Interact>>>();
