@@ -7,8 +7,9 @@
                     xmlns:selector="using:Domojee.Selectors"
                     xmlns:Converters="using:Template10.Converters"
                     mc:Ignorable="d">
-    <converter:EqLogicCmdInfoByIdConverter x:Key="EqLogicCmdInfoByIdConverter"/>
     <converter:StateToFontAwesomeConverter x:Key="StateToFontAwesomeConverter"/>
+    <FontFamily x:Key="FontAwesome">/Assets/Fonts/FontAwesome.ttf#FontAwesome</FontFamily>
+    <converter:EqLogicCmdInfoByIdConverter x:Key="EqLogicCmdInfoByIdConverter"/>
     <Converters:ChangeTypeConverter x:Key="ChangeTypeConverter"/>
     <converter:EqLogicStateConverter x:Key="EqLogicStateConverter" />
     <converter:UpdatingConverter x:Key="UpdatingConverter" />
@@ -22,66 +23,41 @@
     </converter:ValueConverterGroup>
     <converter:UpdatingConverter x:Key="UpdatingVisibilityConverter" />
 
-    <DataTemplate x:Key="ObjectTemplate">
-        <Grid CornerRadius="2"
-			Holding="Grid_Holding"
-			RightTapped="Grid_RightTapped">
-            <FlyoutBase.AttachedFlyout>
-                <MenuFlyout Placement="Bottom">
-                    <MenuFlyoutItem Click="MenuFlyoutItem_Click"
-						Tag="{Binding id}"
-						Text="Modifier l'image" />
-                    <MenuFlyoutItem Click="MenuFlyoutItem_Click_1"
-						Tag="{Binding id}"
-						Text="Réinitialiser l'image" />
-                    <MenuFlyoutItem Click="MenuFlyoutItem_Click_Epingler"
-						Tag="{Binding id}"
-						Text="Epingler" />
-                </MenuFlyout>
-            </FlyoutBase.AttachedFlyout>
-
-            <Image Width="300"
-				Height="108"
-				Source="{Binding Image}"
-				Stretch="UniformToFill" />
-            <Rectangle Width="300"
-				Height="48"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Bottom"
-				Fill="{StaticResource BlueBase}"
-				Opacity="0.8" />
-            <StackPanel VerticalAlignment="Bottom">
-                <TextBlock x:Name="txtName"
-					HorizontalAlignment="Center"
-					FontSize="18"
-					FontWeight="Bold"
-					Text="{Binding Name, FallbackValue=Name}"
-					TextTrimming="CharacterEllipsis"
-					TextWrapping="Wrap" />
-                <TextBlock x:Name="txtCount"
-					Margin="0,0,5,5"
-					HorizontalAlignment="Right"
-					FontSize="10"
-					Text="{Binding Count, FallbackValue=0}" />
-            </StackPanel>
-        </Grid>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ObjectHeaderTemplate">
+       <DataTemplate x:Key="ObjectHeaderTemplate">
         <TextBlock Text="{Binding name}" />
     </DataTemplate>
 
     <DataTemplate x:Key="ObjectPageTemplate">
-        <ListBox
-			x:Name="eqlogicview"
-			ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
-			ItemsSource="{Binding eqLogics}"
-			Padding="15"/>
+        <ScrollViewer Grid.Row="1" HorizontalScrollMode="Disabled">
+            <StackPanel>
+                <Grid>
+                    <ctl:VariableSizedGridView x:Name="eqlogicview"
+				ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
+				ItemsSource="{Binding eqLogics}"
+				SelectionMode="None">
+                        <ctl:VariableSizedGridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ctl:VariableSizedGridView.ItemContainerStyle>
+                        <ctl:VariableSizedGridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid 
+							ItemWidth="450"
+							MaximumRowsOrColumns="5"
+							Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ctl:VariableSizedGridView.ItemsPanel>
+                    </ctl:VariableSizedGridView>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
     </DataTemplate>
     <DataTemplate x:Key="EqLogicTemplate">
         <Grid>
             <ctl:VariableSizedGridView x:Name="cmdview"
-				Background="#FF29EC16"
+				Background="#FF5EA2D1"
 				IsItemClickEnabled="False"
 				ItemTemplateSelector="{StaticResource CmdTemplateSelector}"
 				ItemsSource="{Binding cmds}"
@@ -339,7 +315,6 @@
 				RelativePanel.Below="PART_Name">
                 <Slider HorizontalAlignment="Center"
 					Foreground="White"
-					Width="150"
 					Minimum="0" 
 					Maximum="255" 
 					Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}" />
@@ -361,7 +336,9 @@
                 <TextBlock HorizontalAlignment="Center"
 					FontFamily="{StaticResource FontAwesome}"
 					Foreground="White"
-					Text="{Binding Value, Converter={StaticResource StateToFontAwesomeConverter}}" />
+                    Text="{Binding Path=Value, 
+                        Converter={StaticResource StateToFontAwesomeConverter},
+                        UpdateSourceTrigger=Default}" />
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
@@ -379,7 +356,6 @@
 				RelativePanel.Below="PART_Name">
                 <TextBlock HorizontalAlignment="Center"
 					Foreground="White"
-					Width="150"
 					Text="{Binding Value}" />
             </Viewbox>
         </RelativePanel>
@@ -398,7 +374,6 @@
 				RelativePanel.Below="PART_Name">
                 <ToggleButton  HorizontalAlignment="Center"
 					Foreground="White"
-					Width="150"
 					Command="{Binding ExecCommand}"
 					Content="{Binding name}"/>
             </Viewbox>
@@ -418,9 +393,11 @@
 				RelativePanel.Below="PART_Name">
                 <Slider HorizontalAlignment="Center"
 					Foreground="White"
-					Width="150"
 					Minimum="0" 
-					Maximum="255"  />
+					Maximum="255" 
+					Value="{Binding Value, 
+                        ConverterParameter=ToDouble, 
+                        Converter={StaticResource ChangeTypeConverter}}" />
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
@@ -438,7 +415,6 @@
 				RelativePanel.Below="PART_Name">
                 <TextBox HorizontalAlignment="Center"
 					Foreground="White"
-					Width="150"
 					Text="{Binding eqLogic_id, 
                             ConverterParameter={Binding Value}, 
                             Converter={StaticResource EqLogicCmdInfoByIdConverter}}"/>
