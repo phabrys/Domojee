@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using System.Linq;
 namespace Jeedom.Model
 {
     [DataContract]
@@ -24,25 +25,25 @@ namespace Jeedom.Model
         [DataMember]
         public string type;
 
-      /*  [DataMember(Name = "configuration")]
-        private CommandConfiguration _configuration;
+        /*  [DataMember(Name = "configuration")]
+          private CommandConfiguration _configuration;
 
-        public CommandConfiguration configuration
+          public CommandConfiguration configuration
 
-        {
-            get
-            {
-                if (_configuration == null)
-                    return new CommandConfiguration();
-                else
-                    return _configuration;
-            }
+          {
+              get
+              {
+                  if (_configuration == null)
+                      return new CommandConfiguration();
+                  else
+                      return _configuration;
+              }
 
-            set
-            {
-                _configuration = value;
-            }
-        }*/
+              set
+              {
+                  _configuration = value;
+              }
+          }*/
         [DataMember(Name = "display")]
         private CommandDisplay _display;
 
@@ -101,13 +102,20 @@ namespace Jeedom.Model
         {
             get
             {
-                return _value;
+                if (this.type == "action")
+                    return  RequestViewModel.Instance.CommandList.Where(cmd => cmd.Equals(_value.Replace('#',' ').Trim())).First().Value;
+                else
+                    return _value;
             }
 
             set
             {
-                 _value = value;
-                // ExecCommand();
+                if (this.type=="action")
+                {
+                    RequestViewModel.Instance.CommandList.Where(cmd => cmd.Equals(_value.Replace('#', ' ').Trim())).First().Value= value;
+                }
+                else
+                    _value = value;
                 NotifyPropertyChanged();
                 if (Parent != null)
                 {
@@ -158,31 +166,49 @@ namespace Jeedom.Model
             }
         }
 
-      /*  [DataMember]
-        public string unite
-        {
-            get
-            {
-                return _unite;
-            }
+        /*  [DataMember]
+          public string unite
+          {
+              get
+              {
+                  return _unite;
+              }
 
-            set
-            {
-                _unite = value;
-                NotifyPropertyChanged();
-            }
-        }*/
+              set
+              {
+                  _unite = value;
+                  NotifyPropertyChanged();
+              }
+          }*/
 
         #endregion Propriétés avec notification de changement
 
 
         #region Private Methods
-        private async Task ExecCommand()
+        public async Task ExecCommand()
         {
-                this.Updating = true;
-                await RequestViewModel.Instance.ExecuteCommand(this);
-                this.Updating = false;
-            
+            this.Updating = true;
+            Parameters parameters = new Parameters();
+            parameters.id = this.id;
+            parameters.name = this.name;
+            switch (this.subType)
+            {
+                case "other":
+                    break;
+                case "slider":
+                    parameters.options.slider = this.Value;
+                    break;
+                case "message":
+                    parameters.options.title = "";// this.title;
+                    parameters.options.message = "";//this.message;
+                    break;
+                case "color":
+                    parameters.options.color = this.Value;
+                    break;
+            }
+            await RequestViewModel.Instance.ExecuteCommand(this);
+            this.Updating = false;
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -194,7 +220,7 @@ namespace Jeedom.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-   
+
         #endregion Private Methods
     }
 }

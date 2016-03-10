@@ -665,12 +665,15 @@ namespace Jeedom
             }
         }
 
-        public async Task ExecuteCommand(Command cmd)
+        public async Task ExecuteCommand(Command cmd, Parameters parameters = null)
         {
             cmd.Updating = true;
-            var parameters = new Parameters();
-            parameters.id = cmd.id;
-            parameters.name = cmd.name;
+            if (parameters== null)
+            {
+                parameters = new Parameters();
+                parameters.id = cmd.id;
+                parameters.name = cmd.name;
+            }
             var jsonrpc = new JsonRpcClient(parameters);
 
             if (await jsonrpc.SendRequest("cmd::execCmd"))

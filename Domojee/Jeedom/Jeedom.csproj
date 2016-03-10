@@ -125,6 +125,7 @@
     <Compile Include="Api\Json\JsonRpcClient.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Api\Json\Event\Option.cs" />
+    <Compile Include="Model\ParametersOption.cs" />
     <Compile Include="Model\Parameters.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Api\Json\Response\Response.cs" />
