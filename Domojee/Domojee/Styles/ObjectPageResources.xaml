@@ -28,40 +28,9 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ObjectPageTemplate">
-        <ScrollViewer Grid.Row="1" HorizontalScrollMode="Disabled">
-            <StackPanel>
-                <Grid>
-                    <ctl:VariableSizedGridView x:Name="eqlogicview"
+        <ctl:VariableSizedGridView x:Name="eqlogicview"
 				ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
 				ItemsSource="{Binding eqLogics}"
-				SelectionMode="None">
-                        <ctl:VariableSizedGridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ctl:VariableSizedGridView.ItemContainerStyle>
-                        <ctl:VariableSizedGridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid 
-							ItemWidth="450"
-							MaximumRowsOrColumns="5"
-							Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ctl:VariableSizedGridView.ItemsPanel>
-                    </ctl:VariableSizedGridView>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-    </DataTemplate>
-    <DataTemplate x:Key="EqLogicTemplate">
-        <Grid>
-            <ctl:VariableSizedGridView x:Name="cmdview"
-				Background="#FF5EA2D1"
-				IsItemClickEnabled="False"
-				ItemTemplateSelector="{StaticResource CmdTemplateSelector}"
-				ItemsSource="{Binding cmds}"
-				Padding="15"
 				SelectionMode="None">
                 <ctl:VariableSizedGridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
@@ -72,18 +41,43 @@
                 <ctl:VariableSizedGridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VariableSizedWrapGrid 
-							ItemWidth="150"
+                            ItemWidth="450"
 							MaximumRowsOrColumns="5"
 							Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ctl:VariableSizedGridView.ItemsPanel>
-                <!--ProgressRing x:Name="PART_Updating"
+            </ctl:VariableSizedGridView>
+    </DataTemplate>
+    <DataTemplate x:Key="EqLogicTemplate">
+        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
+            <ctl:VariableSizedGridView x:Name="cmdview"
+				Background="#FF5EA2D1"
+				IsItemClickEnabled="False"
+				ItemTemplateSelector="{StaticResource CmdTemplateSelector}"
+				ItemsSource="{Binding cmds}"
+				Padding="15"
+				SelectionMode="None">
+                    <ctl:VariableSizedGridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ctl:VariableSizedGridView.ItemContainerStyle>
+                    <ctl:VariableSizedGridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid 
+							ItemWidth="150"
+							MaximumRowsOrColumns="5"
+							Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ctl:VariableSizedGridView.ItemsPanel>
+                    <!--ProgressRing x:Name="PART_Updating"
 					IsActive="false"
 					RelativePanel.AlignRightWithPanel="True"
 					RelativePanel.AlignTopWithPanel="True"
 					Visibility="{Binding Updating, Converter={StaticResource UpdatingConverter}}"  /-->
-            </ctl:VariableSizedGridView>
-        </Grid>
+             </ctl:VariableSizedGridView>
+        </RelativePanel>
     </DataTemplate>
 
     <!--  Template pour ZWave  -->
@@ -315,6 +309,7 @@
 				RelativePanel.Below="PART_Name">
                 <Slider HorizontalAlignment="Center"
 					Foreground="White"
+                    Width="150"
 					Minimum="0" 
 					Maximum="255" 
 					Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}" />
@@ -356,6 +351,7 @@
 				RelativePanel.Below="PART_Name">
                 <TextBlock HorizontalAlignment="Center"
 					Foreground="White"
+                    Width="150"
 					Text="{Binding Value}" />
             </Viewbox>
         </RelativePanel>
@@ -374,6 +370,7 @@
 				RelativePanel.Below="PART_Name">
                 <ToggleButton  HorizontalAlignment="Center"
 					Foreground="White"
+                    Width="150"
 					Command="{Binding ExecCommand}"
 					Content="{Binding name}"/>
             </Viewbox>
@@ -395,6 +392,7 @@
 					Foreground="White"
 					Minimum="0" 
 					Maximum="255" 
+                    Width="150"
 					Value="{Binding Value, 
                         ConverterParameter=ToDouble, 
                         Converter={StaticResource ChangeTypeConverter}}" />
@@ -415,6 +413,7 @@
 				RelativePanel.Below="PART_Name">
                 <TextBox HorizontalAlignment="Center"
 					Foreground="White"
+                    Width="150"
 					Text="{Binding eqLogic_id, 
                             ConverterParameter={Binding Value}, 
                             Converter={StaticResource EqLogicCmdInfoByIdConverter}}"/>
