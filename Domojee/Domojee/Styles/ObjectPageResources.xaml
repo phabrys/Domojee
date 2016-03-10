@@ -395,6 +395,7 @@
 					Foreground="White"
 					Minimum="0" 
 					Maximum="255" 
+					ManipulationCompleted="{Binding ExecCommand}"
 					Value="{Binding Value, 
                         ConverterParameter=ToDouble, 
                         Converter={StaticResource ChangeTypeConverter}}" />
@@ -409,7 +410,7 @@
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.AlignTopWithPanel="True"
 				Text="{Binding name, FallbackValue=Name}" />
-            <Viewbox x:Name="PART_Icon"
+            <RelativePanel x:Name="PART_Icon"
 				Margin="4"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.Below="PART_Name">
@@ -418,7 +419,16 @@
 					Text="{Binding eqLogic_id, 
                             ConverterParameter={Binding Value}, 
                             Converter={StaticResource EqLogicCmdInfoByIdConverter}}"/>
-            </Viewbox>
+                <TextBox HorizontalAlignment="Center"
+					Foreground="White"
+					Text="{Binding eqLogic_id, 
+                            ConverterParameter={Binding Value}, 
+                            Converter={StaticResource EqLogicCmdInfoByIdConverter}}"/>
+                <ToggleButton  HorizontalAlignment="Center"
+					Foreground="White"
+					Command="{Binding ExecCommand}"
+					Content="{Binding name}"/>
+            </RelativePanel>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
