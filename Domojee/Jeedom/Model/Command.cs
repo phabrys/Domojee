@@ -86,7 +86,7 @@ namespace Jeedom.Model
         }
 
         [DataMember(Name = "value")]
-        private string _value;
+        private string _value="";
 
         private bool _updating = false;
 
@@ -102,20 +102,15 @@ namespace Jeedom.Model
         {
             get
             {
-                if (this.type == "action")
-                    return  RequestViewModel.Instance.CommandList.Where(cmd => cmd.Equals(_value.Replace('#',' ').Trim())).First().Value;
+                if (this.type == "action"&& _value!="")
+                    return  RequestViewModel.Instance.CommandList.Where(cmd => cmd.id.Equals(_value.Replace('#',' ').Trim())).First().Value;
                 else
                     return _value;
             }
 
             set
             {
-                if (this.type=="action")
-                {
-                    RequestViewModel.Instance.CommandList.Where(cmd => cmd.Equals(_value.Replace('#', ' ').Trim())).First().Value= value;
-                }
-                else
-                    _value = value;
+                _value = value;
                 NotifyPropertyChanged();
                 if (Parent != null)
                 {
