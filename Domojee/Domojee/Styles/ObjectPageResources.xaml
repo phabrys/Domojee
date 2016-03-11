@@ -371,64 +371,41 @@
                 <ToggleButton  HorizontalAlignment="Center"
 					Foreground="White"
                     Width="150"
-					Command="{Binding ExecCommand}"
 					Content="{Binding name}"/>
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="SliderCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <TextBlock x:Name="PART_Name"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True"
-				Text="{Binding name, FallbackValue=Name}" />
-            <Viewbox x:Name="PART_Icon"
-				Margin="4"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="PART_Name">
-                <Slider HorizontalAlignment="Center"
+            <Slider HorizontalAlignment="Center"
 					Foreground="White"
 					Minimum="0" 
 					Maximum="255" 
-					ManipulationCompleted="{Binding ExecCommand}"
                     Width="150"
-					Value="{Binding Value, 
-                        ConverterParameter=ToDouble, 
-                        Converter={StaticResource ChangeTypeConverter}}" />
-            </Viewbox>
+                    Header="{Binding name, FallbackValue=Name}"
+					Value="{Binding WidgetValue.slider, Mode=TwoWay}"/>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="MessageCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <TextBlock x:Name="PART_Name"
+            <TextBlock x:Name="Title"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True"
-				Text="{Binding name, FallbackValue=Name}" />
-            <RelativePanel x:Name="PART_Icon"
-				Margin="4"
+				RelativePanel.AlignTopWithPanel="True" 
+                Width="150"
+                Text="{Binding WidgetValue.title, Mode=TwoWay}"/>
+            <TextBlock x:Name="Message"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="PART_Name">
-                <TextBox HorizontalAlignment="Center"
+				RelativePanel.Below="Title" 
+                Width="150"
+                Text="{Binding WidgetValue.title, Mode=TwoWay}"/>
+            <ToggleButton  
+				RelativePanel.AlignHorizontalCenterWithPanel="True"
+				RelativePanel.Below="Message" 
 					Foreground="White"
-                    Width="150"
-					Text="{Binding eqLogic_id, 
-                            ConverterParameter={Binding Value}, 
-                            Converter={StaticResource EqLogicCmdInfoByIdConverter}}"/>
-                <TextBox HorizontalAlignment="Center"
-					Foreground="White"
-					Text="{Binding eqLogic_id, 
-                            ConverterParameter={Binding Value}, 
-                            Converter={StaticResource EqLogicCmdInfoByIdConverter}}"/>
-                <ToggleButton  HorizontalAlignment="Center"
-					Foreground="White"
-					Command="{Binding ExecCommand}"
 					Content="{Binding name}"/>
             </RelativePanel>
-        </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">

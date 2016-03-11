@@ -67,7 +67,7 @@ namespace Jeedom.Model
         [DataMember]
         public string subType;
 
-        //private string _unite;
+        private string _unite;
 
         [DataMember]
         private bool _isVisible = true;
@@ -160,8 +160,23 @@ namespace Jeedom.Model
                 NotifyPropertyChanged();
             }
         }
+        private ParametersOption _WidgetValue= new ParametersOption();
+        
+        public ParametersOption WidgetValue
+        {
+            get
+            {
+                return _WidgetValue;
+            }
 
-        /*  [DataMember]
+            set
+            {
+                _WidgetValue = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+          [DataMember]
           public string unite
           {
               get
@@ -174,33 +189,20 @@ namespace Jeedom.Model
                   _unite = value;
                   NotifyPropertyChanged();
               }
-          }*/
+          }
 
         #endregion Propriétés avec notification de changement
 
 
         #region Private Methods
+
         public async Task ExecCommand()
         {
             this.Updating = true;
             Parameters parameters = new Parameters();
             parameters.id = this.id;
             parameters.name = this.name;
-            switch (this.subType)
-            {
-                case "other":
-                    break;
-                case "slider":
-                    parameters.options.slider = this.Value;
-                    break;
-                case "message":
-                    parameters.options.title = "";// this.title;
-                    parameters.options.message = "";//this.message;
-                    break;
-                case "color":
-                    parameters.options.color = this.Value;
-                    break;
-            }
+            parameters.options = this.WidgetValue;
             await RequestViewModel.Instance.ExecuteCommand(this);
             this.Updating = false;
 
