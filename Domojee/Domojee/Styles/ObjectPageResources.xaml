@@ -358,21 +358,10 @@
     </DataTemplate>
     <DataTemplate x:Key="OtherCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <TextBlock x:Name="PART_Name"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True"
-				Text="{Binding name, FallbackValue=Name}" />
-            <Viewbox x:Name="PART_Icon"
-				Margin="4"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="PART_Name">
-                <ToggleButton  HorizontalAlignment="Center"
+            <ToggleButton  HorizontalAlignment="Center"
 					Foreground="White"
                     Width="150"
 					Content="{Binding name}"/>
-            </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="SliderCmdTemplate">
@@ -388,19 +377,25 @@
     </DataTemplate>
     <DataTemplate x:Key="MessageCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <TextBlock x:Name="Title"
+            <TextBox x:Name="Title"
+                Header="Title"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
+				VerticalAlignment="Stretch"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.AlignTopWithPanel="True" 
                 Width="150"
                 Text="{Binding WidgetValue.title, Mode=TwoWay}"/>
-            <TextBlock x:Name="Message"
+            <TextBox x:Name="Message"
+                Header="Message"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Stretch"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.Below="Title" 
                 Width="150"
-                Text="{Binding WidgetValue.title, Mode=TwoWay}"/>
+                Text="{Binding WidgetValue.Message, Mode=TwoWay}"/>
             <ToggleButton  
+				HorizontalAlignment="Center"
+				VerticalAlignment="Stretch"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.Below="Message" 
 					Foreground="White"
