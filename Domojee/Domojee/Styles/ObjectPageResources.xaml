@@ -358,10 +358,12 @@
     </DataTemplate>
     <DataTemplate x:Key="OtherCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <ToggleButton  HorizontalAlignment="Center"
+            <Button  HorizontalAlignment="Center"
 					Foreground="White"
                     Width="150"
-					Content="{Binding name}"/>
+					Content="{Binding name}"
+                    ClickMode="Press"
+                Command="{Binding ExecCommand}"/>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="SliderCmdTemplate">
@@ -372,7 +374,8 @@
 					Maximum="255" 
                     Width="150"
                     Header="{Binding name, FallbackValue=Name}"
-					Value="{Binding WidgetValue.slider, Mode=TwoWay}"/>
+					Value="{Binding WidgetValue.slider, Mode=TwoWay}"
+                    ManipulationCompleted="{Binding ExecCommand}"/>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="MessageCmdTemplate">
@@ -393,13 +396,15 @@
 				RelativePanel.Below="Title" 
                 Width="150"
                 Text="{Binding WidgetValue.Message, Mode=TwoWay}"/>
-            <ToggleButton  
+            <Button  
 				HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.Below="Message" 
 					Foreground="White"
-					Content="{Binding name}"/>
+					Content="{Binding name}"
+                 ClickMode="Press"
+                Command="{Binding ExecCommand}"/>
             </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">

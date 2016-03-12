@@ -2,8 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using System.Linq;
+using Jeedom.Mvvm;
+
 namespace Jeedom.Model
 {
     [DataContract]
@@ -196,18 +197,29 @@ namespace Jeedom.Model
 
         #region Private Methods
 
-        public async Task ExecCommand()
+
+        private RelayCommand<object> _ExecCommand;
+        public RelayCommand<object> ExecCommand
         {
-            this.Updating = true;
-            Parameters parameters = new Parameters();
-            parameters.id = this.id;
-            parameters.name = this.name;
-            parameters.options = this.WidgetValue;
-            await RequestViewModel.Instance.ExecuteCommand(this);
-            this.Updating = false;
-
+            get
+            {
+                this._ExecCommand = this._ExecCommand ?? new RelayCommand<object>(async parameters =>
+                {
+                    try
+                    {
+                        this.Updating = true;
+                        Parameters CmdParameters = new Parameters();
+                        CmdParameters.id = this.id;
+                        CmdParameters.name = this.name;
+                        CmdParameters.options = this.WidgetValue;
+                        await RequestViewModel.Instance.ExecuteCommand(this, CmdParameters);
+                        this.Updating = false;
+                    }
+                    catch (Exception) { }
+                });
+                return this._ExecCommand;
+            }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
