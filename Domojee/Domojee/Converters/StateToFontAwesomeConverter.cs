@@ -10,7 +10,7 @@ namespace Domojee.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var state = value as string;
-            if (state == "1" || state.ToLower() == "on")
+            if (state != null && (state == "1" || state.ToLower() == "on"))
                 return "fa-check";
             else
                 return "fa-times";
