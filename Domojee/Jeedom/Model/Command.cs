@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
+using System.Linq;
+using Jeedom.Mvvm;
+
 namespace Jeedom.Model
 {
     [DataContract]
@@ -24,25 +26,25 @@ namespace Jeedom.Model
         [DataMember]
         public string type;
 
-      /*  [DataMember(Name = "configuration")]
-        private CommandConfiguration _configuration;
+        /*  [DataMember(Name = "configuration")]
+          private CommandConfiguration _configuration;
 
-        public CommandConfiguration configuration
+          public CommandConfiguration configuration
 
-        {
-            get
-            {
-                if (_configuration == null)
-                    return new CommandConfiguration();
-                else
-                    return _configuration;
-            }
+          {
+              get
+              {
+                  if (_configuration == null)
+                      return new CommandConfiguration();
+                  else
+                      return _configuration;
+              }
 
-            set
-            {
-                _configuration = value;
-            }
-        }*/
+              set
+              {
+                  _configuration = value;
+              }
+          }*/
         [DataMember(Name = "display")]
         private CommandDisplay _display;
 
@@ -66,7 +68,7 @@ namespace Jeedom.Model
         [DataMember]
         public string subType;
 
-        //private string _unite;
+        private string _unite;
 
         [DataMember]
         private bool _isVisible = true;
@@ -85,7 +87,7 @@ namespace Jeedom.Model
         }
 
         [DataMember(Name = "value")]
-        private string _value;
+        private string _value="";
 
         private bool _updating = false;
 
@@ -101,13 +103,15 @@ namespace Jeedom.Model
         {
             get
             {
-                return _value;
+                if (this.type == "action"&& _value!="")
+                    return  RequestViewModel.Instance.CommandList.Where(cmd => cmd.id.Equals(_value.Replace('#',' ').Trim())).First().Value;
+                else
+                    return _value;
             }
 
             set
             {
-                 _value = value;
-                // ExecCommand();
+                _value = value;
                 NotifyPropertyChanged();
                 if (Parent != null)
                 {
@@ -157,34 +161,65 @@ namespace Jeedom.Model
                 NotifyPropertyChanged();
             }
         }
-
-      /*  [DataMember]
-        public string unite
+        private ParametersOption _WidgetValue= new ParametersOption();
+        
+        public ParametersOption WidgetValue
         {
             get
             {
-                return _unite;
+                return _WidgetValue;
             }
 
             set
             {
-                _unite = value;
+                _WidgetValue = value;
                 NotifyPropertyChanged();
             }
-        }*/
+        }
+
+          [DataMember]
+          public string unite
+          {
+              get
+              {
+                  return _unite;
+              }
+
+              set
+              {
+                  _unite = value;
+                  NotifyPropertyChanged();
+              }
+          }
 
         #endregion Propriétés avec notification de changement
 
 
         #region Private Methods
-        private async Task ExecCommand()
-        {
-                this.Updating = true;
-                await RequestViewModel.Instance.ExecuteCommand(this);
-                this.Updating = false;
-            
-        }
 
+
+        private RelayCommand<object> _ExecCommand;
+        public RelayCommand<object> ExecCommand
+        {
+            get
+            {
+                this._ExecCommand = this._ExecCommand ?? new RelayCommand<object>(async parameters =>
+                {
+                    try
+                    {
+                        this.Updating = true;
+                        Parameters CmdParameters = new Parameters();
+                        CmdParameters.id = this.id;
+                        CmdParameters.name = this.name;
+                        CmdParameters.options = this.WidgetValue;
+                        await RequestViewModel.Instance.ExecuteCommand(this, CmdParameters);
+                        this.Updating = false;
+                    }
+                    catch (Exception) { }
+                });
+                return this._ExecCommand;
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -194,7 +229,7 @@ namespace Jeedom.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-   
+
         #endregion Private Methods
     }
 }
