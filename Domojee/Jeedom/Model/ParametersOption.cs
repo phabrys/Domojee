@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.media;
 namespace Jeedom.Model
 {
     public class ParametersOption : INotifyPropertyChanged
@@ -52,7 +53,20 @@ namespace Jeedom.Model
                 NotifyPropertyChanged();
             }
         }
-        public string color;
+        public string _color;
+        public string color
+        {
+            get
+            {
+                return _color;
+            }
+
+            set
+            {
+                _color = value;
+                NotifyPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(String propertyName = "")
