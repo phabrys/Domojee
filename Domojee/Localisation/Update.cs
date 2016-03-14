@@ -91,50 +91,20 @@ namespace Localisation
         {
             try
             {
-                // Get permission for a background task from the user. If the user has already answered once,
-                // this does nothing and the user must manually update their preference via PC Settings.
                 BackgroundAccessStatus backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-
-                // Regardless of the answer, register the background task. If the user later adds this application
-                // to the lock screen, the background task will be ready to run.
-                // Create a new background task builder
+                
                 BackgroundTaskBuilder geofenceTaskBuilder = new BackgroundTaskBuilder();
 
                 geofenceTaskBuilder.Name = SampleBackgroundTaskName;
                 geofenceTaskBuilder.TaskEntryPoint = SampleBackgroundTaskEntryPoint;
-
-                // Create a new location trigger
                 var trigger = new LocationTrigger(LocationTriggerType.Geofence);
-
-                // Associate the locationi trigger with the background task builder
+                
                 geofenceTaskBuilder.SetTrigger(trigger);
-
-                // If it is important that there is user presence and/or
-                // internet connection when OnCompleted is called
-                // the following could be called before calling Register()
-                // SystemCondition condition = new SystemCondition(SystemConditionType.UserPresent | SystemConditionType.InternetAvailable);
-                // geofenceTaskBuilder.AddCondition(condition);
-
-                // Register the background task
                 _geofenceTask = geofenceTaskBuilder.Register();
-
-                switch (backgroundAccessStatus)
-                {
-                    case BackgroundAccessStatus.Unspecified:
-                    case BackgroundAccessStatus.Denied:
-                        //  _rootPage.NotifyUser("Not able to run in background. Application must be added to the lock screen.", NotifyType.ErrorMessage);
-                        break;
-
-                    default:
-                        // _rootPage.NotifyUser("Geofence background task registered.", NotifyType.StatusMessage);
-
-                        // RequestLocationAccess();
-                        break;
-                }
+                
             }
-            catch (Exception ex)
+            catch
             {
-                //_rootPage.NotifyUser(ex.ToString(), NotifyType.ErrorMessage);
             }
         }
 
@@ -145,8 +115,6 @@ namespace Localisation
                 _geofenceTask.Unregister(true);
                 _geofenceTask = null;
             }
-
-            //_rootPage.NotifyUser("Geofence background task unregistered", NotifyType.StatusMessage);
         }
     }
 }
