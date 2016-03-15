@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
+using Jeedom;
 
 namespace Domojee.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
+        public ConfigurationViewModel config { get; } = new ConfigurationViewModel();
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
     }
