@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.media;
 namespace Jeedom.Model
 {
     public class ParametersOption : INotifyPropertyChanged
