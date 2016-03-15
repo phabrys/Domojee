@@ -417,6 +417,7 @@
 				RelativePanel.AlignTopWithPanel="True"
 				Text="{Binding name, FallbackValue=Name}" />
             <ColorPicker:ColorPicker 
+                SelectedColor="{Binding WidgetValue.color, Mode=TwoWay}"
                 SelectedColorChanged="{Binding ExecCommand}" />
         </RelativePanel>
     </DataTemplate>
