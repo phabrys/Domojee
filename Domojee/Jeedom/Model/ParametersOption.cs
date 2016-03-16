@@ -5,6 +5,9 @@ namespace Jeedom.Model
 {
     public class ParametersOption : INotifyPropertyChanged
     {
+        public ParametersOption()
+        {
+        }
         private double _slider;
         public double slider
         {
@@ -15,6 +18,8 @@ namespace Jeedom.Model
 
             set
             {
+
+
                 _slider = value;
                 NotifyPropertyChanged();
             }
@@ -47,7 +52,20 @@ namespace Jeedom.Model
                 NotifyPropertyChanged();
             }
         }
-        public string color;
+        public string _color;
+        public string color
+        {
+            get
+            {
+                return _color;
+            }
+
+            set
+            {
+                _color = value;
+                NotifyPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(String propertyName = "")

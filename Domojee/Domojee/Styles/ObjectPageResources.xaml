@@ -5,6 +5,7 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:selector="using:Domojee.Selectors"
+                    xmlns:ColorPicker="using:ColorPicker"
                     xmlns:Converters="using:Template10.Converters"
                     mc:Ignorable="d">
     <converter:StateToFontAwesomeConverter x:Key="StateToFontAwesomeConverter"/>
@@ -375,7 +376,7 @@
                     Width="150"
                     Header="{Binding name, FallbackValue=Name}"
 					Value="{Binding WidgetValue.slider, Mode=TwoWay}"
-                    ManipulationCompleted="{Binding ExecCommand}"/>
+                    ValueChanged="{Binding ExecCommand}"/>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="MessageCmdTemplate">
@@ -415,10 +416,9 @@
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
 				RelativePanel.AlignTopWithPanel="True"
 				Text="{Binding name, FallbackValue=Name}" />
-            <Viewbox x:Name="PART_Icon"
-				Margin="4"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="PART_Name"/>
+            <ColorPicker:ColorPicker 
+                SelectedColor="{Binding WidgetValue.color, Mode=TwoWay}"
+                SelectedColorChanged="{Binding ExecCommand}" />
         </RelativePanel>
     </DataTemplate>
 

@@ -37,9 +37,9 @@ namespace Domojee.Views
             HomePosition_Cmd.ItemsSource = GeolocCmd;
             MobilePosition_Cmd.ItemsSource = GeolocCmd;
             if (GeolocCmd.Count() == 0)
-                activeLocation.IsEnabled = false;
+                Location.IsEnabled = false;
             else
-                activeLocation.IsEnabled = true;
+                Location.IsEnabled = true;
             var GeolocObjectId = settings.Values["GeolocObjectId"];
             if (GeolocObjectId != null)
             {
@@ -59,9 +59,9 @@ namespace Domojee.Views
             var ObjetctPush = RequestViewModel.Instance.EqLogicList.Where(w => w.eqType_name.Equals("pushNotification"));
             MobileNotification.ItemsSource = ObjetctPush;
             if (ObjetctPush.Count() == 0)
-                activePush.IsEnabled = false;
+                notify.IsEnabled = false;
             else
-                activePush.IsEnabled = true;
+                notify.IsEnabled = true;
             var NotificationId = settings.Values["NotificationObjectId"];
             if (NotificationId != null)
             {
@@ -85,7 +85,7 @@ namespace Domojee.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var index = _SerializationService.Deserialize<int>(e.Parameter?.ToString());
-            MyPivot.SelectedIndex = index;
+            AppParameter.SelectedIndex = index;
             foreach (var cur in BackgroundTaskRegistration.AllTasks)
             {
                 if (cur.Value.Name == BackgroundTaskName)
