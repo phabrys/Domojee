@@ -17,7 +17,17 @@ namespace Jeedom.Model
     {
         #region Public Fields
 
-        public int ColSpan = 1;
+        public int ColSpan
+        {
+            get
+            {
+                var _visibleCmds = GetVisibleCmds().Count();
+                if (_visibleCmds > 4)
+                    return 4;
+                else
+                    return _visibleCmds;
+            }
+        }
 
         [DataMember]
         public string isEnable;
@@ -33,7 +43,17 @@ namespace Jeedom.Model
 
         public JdObject Parent;
 
-        public int RowSpan = 1;
+        public int RowSpan
+        {
+            get
+            {
+                var _visibleCmds = GetVisibleCmds().Count();
+                if (_visibleCmds > 4)
+                    return (int)Math.Ceiling((double)_visibleCmds / 4);
+                else
+                    return 1;
+            }
+        }
 
         #endregion Public Fields
 
@@ -83,6 +103,16 @@ namespace Jeedom.Model
             {
                 _cmds = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged("VisibleCmds");
+            }
+        }
+
+        [DataMember]
+        public ObservableCollection<Command> VisibleCmds
+        {
+            get
+            {
+                return GetVisibleCmds();
             }
         }
 
@@ -109,16 +139,6 @@ namespace Jeedom.Model
             set
             {
                 _display = value;
-                if (_display != null)
-                {
-                   /* if (_display.customParameters != null)
-                    {
-                        if (_display.customParameters.DomojeeColSpan != 0)
-                            ColSpan = _display.customParameters.DomojeeColSpan;
-                        if (_display.customParameters.DomojeeRowSpan != 0)
-                            RowSpan = _display.customParameters.DomojeeRowSpan;
-                    }*/
-                }
                 NotifyPropertyChanged();
             }
         }
@@ -133,19 +153,7 @@ namespace Jeedom.Model
             set
             {
                 _eqtype_name = value;
-                switch (value)
-                {
-                    case "openzwave":
-                        ColSpan = 2;
-                        break;
 
-                    case "energy":
-                        ColSpan = 1;
-                        break;
-
-                    default:
-                        break;
-                }
                 NotifyPropertyChanged();
             }
         }
@@ -287,6 +295,12 @@ namespace Jeedom.Model
         public ObservableCollection<Command> GetActionsCmds()
         {
             IEnumerable<Command> results = cmds.Where(c => c.type == "action");
+            return new ObservableCollection<Command>(results);
+        }
+
+        public ObservableCollection<Command> GetVisibleCmds()
+        {
+            IEnumerable<Command> results = cmds.Where(c => c.isVisible == true);
             return new ObservableCollection<Command>(results);
         }
 
