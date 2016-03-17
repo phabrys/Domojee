@@ -58,6 +58,7 @@ namespace Jeedom
                 NotifyPropertyChanged();
             }
         }
+
         public ObservableCollection<Interact> InteractList
         {
             get { return _interactList; }
@@ -125,6 +126,18 @@ namespace Jeedom
             }
         }
 
+        private string _version;
+
+        public string Version
+        {
+            get { return _version; }
+            set
+            {
+                _version = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private string _loadingMessage;
 
         public string LoadingMessage
@@ -180,6 +193,18 @@ namespace Jeedom
             return jsonrpc.Error;
         }
 
+        public async Task<Error> DownloadVersion()
+        {
+            var jsonrpc = new JsonRpcClient();
+            if (await jsonrpc.SendRequest("version"))
+            {
+                var response = jsonrpc.GetRequestResponseDeserialized<Response<string>>();
+                Version = response.result;
+            }
+
+            return jsonrpc.Error;
+        }
+
         private async Task<Error> DownloadDateTime()
         {
             var jsonrpc = new JsonRpcClient();
@@ -197,10 +222,14 @@ namespace Jeedom
         {
             Updating = true;
 
-            int pg = 100 / 5;
+            int pg = 100 / 6;
 
             LoadingMessage = "Contacte Jeedom";
             var error = await DownloadDateTime();
+            Progress += pg;
+
+            LoadingMessage = "Chargement de la Version";
+            error = await DownloadVersion();
             Progress += pg;
 
             LoadingMessage = "Chargement des Objets";
@@ -414,7 +443,7 @@ namespace Jeedom
             {
                 var response = jsonrpc.GetRequestResponseDeserialized<Response<string>>();
                 if (response != null)
-                InteractReply= response.result;
+                    InteractReply = response.result;
             }
 
             return jsonrpc.Error;
@@ -453,7 +482,6 @@ namespace Jeedom
                         InteractsList.Add(Iteract.query);
                     }
                     await commandDefinitions.SetPhraseListAsync("InteractList", InteractsList);
-                    
                 }
             }
             catch (Exception ex)
