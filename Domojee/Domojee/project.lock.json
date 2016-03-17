@@ -19,12 +19,33 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/1.2.3": {
+      "Microsoft.ApplicationInsights/2.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Diagnostics.Tools": "[4.0.0, )",
+          "System.Diagnostics.Tracing": "[4.0.20, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.IO": "[4.0.10, )",
+          "System.IO.Compression": "[4.0.0, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Net.Http": "[4.0.0, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.Encoding": "[4.0.10, )",
+          "System.Text.Encoding.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
         "compile": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -258,7 +279,7 @@
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/8.0.3": {
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         },
@@ -1683,12 +1704,33 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/1.2.3": {
+      "Microsoft.ApplicationInsights/2.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Diagnostics.Tools": "[4.0.0, )",
+          "System.Diagnostics.Tracing": "[4.0.20, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.IO": "[4.0.10, )",
+          "System.IO.Compression": "[4.0.0, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Net.Http": "[4.0.0, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.Encoding": "[4.0.10, )",
+          "System.Text.Encoding.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
         "compile": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -1965,7 +2007,7 @@
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/8.0.3": {
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         },
@@ -3437,12 +3479,33 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/1.2.3": {
+      "Microsoft.ApplicationInsights/2.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Diagnostics.Tools": "[4.0.0, )",
+          "System.Diagnostics.Tracing": "[4.0.20, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.IO": "[4.0.10, )",
+          "System.IO.Compression": "[4.0.0, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Net.Http": "[4.0.0, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.Encoding": "[4.0.10, )",
+          "System.Text.Encoding.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
         "compile": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -3705,7 +3768,7 @@
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/8.0.3": {
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         },
@@ -5163,12 +5226,33 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/1.2.3": {
+      "Microsoft.ApplicationInsights/2.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Diagnostics.Tools": "[4.0.0, )",
+          "System.Diagnostics.Tracing": "[4.0.20, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.IO": "[4.0.10, )",
+          "System.IO.Compression": "[4.0.0, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Net.Http": "[4.0.0, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.Encoding": "[4.0.10, )",
+          "System.Text.Encoding.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
         "compile": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -5450,7 +5534,7 @@
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/8.0.3": {
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         },
@@ -6922,12 +7006,33 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/1.2.3": {
+      "Microsoft.ApplicationInsights/2.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Diagnostics.Tools": "[4.0.0, )",
+          "System.Diagnostics.Tracing": "[4.0.20, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.IO": "[4.0.10, )",
+          "System.IO.Compression": "[4.0.0, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Net.Http": "[4.0.0, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.Encoding": "[4.0.10, )",
+          "System.Text.Encoding.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
         "compile": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -7190,7 +7295,7 @@
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/8.0.3": {
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         },
@@ -8648,12 +8753,33 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/1.2.3": {
+      "Microsoft.ApplicationInsights/2.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Diagnostics.Tools": "[4.0.0, )",
+          "System.Diagnostics.Tracing": "[4.0.20, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.IO": "[4.0.10, )",
+          "System.IO.Compression": "[4.0.0, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Net.Http": "[4.0.0, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.Encoding": "[4.0.10, )",
+          "System.Text.Encoding.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
         "compile": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -8935,7 +9061,7 @@
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/8.0.3": {
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         },
@@ -10407,12 +10533,33 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/1.2.3": {
+      "Microsoft.ApplicationInsights/2.0.0": {
+        "dependencies": {
+          "System.Collections": "[4.0.10, )",
+          "System.Diagnostics.Debug": "[4.0.10, )",
+          "System.Diagnostics.Tools": "[4.0.0, )",
+          "System.Diagnostics.Tracing": "[4.0.20, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.IO": "[4.0.10, )",
+          "System.IO.Compression": "[4.0.0, )",
+          "System.Linq": "[4.0.0, )",
+          "System.Net.Http": "[4.0.0, )",
+          "System.Reflection": "[4.0.10, )",
+          "System.Reflection.Extensions": "[4.0.0, )",
+          "System.Runtime": "[4.0.20, )",
+          "System.Runtime.Extensions": "[4.0.10, )",
+          "System.Text.Encoding": "[4.0.10, )",
+          "System.Text.Encoding.Extensions": "[4.0.10, )",
+          "System.Text.RegularExpressions": "[4.0.10, )",
+          "System.Threading": "[4.0.10, )",
+          "System.Threading.Tasks": "[4.0.10, )",
+          "System.Xml.XDocument": "[4.0.10, )"
+        },
         "compile": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -10675,7 +10822,7 @@
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/8.0.3": {
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         },
@@ -12144,22 +12291,22 @@
         "package/services/metadata/core-properties/c539083e64234fec8295a232ceee247c.psmdcp"
       ]
     },
-    "Microsoft.ApplicationInsights/1.2.3": {
-      "sha512": "a34atobxpucCTTX9VCD7aIu6Ydzry+Va7TxK2tTQcfaMvefGW4kUKtg9GHKIn19IaXe+A4oZt/GBqsOt5vQrBA==",
+    "Microsoft.ApplicationInsights/2.0.0": {
+      "sha512": "0fHI0623ruqUzsxOGBGgWvLKTCKNzpLFT1lWUs759hsnn1vIDdbLeRoyeKwfUkQI4AusHcuuX8jZfGlM2TOnVg==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
         "_rels/.rels",
+        "lib/dotnet5.4/Microsoft.ApplicationInsights.dll",
+        "lib/dotnet5.4/Microsoft.ApplicationInsights.XML",
         "lib/net40/Microsoft.ApplicationInsights.dll",
         "lib/net40/Microsoft.ApplicationInsights.XML",
         "lib/net45/Microsoft.ApplicationInsights.dll",
         "lib/net45/Microsoft.ApplicationInsights.XML",
-        "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll",
-        "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.XML",
-        "lib/wp8/Microsoft.ApplicationInsights.dll",
-        "lib/wp8/Microsoft.ApplicationInsights.XML",
+        "lib/net46/Microsoft.ApplicationInsights.dll",
+        "lib/net46/Microsoft.ApplicationInsights.XML",
         "Microsoft.ApplicationInsights.nuspec",
-        "package/services/metadata/core-properties/3b36eef276524f5d883c618d5fd8c500.psmdcp"
+        "package/services/metadata/core-properties/fc991380f147454190a499a70e9b0afa.psmdcp"
       ]
     },
     "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -12867,8 +13014,8 @@
         "package/services/metadata/core-properties/aa8a385ed5b94b29a44c3a4ace39232c.psmdcp"
       ]
     },
-    "Newtonsoft.Json/8.0.2": {
-      "sha512": "e5yWmEfu68rmtG431zl9N/7PlNKQDIuiDW5MHlEFAZcecakcxrIGnKqrPAtWNILzK2oNanRB5cD150MYhECK3g==",
+    "Newtonsoft.Json/8.0.3": {
+      "sha512": "KGsYQdS2zLH+H8x2cZaSI7e+YZ4SFIbyy1YJQYl6GYBWjf5o4H1A68nxyq+WTyVSOJQ4GqS/DiPE+UseUizgMg==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -12886,7 +13033,7 @@
         "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll",
         "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.xml",
         "Newtonsoft.Json.nuspec",
-        "package/services/metadata/core-properties/cc8c591d554640789c6a6ef6456f7772.psmdcp",
+        "package/services/metadata/core-properties/199d932507f04f0285dade0302b87d22.psmdcp",
         "tools/install.ps1"
       ]
     },
@@ -15741,12 +15888,12 @@
     "": [
       "ColorPicker >= 1.0.2",
       "CrossPieCharts.UWP >= 1.0.2",
-      "Microsoft.ApplicationInsights >= 1.2.3",
+      "Microsoft.ApplicationInsights >= 2.0.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.2.3",
       "Microsoft.ApplicationInsights.WindowsApps >= 1.1.1",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
       "Microsoft.Xaml.Behaviors.Uwp.Managed >= 1.1.0",
-      "Newtonsoft.Json >= 8.0.2",
+      "Newtonsoft.Json >= 8.0.3",
       "Template10 >= 1.1.8"
     ],
     "UAP,Version=v10.0": []
