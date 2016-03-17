@@ -31,36 +31,46 @@ namespace Domojee.Selectors
 
             // Cherche si on a spécifié un Template dans les customParameters de l'équipement
             //TODO : Voir "generic_type" : https://www.jeedom.com/forum/viewtopic.php?f=112&t=15155#p278226
-            if (cmd.display != null) {
-				switch(cmd.display.generic_type)
+            if (cmd.display != null)
+            {
+                /* switch(cmd.display.generic_type)
                 {
                     case "LIGHT_STATE":
                         return LIGHT_STATE_Template;
+
                     case "LIGHT_ON":
                         return LIGHT_ON_Template;
+
                     case "LIGHT_OFF":
                         return LIGHT_OFF_Template;
-                }
+                } */
             }
-                switch(cmd.subType)
-                {
-                    case "numeric":
-                        return NumericCmdTemplate;
-                    case "binary":
-                        return BinaryCmdTemplate;
-                    case "string":
-                        return StringCmdTemplate;
-                    case "other":
-                        return OtherCmdTemplate;
-                    case "slider":
-                        return SliderCmdTemplate;
-                    case "message":
-                        return MessageCmdTemplate;
-                    case "color":
-                        return ColorCmdTemplate;
-                }
+            switch (cmd.subType)
+            {
+                case "numeric":
+                    return NumericCmdTemplate;
+
+                case "binary":
+                    return BinaryCmdTemplate;
+
+                case "string":
+                    return StringCmdTemplate;
+
+                case "other":
+                    return OtherCmdTemplate;
+
+                case "slider":
+                    return SliderCmdTemplate;
+
+                case "message":
+                    return MessageCmdTemplate;
+
+                case "color":
+                    return ColorCmdTemplate;
+            }
             return null;
         }
+
         #endregion Protected Methods
     }
 }

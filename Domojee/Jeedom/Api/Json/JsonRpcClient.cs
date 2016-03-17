@@ -160,7 +160,11 @@ namespace Jeedom.Api.Json
                 var resp = JsonConvert.DeserializeObject<T>(rawResponse);
                 return resp;
             }
-            catch (Exception)
+            catch (JsonException e)
+            {
+                return default(T);
+            }
+            catch (Exception e)
             {
                 return default(T);
             }
