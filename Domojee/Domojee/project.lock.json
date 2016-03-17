@@ -3,14 +3,6 @@
   "version": 1,
   "targets": {
     "UAP,Version=v10.0": {
-      "ColorPicker/1.0.2": {
-        "compile": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        }
-      },
       "CrossPieCharts.UWP/1.0.2": {
         "compile": {
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
@@ -1688,14 +1680,6 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "ColorPicker/1.0.2": {
-        "compile": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        }
-      },
       "CrossPieCharts.UWP/1.0.2": {
         "compile": {
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
@@ -3463,14 +3447,6 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "ColorPicker/1.0.2": {
-        "compile": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        }
-      },
       "CrossPieCharts.UWP/1.0.2": {
         "compile": {
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
@@ -5210,14 +5186,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "ColorPicker/1.0.2": {
-        "compile": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        }
-      },
       "CrossPieCharts.UWP/1.0.2": {
         "compile": {
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
@@ -6990,14 +6958,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "ColorPicker/1.0.2": {
-        "compile": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        }
-      },
       "CrossPieCharts.UWP/1.0.2": {
         "compile": {
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
@@ -8737,14 +8697,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "ColorPicker/1.0.2": {
-        "compile": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        }
-      },
       "CrossPieCharts.UWP/1.0.2": {
         "compile": {
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
@@ -10517,14 +10469,6 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "ColorPicker/1.0.2": {
-        "compile": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win81+wpa81/ColorPicker.dll": {}
-        }
-      },
       "CrossPieCharts.UWP/1.0.2": {
         "compile": {
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
@@ -12265,21 +12209,6 @@
     }
   },
   "libraries": {
-    "ColorPicker/1.0.2": {
-      "sha512": "dZOcHD8ZwPKoRTZ0niZIvx7VL0RT4LVHys5bEBzKunxTbEnZD8n3wCYcEU6Gx9io7rfIvToswAJgmMWSuo4hMA==",
-      "type": "Package",
-      "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "ColorPicker.nuspec",
-        "lib/portable-win81+wpa81/ColorPicker.dll",
-        "lib/portable-win81+wpa81/ColorPicker.pri",
-        "lib/portable-win81+wpa81/ColorPicker/ColorPicker.xr.xml",
-        "lib/portable-win81+wpa81/ColorPicker/colors.jpg",
-        "lib/portable-win81+wpa81/ColorPicker/Themes/Generic.xbf",
-        "package/services/metadata/core-properties/8ccdb8fe7f264139aa1322f9f7188ec5.psmdcp"
-      ]
-    },
     "CrossPieCharts.UWP/1.0.2": {
       "sha512": "i1wk9HbklmCpmszwXL27UuZ5MYD5rwgXvl+IBPI2E/+g4LE7IHIEbTH2Tb/ZTzgaxc+BTPVv4M7pSybpSq1K+A==",
       "type": "Package",
@@ -15886,7 +15815,6 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "ColorPicker >= 1.0.2",
       "CrossPieCharts.UWP >= 1.0.2",
       "Microsoft.ApplicationInsights >= 2.0.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.2.3",

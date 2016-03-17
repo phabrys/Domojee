@@ -6,6 +6,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:selector="using:Domojee.Selectors"
                     xmlns:Converters="using:Template10.Converters"
+                    xmlns:xc="using:Color_Picker"
                     mc:Ignorable="d">
     <converter:StateToFontAwesomeConverter x:Key="StateToFontAwesomeConverter"/>
     <FontFamily x:Key="FontAwesome">/Assets/Fonts/FontAwesome.ttf#FontAwesome</FontFamily>
@@ -71,11 +72,11 @@
 							Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ctl:VariableSizedGridView.ItemsPanel>
-                <!--ProgressRing x:Name="PART_Updating"
+                <ProgressRing x:Name="PART_Updating"
 					IsActive="false"
 					RelativePanel.AlignRightWithPanel="True"
 					RelativePanel.AlignTopWithPanel="True"
-					Visibility="{Binding Updating, Converter={StaticResource UpdatingConverter}}"  /-->
+					Visibility="{Binding Updating, Converter={StaticResource UpdatingConverter}}"  />
             </ctl:VariableSizedGridView>
         </RelativePanel>
     </DataTemplate>
@@ -409,12 +410,13 @@
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <TextBlock x:Name="PART_Name"
+            <xc:Clr_Pckr
+                Header="{Binding name, FallbackValue=Name}"
+				value="{Binding WidgetValue.color, Mode=TwoWay}"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
+				VerticalAlignment="Stretch"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True"
-				Text="{Binding name, FallbackValue=Name}" />
+                Width="150" />
         </RelativePanel>
     </DataTemplate>
 
