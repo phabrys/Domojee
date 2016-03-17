@@ -6,7 +6,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:selector="using:Domojee.Selectors"
                     xmlns:Converters="using:Template10.Converters"
-                    xmlns:xc="using:Color_Picker"
+                    xmlns:xc="using:ColorPicker"
                     mc:Ignorable="d">
     <converter:StateToFontAwesomeConverter x:Key="StateToFontAwesomeConverter" />
     <FontFamily x:Key="FontAwesome">/Assets/Fonts/FontAwesome.ttf#FontAwesome</FontFamily>
@@ -423,8 +423,7 @@
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <xc:Clr_Pckr
-                Header="{Binding name, FallbackValue=Name}"
+            <xc:ColorPicker 
 				SelectedColor="{Binding WidgetValue.color, Mode=TwoWay}"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
