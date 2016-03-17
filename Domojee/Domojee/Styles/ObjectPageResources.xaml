@@ -29,56 +29,26 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ObjectPageTemplate">
-                    <ctl:VariableSizedGridView x:Name="eqlogicview"
-				ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
-				ItemsSource="{Binding eqLogics}"
-				SelectionMode="None">
-                        <ctl:VariableSizedGridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ctl:VariableSizedGridView.ItemContainerStyle>
-                        <ctl:VariableSizedGridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid 
-							ItemWidth="450"
-							MaximumRowsOrColumns="5"
-							Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ctl:VariableSizedGridView.ItemsPanel>
-                    </ctl:VariableSizedGridView>
+        <ItemsControl  Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}" 
+                       ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
+                       ItemsSource="{Binding eqLogics}">
+            <ItemsPanelTemplate>
+                <WrapGrid x:Name="ContentGrid"
+                          ItemWidth="450">
+                </WrapGrid>
+            </ItemsPanelTemplate>
+        </ItemsControl>
     </DataTemplate>
     <DataTemplate x:Key="EqLogicTemplate">
-        <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <ctl:VariableSizedGridView x:Name="cmdview"
-				Background="#FF5EA2D1"
-				IsItemClickEnabled="False"
-				ItemTemplateSelector="{StaticResource CmdTemplateSelector}"
-				ItemsSource="{Binding cmds}"
-				Padding="15"
-				SelectionMode="None">
-                <ctl:VariableSizedGridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ctl:VariableSizedGridView.ItemContainerStyle>
-                <ctl:VariableSizedGridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid 
-							ItemWidth="150"
-							MaximumRowsOrColumns="5"
-							Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ctl:VariableSizedGridView.ItemsPanel>
-                <ProgressRing x:Name="PART_Updating"
-					IsActive="false"
-					RelativePanel.AlignRightWithPanel="True"
-					RelativePanel.AlignTopWithPanel="True"
-					Visibility="{Binding Updating, Converter={StaticResource UpdatingConverter}}"  />
-            </ctl:VariableSizedGridView>
-        </RelativePanel>
+        <ItemsControl  Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}" 
+                       ItemTemplateSelector="{StaticResource CmdTemplateSelector}"
+                       ItemsSource="{Binding cmds}">
+            <ItemsPanelTemplate>
+                <WrapGrid x:Name="ContentGrid"
+                          ItemWidth="150">
+                </WrapGrid>
+            </ItemsPanelTemplate>
+        </ItemsControl>
     </DataTemplate>
 
     <!--  Template pour ZWave  -->
