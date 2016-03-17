@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using Windows.UI.Xaml.Media;
 namespace Jeedom.Model
 {
     public class ParametersOption : INotifyPropertyChanged
@@ -52,8 +52,8 @@ namespace Jeedom.Model
                 NotifyPropertyChanged();
             }
         }
-        public string _color;
-        public string color
+        public SolidColorBrush _color;
+        public SolidColorBrush color
         {
             get
             {
