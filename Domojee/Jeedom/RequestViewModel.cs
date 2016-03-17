@@ -289,6 +289,7 @@ namespace Jeedom
                                 {
                                     foreach (Command cmd in eq.cmds)
                                     {
+                                        cmd.Parent = eq;
                                         CommandList.Add(cmd);
                                     }
                                 }
@@ -696,7 +697,7 @@ namespace Jeedom
         public async Task ExecuteCommand(Command cmd, Parameters parameters = null)
         {
             cmd.Updating = true;
-            if (parameters== null)
+            if (parameters == null)
             {
                 parameters = new Parameters();
                 parameters.id = cmd.id;
