@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Jeedom.Mvvm;
+using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Linq;
-using Jeedom.Mvvm;
 
 namespace Jeedom.Model
 {
     [DataContract]
+
     public class Command : INotifyPropertyChanged
     {
         #region Propriétés sans notification de changement
@@ -45,6 +47,7 @@ namespace Jeedom.Model
                   _configuration = value;
               }
           }*/
+
         [DataMember(Name = "display")]
         private CommandDisplay _display;
 
@@ -70,8 +73,10 @@ namespace Jeedom.Model
 
         private string _unite;
 
-        [DataMember]
-        private bool _isVisible = true;
+        [DataMember(Name = "isVisible")]
+        [JsonConverter(typeof(JsonConverters.BooleanJsonConverter))]
+        private bool _isVisible;
+
         public bool isVisible
         {
             get
@@ -82,12 +87,11 @@ namespace Jeedom.Model
             set
             {
                 _isVisible = Convert.ToBoolean(value);
-
             }
         }
 
         [DataMember(Name = "value")]
-        private string _value="";
+        private string _value = "";
 
         private bool _updating = false;
 
@@ -103,8 +107,8 @@ namespace Jeedom.Model
         {
             get
             {
-                if (this.type == "action"&& _value!="")
-                    return  RequestViewModel.Instance.CommandList.Where(cmd => cmd.id.Equals(_value.Replace('#',' ').Trim())).First().Value;
+                if (this.type == "action" && _value != "")
+                    return RequestViewModel.Instance.CommandList.Where(cmd => cmd.id.Equals(_value.Replace('#', ' ').Trim())).First().Value;
                 else
                     return _value;
             }
@@ -161,8 +165,9 @@ namespace Jeedom.Model
                 NotifyPropertyChanged();
             }
         }
-        private ParametersOption _WidgetValue= new ParametersOption();
-        
+
+        private ParametersOption _WidgetValue = new ParametersOption();
+
         public ParametersOption WidgetValue
         {
             get
@@ -177,28 +182,27 @@ namespace Jeedom.Model
             }
         }
 
-          [DataMember]
-          public string unite
-          {
-              get
-              {
-                  return _unite;
-              }
+        [DataMember]
+        public string unite
+        {
+            get
+            {
+                return _unite;
+            }
 
-              set
-              {
-                  _unite = value;
-                  NotifyPropertyChanged();
-              }
-          }
+            set
+            {
+                _unite = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         #endregion Propriétés avec notification de changement
 
-
         #region Private Methods
 
-
         private RelayCommand<object> _ExecCommand;
+
         public RelayCommand<object> ExecCommand
         {
             get
@@ -213,6 +217,8 @@ namespace Jeedom.Model
                         CmdParameters.name = this.name;
                         CmdParameters.options = this.WidgetValue;
                         await RequestViewModel.Instance.ExecuteCommand(this, CmdParameters);
+                        await RequestViewModel.Instance.UpdateEqLogic(this.Parent);
+
                         this.Updating = false;
                     }
                     catch (Exception) { }
@@ -220,6 +226,7 @@ namespace Jeedom.Model
                 return this._ExecCommand;
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
