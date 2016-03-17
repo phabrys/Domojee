@@ -100,30 +100,17 @@
                 <PivotItem.DataContext>
                     <Jeedom:ConfigurationViewModel/>
                 </PivotItem.DataContext>
-                <Grid>
+                <StackPanel>
                     <ToggleSwitch
 						x:Name="activeLocation"
 						Width="100"
-						Height="59"
-						Margin="10,25,0,0"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
+						Height="60"
 						Header="Activation"
 						IsOn="{Binding GeolocActivation, Mode=TwoWay}"
 						Toggled="activeLocation_Toggled" />
-                    <TextBlock
-						x:Name="Status"
-						Height="20"
-						Margin="6,64,10,0"
-						VerticalAlignment="Top"
-						TextWrapping="Wrap"
-						d:LayoutOverrides="LeftPosition, RightPosition" />
                     <ComboBox
 						x:Name="HomePosition_Cmd"
-						Height="64"
-						Margin="10,89,50,0"
-						HorizontalAlignment="Stretch"
-						VerticalAlignment="Top"
+						Height="60"
 						Header="Objet Jeedom de votre Maison"
 						SelectionChanged="HomePosition_Cmd_SelectionChanged"
 						d:LayoutOverrides="LeftPosition, RightPosition">
@@ -139,10 +126,7 @@
                     </ComboBox>
                     <ComboBox
 						x:Name="MobilePosition_Cmd"
-						Height="64"
-						Margin="10,158,50,0"
-						HorizontalAlignment="Stretch"
-						VerticalAlignment="Top"
+						Height="60"
 						Header="Objet Jeedom de votre mobile"
 						SelectionChanged="MobilePosition_Cmd_SelectionChanged"
 						d:LayoutOverrides="LeftPosition, RightPosition">
@@ -162,86 +146,74 @@
                     	Header="Activation"
                     	IsOn="{Binding GeoFenceActivation, Mode=TwoWay}" />
                     <TextBox
-						Height="67"
-						Margin="6,0,54,110"
-						VerticalAlignment="Bottom"
+						Height="60"
 						Header="Distance d'activation du Géorepérage"
 						Text="{Binding GeoFenceActivationDistance, Mode=TwoWay}"
 						d:LayoutOverrides="LeftPosition, RightPosition" />
                     <TextBlock
-						x:Name="MobilePosition_Longitude"
-						Height="25"
-						Margin="88,0,37,52"
-						VerticalAlignment="Bottom"
-						Text="No data"
-						TextWrapping="Wrap"
-						d:LayoutOverrides="LeftPosition, RightPosition" />
-                    <TextBlock
-						x:Name="MobilePosition_Accuracy"
+						x:Name="Status"
 						Height="20"
-						Margin="88,0,37,27"
-						VerticalAlignment="Bottom"
-						Text="No data"
 						TextWrapping="Wrap"
 						d:LayoutOverrides="LeftPosition, RightPosition" />
-                    <TextBlock
+                    <StackPanel>
+                        <TextBlock
+						Grid.Row="0"
 						Grid.Column="0"
-						Height="30"
-						Margin="6,0,0,47"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Bottom"
-						Text="Longitude: "
+						Height="25"
+						Text="Latitude: "
 						TextWrapping="Wrap" />
-                    <TextBlock
-						Grid.Column="0"
-						Height="22"
-						Margin="6,0,0,25"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Bottom"
-						Text="Accuracy: "
-						TextWrapping="Wrap" />
-                    <TextBlock
+                        <TextBlock
 						x:Name="MobilePosition_Latitude"
 						Grid.Row="0"
 						Height="21"
-						Margin="88,0,37,84"
-						VerticalAlignment="Bottom"
-						RenderTransformOrigin="0.818,0.5"
 						Text="No data"
 						TextWrapping="Wrap"
 						d:LayoutOverrides="LeftPosition, RightPosition" />
-                    <TextBlock
-						Grid.Row="0"
+
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock
 						Grid.Column="0"
-						Height="25"
-						Margin="6,0,0,80"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Bottom"
-						Text="Latitude: "
+						Height="30"
+						Text="Longitude: "
 						TextWrapping="Wrap" />
-                </Grid>
+                        <TextBlock
+						x:Name="MobilePosition_Longitude"
+						Height="25"
+						Text="No data"
+						TextWrapping="Wrap"
+						d:LayoutOverrides="LeftPosition, RightPosition" />
+                        <StackPanel>
+                        </StackPanel>
+                        <TextBlock
+						Grid.Column="0"
+						Height="22"
+						Text="Accuracy: "
+						TextWrapping="Wrap" />
+                        <TextBlock
+						x:Name="MobilePosition_Accuracy"
+						Height="20"
+						Text="No data"
+						TextWrapping="Wrap"
+						d:LayoutOverrides="LeftPosition, RightPosition" />
+                    </StackPanel>
+                </StackPanel>
             </PivotItem>
             <PivotItem x:Name="notify" Header="Notification">
                 <PivotItem.DataContext>
                     <Jeedom:ConfigurationViewModel/>
                 </PivotItem.DataContext>
-                <Grid>
+                <StackPanel>
                     <ToggleSwitch
 						x:Name="activePush"
 						Width="100"
 						Height="100"
-						Margin="10,0,0,0"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
 						Header="Activation"
 						IsOn="{Binding NotificationActivation, Mode=TwoWay}"
 						Toggled="activePush_Toggled" />
                     <ComboBox
 						x:Name="MobileNotification"
-						Height="64"
-						Margin="10,63,10,0"
-						HorizontalAlignment="Stretch"
-						VerticalAlignment="Top"
+						Height="60"
 						SelectionChanged="MobileNotification_Cmd_SelectionChanged"
 						d:LayoutOverrides="LeftPosition, RightPosition">
                         <ComboBox.ItemTemplate>
@@ -254,7 +226,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                </Grid>
+                </StackPanel>
             </PivotItem>
         </Pivot>
 
