@@ -423,12 +423,13 @@
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
-            <xc:ColorPicker 
+            <!--xc:Clr_Pckr
+                Header="{Binding name, FallbackValue=Name}"
 				SelectedColor="{Binding WidgetValue.color, Mode=TwoWay}"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
 				RelativePanel.AlignHorizontalCenterWithPanel="True"
-                Width="150" />
+                Width="150" /-->
         </RelativePanel>
     </DataTemplate>
 

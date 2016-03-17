@@ -33,7 +33,20 @@ namespace Jeedom.Model
         public string isEnable;
 
         [DataMember]
-        public string isVisible;
+        private bool _isVisible = true;
+        public bool isVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+
+            set
+            {
+                _isVisible = Convert.ToBoolean(value);
+
+            }
+        }
 
         [DataMember]
         public string logicalId;
