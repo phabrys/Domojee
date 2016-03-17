@@ -59,7 +59,7 @@ namespace Jeedom.Model
         [DataMember(Name = "forceReturnLineAfter")]
         public string forceReturnLineAfter { get; set; }
 
-        [DataMember(Name = "parameters")]
-        public IList<object> parameters { get; set; }
+        //[DataMember(Name = "parameters")]
+        //public string parameters { get; set; }
     }
 }
