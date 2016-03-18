@@ -25,30 +25,30 @@
     </converter:ValueConverterGroup>
     <converter:UpdatingConverter x:Key="UpdatingVisibilityConverter" />
 
-       <DataTemplate x:Key="ObjectHeaderTemplate">
+    <DataTemplate x:Key="ObjectHeaderTemplate">
         <TextBlock Text="{Binding name}" />
     </DataTemplate>
 
     <DataTemplate x:Key="ObjectPageTemplate">
-                    <ctl:VariableSizedGridView x:Name="eqlogicview"
+        <ctl:VariableSizedGridView x:Name="eqlogicview"
 				ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
 				ItemsSource="{Binding eqLogics}"
 				SelectionMode="None">
-                        <ctl:VariableSizedGridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ctl:VariableSizedGridView.ItemContainerStyle>
-                        <ctl:VariableSizedGridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid ItemHeight="120"
+            <ctl:VariableSizedGridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                </Style>
+            </ctl:VariableSizedGridView.ItemContainerStyle>
+            <ctl:VariableSizedGridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VariableSizedWrapGrid 
                                            ItemWidth="120"
                                            MaximumRowsOrColumns="20"
                                            Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ctl:VariableSizedGridView.ItemsPanel>
-                    </ctl:VariableSizedGridView>
+                </ItemsPanelTemplate>
+            </ctl:VariableSizedGridView.ItemsPanel>
+        </ctl:VariableSizedGridView>
     </DataTemplate>
     <DataTemplate x:Key="EqLogicTemplate">
         <RelativePanel HorizontalAlignment="Stretch"
@@ -316,39 +316,41 @@
     <DataTemplate x:Key="NumericCmdTemplate">
         <RelativePanel>
             <TextBlock x:Name="PART_Name"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True"
-				Text="{Binding name, FallbackValue=Name}" />
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name, FallbackValue=Name}" />
             <Viewbox Margin="4"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="PART_Name">
-
-                <Slider Width="150"
-                        HorizontalAlignment="Center"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <Slider 
+                    Width="120"
+                    HorizontalAlignment="Center"
 					Foreground="White"
-					Maximum="255" 
-                        Minimum="0"
+					Maximum="255"
+                    Minimum="0"
 					Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}" />
-            </Viewbox>
-        </RelativePanel>
+                </Viewbox>
+            </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="BinaryCmdTemplate">
         <RelativePanel>
             <TextBlock x:Name="PART_Name"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True"
-				Text="{Binding name, FallbackValue=Name}" />
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name, FallbackValue=Name}" />
             <Viewbox x:Name="PART_Icon"
-				Margin="4"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="PART_Name">
+                     Margin="4"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
                 <TextBlock HorizontalAlignment="Center"
-					FontFamily="{StaticResource FontAwesome}"
-					Foreground="White"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
                            Text="{Binding Path=Value, Converter={StaticResource StateToFontAwesomeConverter}, UpdateSourceTrigger=Default}" />
             </Viewbox>
         </RelativePanel>
@@ -356,18 +358,18 @@
     <DataTemplate x:Key="StringCmdTemplate">
         <RelativePanel>
             <TextBlock x:Name="PART_Name"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True"
-				Text="{Binding name, FallbackValue=Name}" />
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name, FallbackValue=Name}" />
             <Viewbox Margin="4"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="PART_Name">
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
                 <TextBlock Width="150"
                            HorizontalAlignment="Center"
-					Foreground="White"
-					Text="{Binding Value}" />
+                           Foreground="White"
+                           Text="{Binding Value}" />
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
@@ -383,19 +385,31 @@
     </DataTemplate>
     <DataTemplate x:Key="SliderCmdTemplate">
         <RelativePanel>
-            <Slider Width="120"
+            <TextBlock x:Name="PART_Name"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name, FallbackValue=Name}" />
+            <Viewbox Margin="4"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <Slider 
+                    Width="120"
                     HorizontalAlignment="Center"
 					Foreground="White"
-                    Header="{Binding name, FallbackValue=Name}"
-                    Maximum="255"
-					Minimum="0" 
+					Maximum="255"
+                    Minimum="0"
                     ValueChanged="{Binding ExecCommand}"
-                    Value="{Binding WidgetValue.slider, Mode=TwoWay}" />
+					Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}" />
+            </Viewbox>
         </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="MessageCmdTemplate">
         <RelativePanel>
             <TextBox x:Name="Title"
+                       TextWrapping="Wrap"
                      Width="150"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
@@ -404,12 +418,13 @@
 				RelativePanel.AlignTopWithPanel="True" 
                      Text="{Binding WidgetValue.title, Mode=TwoWay}" />
             <TextBox x:Name="Message"
-                Width="150"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Stretch"
+                       TextWrapping="Wrap"
+                     Width="150"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Stretch"
                      Header="Message"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.Below="Title" 
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="Title" 
                      Text="{Binding WidgetValue.Message, Mode=TwoWay}" />
             <Button HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
@@ -417,9 +432,9 @@
                     Command="{Binding ExecCommand}"
                     Content="{Binding name}"
                     Foreground="White"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
+                    RelativePanel.AlignHorizontalCenterWithPanel="True"
                     RelativePanel.Below="Message" />
-            </RelativePanel>
+        </RelativePanel>
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">

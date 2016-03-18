@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
   <CommandSet xml:lang="fr-fr" Name="DomojeeCommandSet_fr-fr">
-    <CommandPrefix>Cortana, </CommandPrefix>
+    <CommandPrefix>Jeedom, </CommandPrefix>
     <Example> Quel est la température réel de la chambre bleu? </Example>
     <Command Name="JeedomInteractList">
       <Example>Quel est la température réel de la chambre bleu?</Example>
