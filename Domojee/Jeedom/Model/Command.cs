@@ -108,14 +108,22 @@ namespace Jeedom.Model
         {
             get
             {
-
+                if (_value != "" && _value != null)
+                {
+                    switch (this.subType)
+                    {
+                        case "numeric":
+                            return _value.Replace('.', ',');
+                    }
+                }
                 return _value;
             }
 
             set
             {
                 _value = value;
-                if (this.type == "action" && _value != "" && _value != null)
+                if (_value != "" && _value != null)
+                {
                     switch (this.subType)
                     {
                         case "slider":
@@ -126,17 +134,14 @@ namespace Jeedom.Model
                             break;
                         case "color":
                             var hexaColor = RequestViewModel.Instance.CommandList.Where(cmd => cmd.id.Equals(_value.Replace('#', ' ').Trim())).First().Value;
-                            this.WidgetValue.color = new SolidColorBrush(
-                    Color.FromArgb(
-                        255,
-                        System.Convert.ToByte(hexaColor.Substring(1, 2), 16),
-                        System.Convert.ToByte(hexaColor.Substring(3, 2), 16),
-                        System.Convert.ToByte(hexaColor.Substring(5, 2), 16)
-                )
-            );
-
+                            this.WidgetValue.color = new SolidColorBrush(Color.FromArgb(
+                                255,
+                                System.Convert.ToByte(hexaColor.Substring(1, 2), 16),
+                                System.Convert.ToByte(hexaColor.Substring(3, 2), 16),
+                                System.Convert.ToByte(hexaColor.Substring(5, 2), 16)));
                             break;
                     }
+                }
 
                 NotifyPropertyChanged();
                 if (Parent != null)
