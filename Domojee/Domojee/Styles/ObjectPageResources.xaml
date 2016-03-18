@@ -330,8 +330,8 @@
                     HorizontalAlignment="Center"
 					Foreground="White"
 					Maximum="255"
-                    Minimum="0"
-					Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}" />
+                    Minimum="0" />
+					<!--Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}"-->
                 </Viewbox>
             </RelativePanel>
     </DataTemplate>
@@ -402,7 +402,7 @@
 					Maximum="255"
                     Minimum="0"
                     ValueChanged="{Binding ExecCommand}"
-					Value="{Binding Value, ConverterParameter=ToDouble, Converter={StaticResource ChangeTypeConverter}}" />
+					Value="{Binding WidgetValue.slider}" />
             </Viewbox>
         </RelativePanel>
     </DataTemplate>
@@ -425,7 +425,7 @@
                      Header="Message"
                      RelativePanel.AlignHorizontalCenterWithPanel="True"
                      RelativePanel.Below="Title" 
-                     Text="{Binding WidgetValue.Message, Mode=TwoWay}" />
+                     Text="{Binding WidgetValue.message, Mode=TwoWay}" />
             <Button HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
                     ClickMode="Press"
