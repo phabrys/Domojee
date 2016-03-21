@@ -42,8 +42,8 @@
             </ctl:VariableSizedGridView.ItemContainerStyle>
             <ctl:VariableSizedGridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid 
-                                           ItemWidth="120"
+                    <VariableSizedWrapGrid ItemWidth="120"
+                                           ItemHeight="120"
                                            MaximumRowsOrColumns="20"
                                            Orientation="Horizontal" />
                 </ItemsPanelTemplate>
@@ -54,6 +54,7 @@
         <RelativePanel HorizontalAlignment="Stretch"
                        Background="#FF5EA2D1"
                        Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}"
+                       d:DesignHeight="150"
                        d:DesignWidth="150">
             <TextBlock x:Name="TbEqName"
                        Margin="4,0,0,0"
@@ -82,7 +83,7 @@
                     <ItemsPanelTemplate>
                         <VariableSizedWrapGrid ItemHeight="100"
                                                ItemWidth="100"
-                                               MaximumRowsOrColumns="4"
+                                               MaximumRowsOrColumns="3"
                                                Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ctl:VariableSizedGridView.ItemsPanel>
@@ -408,33 +409,46 @@
     </DataTemplate>
     <DataTemplate x:Key="MessageCmdTemplate">
         <RelativePanel>
-            <TextBox x:Name="Title"
+            <TextBlock x:Name="PART_Name"
                        TextWrapping="Wrap"
-                     Width="150"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Stretch"
-                     Header="Title"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				RelativePanel.AlignTopWithPanel="True" 
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       RelativePanel.AlignTopWithPanel="True"
+                       Text="{Binding name, FallbackValue=Name}" />
+            <Viewbox x:Name="PART_Icon"
+                     Margin="4"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+                     RelativePanel.Below="PART_Name">
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="{StaticResource FontAwesome}"
+                           Foreground="White"
+                           Text="&#xf1d9;" />
+            </Viewbox>
+            <ContentDialog>
+                <StackPanel>
+                    <TextBox x:Name="Title"
+                     TextWrapping="Wrap"
+				     HorizontalAlignment="Center"
+				     VerticalAlignment="Stretch"
+                     Header="Title" 
                      Text="{Binding WidgetValue.title, Mode=TwoWay}" />
-            <TextBox x:Name="Message"
+                    <TextBox x:Name="Message"
                        TextWrapping="Wrap"
-                     Width="150"
                      HorizontalAlignment="Center"
                      VerticalAlignment="Stretch"
                      Header="Message"
-                     RelativePanel.AlignHorizontalCenterWithPanel="True"
-                     RelativePanel.Below="Title" 
                      Text="{Binding WidgetValue.message, Mode=TwoWay}" />
-            <Button HorizontalAlignment="Center"
+                    <Button HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
                     ClickMode="Press"
                     Command="{Binding ExecCommand}"
                     Content="{Binding name}"
-                    Foreground="White"
-                    RelativePanel.AlignHorizontalCenterWithPanel="True"
-                    RelativePanel.Below="Message" />
+                    Foreground="White"/>
+                </StackPanel>
+            </ContentDialog>
         </RelativePanel>
+         
     </DataTemplate>
     <DataTemplate x:Key="ColorCmdTemplate">
         <RelativePanel Visibility="{Binding isVisible, Converter={StaticResource UpdatingConverter}}">
