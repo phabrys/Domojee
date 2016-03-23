@@ -313,7 +313,7 @@ namespace Jeedom.Model
 
         public ObservableCollection<Command> GetVisibleCmds()
         {
-            IEnumerable<Command> results = cmds.Where(c => c.isVisible == true);
+            IEnumerable<Command> results = cmds.Where(c => c.isVisible == true && c.logicalId != null);
             return new ObservableCollection<Command>(results);
         }
 
