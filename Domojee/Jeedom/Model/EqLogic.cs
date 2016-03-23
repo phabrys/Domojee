@@ -22,8 +22,8 @@ namespace Jeedom.Model
             get
             {
                 var _visibleCmds = GetVisibleCmds().Count();
-                if (_visibleCmds > 4)
-                    return 4;
+                if (_visibleCmds > 3)
+                    return 3;
                 else
                     return _visibleCmds;
             }
@@ -61,8 +61,8 @@ namespace Jeedom.Model
             get
             {
                 var _visibleCmds = GetVisibleCmds().Count();
-                if (_visibleCmds > 4)
-                    return (int)Math.Ceiling((double)_visibleCmds / 4);
+                if (_visibleCmds > 3)
+                    return (int)Math.Ceiling((double)_visibleCmds / 3);
                 else
                     return 1;
             }
