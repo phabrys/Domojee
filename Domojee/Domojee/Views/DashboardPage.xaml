@@ -22,7 +22,7 @@
         <ResourceDictionary Source="../Styles/ObjectPageResources.xaml" />
     </Page.Resources>
 
-    <Grid>
+    <Grid Background="{ThemeResource MainBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
