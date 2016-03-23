@@ -1,40 +1,37 @@
-﻿<UserControl
-    x:Class="Domojee.Controls.StatusBar"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:cvrt="using:Domojee.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:Domojee.Controls"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="24"
-    d:DesignWidth="400"
-    mc:Ignorable="d">
+﻿<UserControl x:Class="Domojee.Controls.StatusBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cvrt="using:Domojee.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Domojee.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="24"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <cvrt:MailVisibilityConverter x:Key="MailVisibilityConverter" />
     </UserControl.Resources>
 
     <RelativePanel Height="24" Background="SteelBlue">
-        <ProgressRing
-            x:Name="ProgressStatus"
-            Margin="5,2"
-            Foreground="White"
-            IsActive="{Binding Updating, FallbackValue=True}"
-            RelativePanel.LeftOf="MailIcon"
-            RelativePanel.AlignVerticalCenterWithPanel="True" />
-        <TextBlock
-            x:Name="StatusMessage"
-            Margin="5,2"
-            Foreground="White"
-            FontSize="12"
-            RelativePanel.AlignLeftWithPanel="True"
-            RelativePanel.AlignVerticalCenterWithPanel="True"
-            Text="{Binding LoadingMessage, FallbackValue=Prêt}" />
-        <SymbolIcon
-            x:Name="MailIcon"
-            Margin="5,2"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.AlignVerticalCenterWithPanel="True"
-            Symbol="Mail"
-            Visibility="{Binding MessageList.Count, Converter={StaticResource MailVisibilityConverter}}" />
+        <SymbolIcon x:Name="MailIcon"
+                    Margin="5,2"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Symbol="Mail"
+                    Visibility="{Binding MessageList, Converter={StaticResource MailVisibilityConverter}}" />
+        <ProgressRing x:Name="ProgressStatus"
+                      Margin="5,2"
+                      Foreground="White"
+                      IsActive="{Binding Updating, FallbackValue=True}"
+                      RelativePanel.AlignVerticalCenterWithPanel="True"
+                      RelativePanel.LeftOf="{Binding ElementName=MailIcon}" />
+        <TextBlock x:Name="StatusMessage"
+                   Margin="5,2"
+                   FontSize="12"
+                   Foreground="White"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignVerticalCenterWithPanel="True"
+                   Text="{Binding LoadingMessage, FallbackValue=Prêt}" />
+
     </RelativePanel>
 </UserControl>
