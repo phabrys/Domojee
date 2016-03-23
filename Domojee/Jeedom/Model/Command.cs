@@ -107,7 +107,7 @@ namespace Jeedom.Model
         {
             get
             {
-                if (this.type == "action" && _value != "")
+                if (this.type == "action" && _value != null)
                     return RequestViewModel.Instance.CommandList.Where(cmd => cmd.id.Equals(_value.Replace('#', ' ').Trim())).First().Value;
                 else
                     return _value;
