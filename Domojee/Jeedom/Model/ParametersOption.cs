@@ -8,7 +8,7 @@ namespace Jeedom.Model
         public ParametersOption()
         {
         }
-        private double _slider;
+        private double _slider=0;
         public double slider
         {
             get
@@ -19,8 +19,7 @@ namespace Jeedom.Model
             set
             {
 
-
-                _slider = value;
+                    _slider = value;
                 NotifyPropertyChanged();
             }
         }
