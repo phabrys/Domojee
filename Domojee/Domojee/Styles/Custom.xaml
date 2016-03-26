@@ -48,6 +48,10 @@
     <SolidColorBrush x:Key="Blue30" Color="#FF4CABC3" />
     <SolidColorBrush x:Key="Blue40" Color="#FF66B8CC" />
     <SolidColorBrush x:Key="BlackBack" Color="#7F000000" />
+    <SolidColorBrush x:Key="HeaderBackground" Color="#FFF2F2F2" />
+    <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
+    <SolidColorBrush x:Key="MainBackground" Color="#FFE6E6E6" />
+
     <FontFamily x:Key="FontAwesome">/Assets/Fonts/FontAwesome.ttf#FontAwesome</FontFamily>
     <FontFamily x:Key="WheatherIcons">/Assets/Fonts/WeatherIcons.ttf#Wheather Icons</FontFamily>
 
@@ -104,14 +108,15 @@
 
             <Style TargetType="controls:HamburgerMenu">
                 <Setter Property="AccentColor" Value="{ThemeResource CustomColor}" />
+                <Setter Property="Background" Value="#2B2B2B" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
                 <Setter Property="VisualStateWideMinWidth" Value="{ThemeResource WideMinWidth}" />
             </Style>
 
             <Style TargetType="controls:PageHeader">
-                <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
-                <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
+                <Setter Property="Background" Value="{ThemeResource HeaderBackground}" />
+                <Setter Property="Foreground" Value="{ThemeResource HeaderForeground}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
             </Style>
@@ -142,8 +147,8 @@
             </Style>
 
             <Style TargetType="controls:PageHeader">
-                <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
-                <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
+                <Setter Property="Background" Value="{ThemeResource HeaderBackground}" />
+                <Setter Property="Foreground" Value="{ThemeResource HeaderForeground}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
             </Style>

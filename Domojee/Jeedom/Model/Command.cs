@@ -116,7 +116,7 @@ namespace Jeedom.Model
                             return _value.Replace('.', ',');
                     }
                 }
-                return _value;
+                    return _value;
             }
 
             set
