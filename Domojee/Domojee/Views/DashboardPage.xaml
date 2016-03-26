@@ -1,18 +1,19 @@
-﻿<Page x:Class="Domojee.Views.DashboardPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:behaviors="using:Template10.Behaviors"
-      xmlns:c="using:Domojee.Converters"
-      xmlns:controls="using:Template10.Controls"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:jdm="using:Jeedom"
-      xmlns:local="using:Domojee.Views"
-      xmlns:localctl="using:Domojee.Controls"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:selector="using:Domojee.Selectors"
-      xmlns:vm="using:Domojee.ViewModels"
-      mc:Ignorable="d">
+﻿<Page
+    x:Class="Domojee.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:Template10.Behaviors"
+    xmlns:c="using:Domojee.Converters"
+    xmlns:controls="using:Template10.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:jdm="using:Jeedom"
+    xmlns:local="using:Domojee.Views"
+    xmlns:localctl="using:Domojee.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:selector="using:Domojee.Selectors"
+    xmlns:vm="using:Domojee.ViewModels"
+    mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:DashboardPageViewModel x:Name="ViewModel" />
@@ -30,18 +31,19 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" Text="Tableau de bord">
-            <interactivity:Interaction.Behaviors>
-                <behaviors:EllipsisBehavior Visibility="Auto" />
-            </interactivity:Interaction.Behaviors>
-        </controls:PageHeader>
+        <controls:PageHeader
+            x:Name="pageHeader"
+            HorizontalAlignment="Center"
+            FontWeight="Bold"
+            Text="Tableau de bord" />
 
         <!--  content  -->
         <Grid Grid.Row="1">
             <ScrollViewer>
-                <Pivot HeaderTemplate="{StaticResource ObjectHeaderTemplate}"
-                       ItemTemplate="{StaticResource ObjectPageTemplate}"
-                       ItemsSource="{x:Bind ViewModel.Request.ObjectList}" />
+                <Pivot
+                    HeaderTemplate="{StaticResource ObjectHeaderTemplate}"
+                    ItemTemplate="{StaticResource ObjectPageTemplate}"
+                    ItemsSource="{x:Bind ViewModel.Request.ObjectList}" />
             </ScrollViewer>
         </Grid>
 

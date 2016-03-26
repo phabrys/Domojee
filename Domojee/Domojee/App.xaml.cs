@@ -27,7 +27,7 @@ namespace Domojee
             //var _settings = SettingsService.Instance;
             RequestedTheme = ApplicationTheme.Light;
             CacheMaxDuration = TimeSpan.FromDays(1);
-            //ShowShellBackButton = _settings.UseShellBackButton;
+            ShowShellBackButton = true;
 
             #endregion App settings
         }

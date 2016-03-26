@@ -119,6 +119,7 @@
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
     <Compile Include="Converters\EqLogicCmdInfoByTypeConverter.cs" />
+    <Compile Include="Converters\MailMessageVisibilityConverter.cs" />
     <Compile Include="Converters\MailVisibilityConverter.cs" />
     <Compile Include="Converters\UpdatingConverter.cs" />
     <Compile Include="Converters\ValueConverterGroup.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Services\SettingsServices\SettingsServices.cs" />
     <Compile Include="ViewModels\ConnectPageViewModel.cs" />
     <Compile Include="ViewModels\DashboardPageViewModel.cs" />
+    <Compile Include="ViewModels\MessagePageViewModel.cs" />
     <Compile Include="ViewModels\ScenePageViewModel.cs" />
     <Compile Include="ViewModels\ServerPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
@@ -150,6 +152,9 @@
     </Compile>
     <Compile Include="Views\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MessagePage.xaml.cs">
+      <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ObjectPage.xaml.cs">
       <DependentUpon>ObjectPage.xaml</DependentUpon>
@@ -237,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoadingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

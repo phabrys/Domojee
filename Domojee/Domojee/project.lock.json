@@ -19,7 +19,7 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.0.0": {
+      "Microsoft.ApplicationInsights/2.0.1": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
           "System.Diagnostics.Debug": "[4.0.10, )",
@@ -42,10 +42,10 @@
           "System.Xml.XDocument": "[4.0.10, )"
         },
         "compile": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -1704,7 +1704,7 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.0.0": {
+      "Microsoft.ApplicationInsights/2.0.1": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
           "System.Diagnostics.Debug": "[4.0.10, )",
@@ -1727,10 +1727,10 @@
           "System.Xml.XDocument": "[4.0.10, )"
         },
         "compile": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -3479,7 +3479,7 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.0.0": {
+      "Microsoft.ApplicationInsights/2.0.1": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
           "System.Diagnostics.Debug": "[4.0.10, )",
@@ -3502,10 +3502,10 @@
           "System.Xml.XDocument": "[4.0.10, )"
         },
         "compile": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -5226,7 +5226,7 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.0.0": {
+      "Microsoft.ApplicationInsights/2.0.1": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
           "System.Diagnostics.Debug": "[4.0.10, )",
@@ -5249,10 +5249,10 @@
           "System.Xml.XDocument": "[4.0.10, )"
         },
         "compile": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -7006,7 +7006,7 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.0.0": {
+      "Microsoft.ApplicationInsights/2.0.1": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
           "System.Diagnostics.Debug": "[4.0.10, )",
@@ -7029,10 +7029,10 @@
           "System.Xml.XDocument": "[4.0.10, )"
         },
         "compile": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -8753,7 +8753,7 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.0.0": {
+      "Microsoft.ApplicationInsights/2.0.1": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
           "System.Diagnostics.Debug": "[4.0.10, )",
@@ -8776,10 +8776,10 @@
           "System.Xml.XDocument": "[4.0.10, )"
         },
         "compile": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -10533,7 +10533,7 @@
           "lib/uap/CrossPieCharts.ClassLibrary.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.0.0": {
+      "Microsoft.ApplicationInsights/2.0.1": {
         "dependencies": {
           "System.Collections": "[4.0.10, )",
           "System.Diagnostics.Debug": "[4.0.10, )",
@@ -10556,10 +10556,10 @@
           "System.Xml.XDocument": "[4.0.10, )"
         },
         "compile": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/Microsoft.ApplicationInsights.dll": {}
+          "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         }
       },
       "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -12291,8 +12291,8 @@
         "package/services/metadata/core-properties/c539083e64234fec8295a232ceee247c.psmdcp"
       ]
     },
-    "Microsoft.ApplicationInsights/2.0.0": {
-      "sha512": "0fHI0623ruqUzsxOGBGgWvLKTCKNzpLFT1lWUs759hsnn1vIDdbLeRoyeKwfUkQI4AusHcuuX8jZfGlM2TOnVg==",
+    "Microsoft.ApplicationInsights/2.0.1": {
+      "sha512": "iZjOx8ysupwITjhCl6suEOBQ+yTUBlJhQ2lfXBJkpS66gjB5TDJxIPrqKJ17/v4QqiFw//eHTGtMUCtoMN6WDQ==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -12305,8 +12305,11 @@
         "lib/net45/Microsoft.ApplicationInsights.XML",
         "lib/net46/Microsoft.ApplicationInsights.dll",
         "lib/net46/Microsoft.ApplicationInsights.XML",
+        "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll",
+        "lib/uap10.0/Microsoft.ApplicationInsights.dll",
+        "lib/wp8/Microsoft.ApplicationInsights.dll",
         "Microsoft.ApplicationInsights.nuspec",
-        "package/services/metadata/core-properties/fc991380f147454190a499a70e9b0afa.psmdcp"
+        "package/services/metadata/core-properties/312640b031884ea79d940dd9faa4155a.psmdcp"
       ]
     },
     "Microsoft.ApplicationInsights.PersistenceChannel/1.2.3": {
@@ -15888,7 +15891,7 @@
     "": [
       "ColorPicker >= 1.0.2",
       "CrossPieCharts.UWP >= 1.0.2",
-      "Microsoft.ApplicationInsights >= 2.0.0",
+      "Microsoft.ApplicationInsights >= 2.0.1",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.2.3",
       "Microsoft.ApplicationInsights.WindowsApps >= 1.1.1",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",

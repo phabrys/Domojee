@@ -9,7 +9,8 @@
     xmlns:local="using:Domojee.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:Domojee.Views"
-    mc:Ignorable="d" Background="Gray">
+    Background="Gray"
+    mc:Ignorable="d">
 
     <Controls:ModalDialog
         x:Name="ModalContainer"
@@ -63,6 +64,23 @@
                 </Controls:HamburgerMenu.PrimaryButtons>
 
                 <Controls:HamburgerMenu.SecondaryButtons>
+
+                    <!--  Messagepage  -->
+                    <Controls:HamburgerButtonInfo x:Name="MessageButoon" PageType="views:MessagePage">
+                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                            <SlideNavigationTransitionInfo />
+                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon
+                                Width="48"
+                                Height="48"
+                                Symbol="Mail" />
+                            <TextBlock
+                                Margin="12,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="Messages" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
 
                     <!--  settingspage button  -->
                     <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">

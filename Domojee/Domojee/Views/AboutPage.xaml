@@ -38,11 +38,11 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader Content="A propos" Frame="{x:Bind Frame}">
-            <Interactivity:Interaction.Behaviors>
-                <Behaviors:EllipsisBehavior Visibility="Auto" />
-            </Interactivity:Interaction.Behaviors>
-        </controls:PageHeader>
+        <controls:PageHeader
+            HorizontalAlignment="Center"
+            FontWeight="Bold"
+            Content="À propos"
+            Frame="{x:Bind Frame}" />
 
         <!--  content  -->
         <ScrollViewer Grid.Row="1">
