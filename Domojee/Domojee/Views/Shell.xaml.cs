@@ -26,10 +26,8 @@ namespace Domojee.Views
             SettingsButton.IsEnabled = false;
         }
 
-        public Shell(INavigationService navigationService)
+        public Shell(INavigationService navigationService) : this()
         {
-            Instance = this;
-            this.InitializeComponent();
             SetNavigationService(navigationService);
         }
 
@@ -38,13 +36,6 @@ namespace Domojee.Views
             MyHamburgerMenu.NavigationService = navigationService;
         }
 
-        public static void SetBusy(bool busy, string text = null)
-        {
-            WindowWrapper.Current().Dispatcher.Dispatch(() =>
-            {
-                Instance.BusyView.BusyText = text;
-                Instance.ModalContainer.IsModal = Instance.BusyView.IsBusy = busy;
-            });
-        }
+
     }
 }

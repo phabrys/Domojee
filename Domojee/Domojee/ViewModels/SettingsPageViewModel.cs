@@ -57,9 +57,9 @@ namespace Domojee.ViewModels
         public DelegateCommand ShowBusyCommand
             => _ShowBusyCommand ?? (_ShowBusyCommand = new DelegateCommand(async () =>
             {
-                Views.Shell.SetBusy(true, _BusyText);
+                Views.Busy.SetBusy(true, _BusyText);
                 await Task.Delay(5000);
-                Views.Shell.SetBusy(false);
+                Views.Busy.SetBusy(false);
             }, () => !string.IsNullOrEmpty(BusyText)));
     }
 

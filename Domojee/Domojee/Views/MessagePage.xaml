@@ -28,7 +28,7 @@
 
         <!--  header  -->
         <controls:PageHeader
-            HorizontalAlignment="Center"
+
             FontWeight="Bold"
             Content="Messages"
             Frame="{x:Bind Frame}" />

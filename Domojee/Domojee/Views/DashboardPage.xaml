@@ -33,7 +33,6 @@
         <!--  header  -->
         <controls:PageHeader
             x:Name="pageHeader"
-            HorizontalAlignment="Center"
             FontWeight="Bold"
             Text="Tableau de bord" />
 

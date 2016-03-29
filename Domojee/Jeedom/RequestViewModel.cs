@@ -187,7 +187,10 @@ namespace Jeedom
             {
                 var response = jsonrpc.GetRequestResponseDeserialized<Response<string>>();
                 if (response.result == "pong")
+                {
+                    Updating = false;
                     return null;
+                }
             }
             Updating = false;
             return jsonrpc.Error;

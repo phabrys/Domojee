@@ -1,126 +1,106 @@
-﻿<Page
-    x:Class="Domojee.Views.Shell"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="using:Template10.Controls"
-    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:Domojee.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views="using:Domojee.Views"
-    Background="Gray"
-    mc:Ignorable="d">
+﻿<Page x:Class="Domojee.Views.Shell"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Controls="using:Template10.Controls"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Domojee.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:views="using:Domojee.Views"
+      Background="Gray"
+      mc:Ignorable="d">
 
-    <Controls:ModalDialog
-        x:Name="ModalContainer"
-        CanBackButtonDismiss="False"
-        DisableBackButtonWhenModal="True">
-        <Controls:ModalDialog.Content>
-            <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
-                <Controls:HamburgerMenu.PrimaryButtons>
-                    <!--  mainpage button  -->
-                    <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:DashboardPage">
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon
-                                Width="48"
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+
+        <Controls:HamburgerMenu.PrimaryButtons>
+            <!--  mainpage button  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:DashboardPage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
                                 Height="48"
                                 Symbol="Home" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="Tableau de bord" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Tableau de bord" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
 
-                    <!--  scenepage button  -->
-                    <Controls:HamburgerButtonInfo PageType="views:ScenePage">
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon
-                                Width="48"
+            <!--  scenepage button  -->
+            <Controls:HamburgerButtonInfo PageType="views:ScenePage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
                                 Height="48"
                                 Symbol="List" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="Scénarios" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Scénarios" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
 
-                    <!--  serverpage button  -->
-                    <Controls:HamburgerButtonInfo PageType="views:ServerPage">
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon
-                                Width="48"
+            <!--  serverpage button  -->
+            <Controls:HamburgerButtonInfo PageType="views:ServerPage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
                                 Height="48"
                                 Symbol="World" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="Serveur" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
-                </Controls:HamburgerMenu.PrimaryButtons>
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Serveur" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+        </Controls:HamburgerMenu.PrimaryButtons>
 
-                <Controls:HamburgerMenu.SecondaryButtons>
+        <Controls:HamburgerMenu.SecondaryButtons>
 
-                    <!--  Messagepage  -->
-                    <Controls:HamburgerButtonInfo x:Name="MessageButoon" PageType="views:MessagePage">
-                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                            <SlideNavigationTransitionInfo />
-                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon
-                                Width="48"
+            <!--  Messagepage  -->
+            <Controls:HamburgerButtonInfo x:Name="MessageButoon" PageType="views:MessagePage">
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
                                 Height="48"
                                 Symbol="Mail" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="Messages" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Messages" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
 
-                    <!--  settingspage button  -->
-                    <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
-                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                            <SuppressNavigationTransitionInfo />
-                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon
-                                Width="48"
+            <!--  settingspage button  -->
+            <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
                                 Height="48"
                                 Symbol="Setting" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="Paramètres" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Paramètres" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
 
-                    <!--  aboutpage button  -->
-                    <Controls:HamburgerButtonInfo x:Name="AboutButton" PageType="views:AboutPage">
-                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                            <SuppressNavigationTransitionInfo />
-                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon
-                                Width="48"
+            <!--  aboutpage button  -->
+            <Controls:HamburgerButtonInfo x:Name="AboutButton" PageType="views:AboutPage">
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
                                 Height="48"
                                 Symbol="Help" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="A propos" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
-                </Controls:HamburgerMenu.SecondaryButtons>
-            </Controls:HamburgerMenu>
-        </Controls:ModalDialog.Content>
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="A propos" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+        </Controls:HamburgerMenu.SecondaryButtons>
+    </Controls:HamburgerMenu>
 
-        <Controls:ModalDialog.ModalContent>
-            <views:Busy x:Name="BusyView" />
-        </Controls:ModalDialog.ModalContent>
-    </Controls:ModalDialog>
+
+
 </Page>

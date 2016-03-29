@@ -2,8 +2,9 @@
 using Domojee.Views;
 using Jeedom;
 using System;
-using System.Threading;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Template10.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -33,16 +34,21 @@ namespace Domojee
         }
 
         // runs even if restored from state
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             // content may already be shell when resuming
-            if ((Window.Current.Content as Shell) == null)
+            if ((Window.Current.Content as ModalDialog) == null)
             {
-                // setup hamburger shell
+                // setup hamburger shell inside a modal dialog
                 var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-                Window.Current.Content = new Shell(nav);
+                Window.Current.Content = new ModalDialog
+                {
+                    DisableBackButtonWhenModal = true,
+                    Content = new Shell(nav),
+                    ModalContent = new Busy(),
+                };
             }
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         // runs only when not restored from state
@@ -50,38 +56,38 @@ namespace Domojee
         {
             ConfigurationViewModel config = new ConfigurationViewModel();
             SettingsService.Instance.UseShellBackButton = true;
+
+            // Ne rien mettre au dessus de ce code sinon Template10 fonctionne mal.
+            NavigationService.Navigate(typeof(DashboardPage));
+
             if (config.Populated)
             {
-                if (await RequestViewModel.Instance.PingJeedom() != null)
-                {
-                    NavigationService.Navigate(typeof(ConnectPage));
-                    return;
-                }
-
                 //Lancer le dispatchertimer
                 var _dispatcher = new DispatcherTimer();
                 _dispatcher.Interval = TimeSpan.FromMinutes(1);
                 _dispatcher.Tick += _dispatcher_Tick;
                 _dispatcher.Start();
 
-                await Task.Delay(TimeSpan.FromSeconds(1));
-                NavigationService.Navigate(typeof(DashboardPage));
-
-                TaskFactory factory = new TaskFactory();
                 var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+
+                // Tentative de connexion à Jeedom
+                if (await RequestViewModel.Instance.PingJeedom() != null)
+                {
+                    ConnectPage.ShowConnectDialog();
+                    return;
+                }
+
                 await taskFactory.StartNew(async () =>
                 {
-                    //Shell.SetBusy(true, "Mise à jour");
                     await RequestViewModel.Instance.FirstLaunch();
-                    //Shell.SetBusy(false);
                 });
             }
             else
             {
-                NavigationService.Navigate(typeof(ConnectPage));
+                ConnectPage.ShowConnectDialog();
             }
 
-            return;// Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         private async void _dispatcher_Tick(object sender, object e)
