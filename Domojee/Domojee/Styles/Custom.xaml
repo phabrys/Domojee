@@ -6,12 +6,15 @@
     <x:Double x:Key="NormalMinWidth">521</x:Double>
     <x:Double x:Key="WideMinWidth">1200</x:Double>
 
-    <Color x:Key="CustomColor">SteelBlue</Color>
+    <Color x:Key="CustomColor">#96c927</Color>
     <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
 
     <Color x:Key="ContrastColor">White</Color>
     <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
 
+    <Color x:Key="SystemAccentColor">#96c927</Color>
+    <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{StaticResource CustomColor}" />
+    
     <SolidColorBrush x:Key="BlueBase" Color="#FF0088AA" />
     <SolidColorBrush x:Key="Blue10" Color="#FF19BBB2" />
     <SolidColorBrush x:Key="Blue20" Color="#FF33A0BB" />
@@ -64,8 +67,10 @@
 
         <ResourceDictionary x:Key="Light">
 
-            <SolidColorBrush x:Key="HeaderBackground" Color="#FFF2F2F2" />
-            <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
+            <SolidColorBrush x:Key="HeaderBackground"
+                             Opacity=".5"
+                             Color="{ThemeResource CustomColor}" />
+
             <SolidColorBrush x:Key="MainBackground" Color="#FFE6E6E6" />
 
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
@@ -85,7 +90,6 @@
             <Style TargetType="controls:PageHeader">
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Background" Value="{ThemeResource HeaderBackground}" />
-                <Setter Property="Foreground" Value="{ThemeResource HeaderForeground}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
             </Style>
@@ -100,8 +104,10 @@
         <!--  Please note the Template 10 default is Light (the current, Microsoft standard)  -->
         <ResourceDictionary x:Key="Default">
 
-            <SolidColorBrush x:Key="HeaderBackground" Color="#FFF2F2F2" />
-            <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
+            <SolidColorBrush x:Key="HeaderBackground"
+                             Opacity=".5"
+                             Color="{ThemeResource CustomColor}" />
+
             <SolidColorBrush x:Key="MainBackground" Color="#FF434343" />
 
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
@@ -121,7 +127,6 @@
             <Style TargetType="controls:PageHeader">
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Background" Value="{ThemeResource HeaderBackground}" />
-                <Setter Property="Foreground" Value="{ThemeResource HeaderForeground}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
             </Style>
