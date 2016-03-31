@@ -8,11 +8,9 @@
       xmlns:local="using:Domojee.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:views="using:Domojee.Views"
-      Background="Gray"
       mc:Ignorable="d">
 
-
-    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu" NavAreaBackground="#FF2B2B2B">
 
         <Controls:HamburgerMenu.PrimaryButtons>
             <!--  mainpage button  -->
@@ -100,7 +98,4 @@
             </Controls:HamburgerButtonInfo>
         </Controls:HamburgerMenu.SecondaryButtons>
     </Controls:HamburgerMenu>
-
-
-
 </Page>

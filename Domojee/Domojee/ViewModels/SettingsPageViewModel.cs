@@ -1,22 +1,22 @@
-﻿using System;
+﻿using Jeedom;
+using System;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
-using Jeedom;
 
 namespace Domojee.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
-        public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
+        public ThemePartViewModel ThemePartViewModel { get; } = new ThemePartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
     }
 
-    public class SettingsPartViewModel : ViewModelBase
+    public class ThemePartViewModel : ViewModelBase
     {
-        private Services.SettingsServices.SettingsService _settings;
+        public Services.SettingsServices.SettingsService _settings;
 
-        public SettingsPartViewModel()
+        public ThemePartViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {

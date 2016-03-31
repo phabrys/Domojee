@@ -1,22 +1,21 @@
-﻿<Page
-    x:Class="Domojee.Views.ScenePage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Behaviors="using:Template10.Behaviors"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:controls10="using:Template10.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:Domojee.Views"
-    xmlns:localctl="using:Domojee.Controls"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Domojee.ViewModels"
-    mc:Ignorable="d">
+﻿<Page x:Class="Domojee.Views.ScenePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls10="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Domojee.Views"
+      xmlns:localctl="using:Domojee.Controls"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Domojee.ViewModels"
+      mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:ScenePageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Grid>
+    <Grid Background="{ThemeResource MainBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -24,23 +23,18 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls10:PageHeader
-            HorizontalAlignment="Center"
-            FontWeight="Bold"
-            Content="Scénarios"
-            Frame="{x:Bind Frame}" />
+        <controls10:PageHeader Content="Scénarios" Frame="{x:Bind Frame}" />
 
         <!--  content  -->
         <ScrollViewer Grid.Row="1">
             <StackPanel>
-                <GridView
-                    x:Name="gridview"
-                    Margin="15"
-                    IsItemClickEnabled="True"
-                    ItemClick="gridview_ItemClick"
-                    ItemTemplate="{StaticResource SceneTemplate}"
-                    ItemsSource="{x:Bind ViewModel.SceneList}"
-                    SelectionMode="None" />
+                <GridView x:Name="gridview"
+                          Margin="15"
+                          IsItemClickEnabled="True"
+                          ItemClick="gridview_ItemClick"
+                          ItemTemplate="{StaticResource SceneTemplate}"
+                          ItemsSource="{x:Bind ViewModel.SceneList}"
+                          SelectionMode="None" />
             </StackPanel>
         </ScrollViewer>
 

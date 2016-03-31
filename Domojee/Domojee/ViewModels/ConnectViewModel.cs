@@ -5,13 +5,13 @@ using Template10.Mvvm;
 
 namespace Domojee.ViewModels
 {
-    internal class ConnectPageViewModel : ViewModelBase
+    internal class ConnectViewModel : ViewModelBase
     {
-        public static ConnectPageViewModel Instance { get; private set; }
+        public static ConnectViewModel Instance { get; private set; }
 
         private ConfigurationViewModel _config;
 
-        public ConnectPageViewModel()
+        public ConnectViewModel()
         {
             Instance = this;
             _config = new ConfigurationViewModel();

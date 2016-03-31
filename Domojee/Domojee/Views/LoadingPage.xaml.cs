@@ -49,7 +49,7 @@ namespace Domojee.Views
             {
                 tbInformation.Text = error.message;
                 await Task.Delay(new TimeSpan(0, 0, 3));
-                Frame.Navigate(typeof(ConnectPage));
+                //Frame.Navigate(typeof(ConnectPage));
                 base.OnNavigatedTo(e);
                 return false;
             }

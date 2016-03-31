@@ -23,7 +23,7 @@ namespace Domojee.Views
 
         private void Shell_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            SettingsButton.IsEnabled = false;
+            //SettingsButton.IsEnabled = false;
         }
 
         public Shell(INavigationService navigationService) : this()
@@ -35,7 +35,5 @@ namespace Domojee.Views
         {
             MyHamburgerMenu.NavigationService = navigationService;
         }
-
-
     }
 }

@@ -14,14 +14,14 @@ using Windows.UI.Xaml.Navigation;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 //TODO: Gérer l'adresse sur le dns jeedom
 
-namespace Domojee.Views
+namespace Domojee.Controls
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ConnectPage : UserControl
+    public sealed partial class ConnectDialog : UserControl
     {
-        public ConnectPage()
+        public ConnectDialog()
         {
             this.InitializeComponent();
         }
@@ -44,7 +44,7 @@ namespace Domojee.Views
             });
 
             // Masque le dialogue de connection
-            ConnectPage.HideConnectDialog();
+            ConnectDialog.HideConnectDialog();
         }
 
         /// <summary>
@@ -55,11 +55,11 @@ namespace Domojee.Views
             WindowWrapper.Current().Dispatcher.Dispatch(() =>
             {
                 var modal = Window.Current.Content as ModalDialog;
-                var view = modal.ModalContent as ConnectPage;
+                var view = modal.ModalContent as ConnectDialog;
                 if (view == null)
-                    modal.ModalContent = view = new ConnectPage();
+                    modal.ModalContent = view = new ConnectDialog();
                 modal.IsModal = true;
-                view.Logo.Begin();
+                //view.Logo.Begin();
             });
         }
 

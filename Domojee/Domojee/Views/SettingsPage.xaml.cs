@@ -21,7 +21,6 @@ namespace Domojee.Views
         private const string BackgroundTaskEntryPoint = "Localisation.LocationBackgroundTask";
         private IBackgroundTaskRegistration _geolocTask = null;
         public ObservableCollection<Message> MessageList = RequestViewModel.Instance.MessageList;
-
         private Template10.Services.SerializationService.ISerializationService _SerializationService;
 
         public SettingsPage()
@@ -161,12 +160,12 @@ namespace Domojee.Views
                 {
                     try
                     {
-                        // If the background task threw an exception, display the exception in
-                        // the error text box.
+                        // If the background task threw an exception, display the exception in the
+                        // error text box.
                         e.CheckResult();
 
-                        // Update the UI with the completion status of the background task
-                        // The Run method of the background task sets this status.
+                        // Update the UI with the completion status of the background task The Run
+                        // method of the background task sets this status.
                         var settings = ApplicationData.Current.LocalSettings;
                         if (settings.Values["Status"] != null)
                         {

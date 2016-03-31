@@ -12,35 +12,6 @@
     <Color x:Key="ContrastColor">White</Color>
     <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
 
-    <VisualStateGroup x:Key="menuVSG">
-        <VisualState x:Name="None">
-            <VisualState.StateTriggers>
-                <AdaptiveTrigger MinWindowWidth="0" />
-            </VisualState.StateTriggers>
-            <VisualState.Setters>
-                <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="False" />
-                <Setter Target="splitView.(SplitView.DisplayMode)" Value="Overlay" />
-            </VisualState.Setters>
-        </VisualState>
-        <VisualState x:Name="Compact">
-            <VisualState.StateTriggers>
-                <AdaptiveTrigger MinWindowWidth="960" />
-            </VisualState.StateTriggers>
-            <VisualState.Setters>
-                <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="False" />
-                <Setter Target="splitView.(SplitView.DisplayMode)" Value="CompactInline" />
-            </VisualState.Setters>
-        </VisualState>
-        <VisualState x:Name="Wide">
-            <VisualState.StateTriggers>
-                <AdaptiveTrigger MinWindowWidth="1280" />
-            </VisualState.StateTriggers>
-            <VisualState.Setters>
-                <Setter Target="splitView.(SplitView.DisplayMode)" Value="CompactInline" />
-                <Setter Target="splitView.(SplitView.IsPaneOpen)" Value="True" />
-            </VisualState.Setters>
-        </VisualState>
-    </VisualStateGroup>
     <SolidColorBrush x:Key="BlueBase" Color="#FF0088AA" />
     <SolidColorBrush x:Key="Blue10" Color="#FF19BBB2" />
     <SolidColorBrush x:Key="Blue20" Color="#FF33A0BB" />
@@ -48,9 +19,6 @@
     <SolidColorBrush x:Key="Blue30" Color="#FF4CABC3" />
     <SolidColorBrush x:Key="Blue40" Color="#FF66B8CC" />
     <SolidColorBrush x:Key="BlackBack" Color="#7F000000" />
-    <SolidColorBrush x:Key="HeaderBackground" Color="#FFF2F2F2" />
-    <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
-    <SolidColorBrush x:Key="MainBackground" Color="#FFE6E6E6" />
 
     <FontFamily x:Key="FontAwesome">/Assets/Fonts/FontAwesome.ttf#FontAwesome</FontFamily>
     <FontFamily x:Key="WheatherIcons">/Assets/Fonts/WeatherIcons.ttf#Wheather Icons</FontFamily>
@@ -76,20 +44,17 @@
             <TextBlock Grid.ColumnSpan="2"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Text="{Binding Name,
-                                      FallbackValue=Name}" />
+                       Text="{Binding Name, FallbackValue=Name}" />
             <ProgressRing Grid.Row="1"
                           Margin="5,0,0,0"
-                          IsActive="{Binding Updating,
-                                             FallbackValue=False}" />
+                          IsActive="{Binding Updating, FallbackValue=False}" />
             <TextBlock Grid.Row="1"
                        Grid.Column="1"
                        Margin="0,0,5,0"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        FontSize="10"
-                       Text="{Binding LastLaunch,
-                                      FallbackValue=none}" />
+                       Text="{Binding LastLaunch, FallbackValue=none}" />
         </Grid>
     </DataTemplate>
 
@@ -98,6 +63,10 @@
         <!--  RequestedTheme=Light  -->
 
         <ResourceDictionary x:Key="Light">
+
+            <SolidColorBrush x:Key="HeaderBackground" Color="#FFF2F2F2" />
+            <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
+            <SolidColorBrush x:Key="MainBackground" Color="#FFE6E6E6" />
 
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource CustomColor}" />
@@ -108,13 +77,13 @@
 
             <Style TargetType="controls:HamburgerMenu">
                 <Setter Property="AccentColor" Value="{ThemeResource CustomColor}" />
-                <Setter Property="Background" Value="#2B2B2B" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
                 <Setter Property="VisualStateWideMinWidth" Value="{ThemeResource WideMinWidth}" />
             </Style>
 
             <Style TargetType="controls:PageHeader">
+                <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Background" Value="{ThemeResource HeaderBackground}" />
                 <Setter Property="Foreground" Value="{ThemeResource HeaderForeground}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
@@ -129,8 +98,11 @@
 
         <!--  RequestedTheme=Dark  -->
         <!--  Please note the Template 10 default is Light (the current, Microsoft standard)  -->
-
         <ResourceDictionary x:Key="Default">
+
+            <SolidColorBrush x:Key="HeaderBackground" Color="#FFF2F2F2" />
+            <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
+            <SolidColorBrush x:Key="MainBackground" Color="#FF434343" />
 
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource CustomColor}" />
@@ -147,6 +119,7 @@
             </Style>
 
             <Style TargetType="controls:PageHeader">
+                <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Background" Value="{ThemeResource HeaderBackground}" />
                 <Setter Property="Foreground" Value="{ThemeResource HeaderForeground}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
@@ -160,7 +133,6 @@
         </ResourceDictionary>
 
         <!--  RequestedTheme=HighContrast  -->
-
         <ResourceDictionary x:Key="HighContrast">
 
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />

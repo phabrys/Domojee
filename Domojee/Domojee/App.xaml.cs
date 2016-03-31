@@ -1,4 +1,5 @@
-﻿using Domojee.Services.SettingsServices;
+﻿using Domojee.Controls;
+using Domojee.Services.SettingsServices;
 using Domojee.Views;
 using Jeedom;
 using System;
@@ -25,10 +26,9 @@ namespace Domojee
 
             #region App settings
 
-            //var _settings = SettingsService.Instance;
-            RequestedTheme = ApplicationTheme.Light;
+            RequestedTheme = SettingsService.Instance.AppTheme;
             CacheMaxDuration = TimeSpan.FromDays(1);
-            ShowShellBackButton = true;
+            ShowShellBackButton = SettingsService.Instance.UseShellBackButton;
 
             #endregion App settings
         }
@@ -73,7 +73,7 @@ namespace Domojee
                 // Tentative de connexion à Jeedom
                 if (await RequestViewModel.Instance.PingJeedom() != null)
                 {
-                    ConnectPage.ShowConnectDialog();
+                    ConnectDialog.ShowConnectDialog();
                     return;
                 }
 
@@ -84,7 +84,7 @@ namespace Domojee
             }
             else
             {
-                ConnectPage.ShowConnectDialog();
+                ConnectDialog.ShowConnectDialog();
             }
 
             await Task.CompletedTask;

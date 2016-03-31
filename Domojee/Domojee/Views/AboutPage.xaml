@@ -1,17 +1,16 @@
-﻿<Page
-    x:Class="Domojee.Views.AboutPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Behaviors="using:Template10.Behaviors"
-    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:c="using:Domojee.Converters"
-    xmlns:controls="using:Template10.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:Domojee.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Domojee.ViewModels"
-    mc:Ignorable="d">
+﻿<Page x:Class="Domojee.Views.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:c="using:Domojee.Converters"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Domojee.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Domojee.ViewModels"
+      mc:Ignorable="d" RequestedTheme="Default">
 
     <Page.Resources>
         <c:VisibleWhenDesktop x:Name="VisibleWhenDesktop" />
@@ -31,78 +30,61 @@
         </Storyboard>
     </Page.Resources>
 
-    <Grid>
+    <Grid Background="{ThemeResource MainBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader
-            HorizontalAlignment="Center"
-            FontWeight="Bold"
-            Content="À propos"
-            Frame="{x:Bind Frame}" />
+        <controls:PageHeader Content="À propos" Frame="{x:Bind Frame}" />
 
         <!--  content  -->
         <ScrollViewer Grid.Row="1">
-            <StackPanel
-                Padding="10"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-                <TextBlock
-                    x:Name="textBlock"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource TitleTextBlockStyle}"
-                    Foreground="White"
-                    FontWeight="Bold"
-                    Text="Domojee"
-                    TextWrapping="Wrap" />
-                <Image
-                    x:Name="image"
-                    Width="150"
-                    RenderTransformOrigin="0.5,0.5"
-                    Source="ms-appx:///Assets/Square150x150Logo.png">
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Padding="10">
+                <TextBlock x:Name="textBlock"
+                           HorizontalAlignment="Center"
+                           FontSize="40"
+                           Style="{StaticResource TitleTextBlockStyle}"
+                           Text="Domojee"
+                           TextWrapping="Wrap" />
+                <Image x:Name="image"
+                       Width="150"
+                       RenderTransformOrigin="0.5,0.5"
+                       Source="ms-appx:///Assets/Square150x150Logo.png">
                     <Image.RenderTransform>
                         <CompositeTransform />
                     </Image.RenderTransform>
                 </Image>
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource SubtitleTextBlockStyle}"
-                    Foreground="White"
-                    Text="Connectez-vous à votre box domotique" />
-                <StackPanel
-                    Margin="0,20,0,0"
-                    HorizontalAlignment="Center"
-                    Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Center"
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           Text="Connectez-vous à votre box domotique"
+                           TextAlignment="Center" />
+                <StackPanel Margin="0,20,0,0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
                     <StackPanel Padding="0,0,10,0">
-                        <TextBlock Foreground="White" Text="Version" />
-                        <TextBlock Foreground="White" Text="Développeurs" />
+                        <TextBlock Text="Version" />
+                        <TextBlock Text="Développeurs" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock
-                            x:Name="tbVersion"
-                            Foreground="White"
-                            Text=": n/a" />
-                        <TextBlock Foreground="White" Text=": Phabrys" />
-                        <TextBlock Foreground="White" Text="  mika-nt28" />
-                        <TextBlock Foreground="White" Text="  DanoneKid" />
+                        <TextBlock x:Name="tbVersion" Text=": n/a" />
+                        <TextBlock Text=": Phabrys" />
+                        <TextBlock Text="  mika-nt28" />
+                        <TextBlock Text="  DanoneKid" />
                     </StackPanel>
                 </StackPanel>
-                <TextBlock
-                    Margin="0,20,0,0"
-                    HorizontalAlignment="Center"
-                    Foreground="White"
-                    Text="Merci à toute l'équipe JEEDOM" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Foreground="White"
-                    Text="Pour leur solution domotique innovante" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Foreground="White"
-                    Text="https://jeedom.fr" />
+                <TextBlock Margin="0,20,0,0"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center">
+                    <Run>Merci à toute l'équipe JEEDOM</Run>
+                    <LineBreak />
+                    <Run>Pour leur solution domotique innovante</Run>
+                    <LineBreak />
+                    <Hyperlink NavigateUri="https://www.jeedom.com">https://www.jeedom.com</Hyperlink>
+                </TextBlock>
             </StackPanel>
         </ScrollViewer>
     </Grid>

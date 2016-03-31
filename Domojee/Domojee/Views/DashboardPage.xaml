@@ -33,7 +33,6 @@
         <!--  header  -->
         <controls:PageHeader
             x:Name="pageHeader"
-            FontWeight="Bold"
             Text="Tableau de bord" />
 
         <!--  content  -->
