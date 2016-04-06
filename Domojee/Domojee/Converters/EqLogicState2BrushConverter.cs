@@ -10,6 +10,9 @@ namespace Domojee.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var state = value as string;
+            if (state == null)
+                state = "off";
+
             var brush = new SolidColorBrush();
             if (state == "1" || state.ToLower() == "on")
                 brush = GetColorFromHexa("#8CC152");
