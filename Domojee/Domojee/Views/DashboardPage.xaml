@@ -21,6 +21,9 @@
 
     <Page.Resources>
         <ResourceDictionary Source="../Styles/ObjectPageResources.xaml" />
+        <ResourceDictionary Source="../Styles/EqLogicRessources.xaml"/>
+        <ResourceDictionary Source="../Styles/Widgets/Default.xaml"/>
+        <ResourceDictionary Source="../Styles/Widgets/Light.xaml"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource MainBackground}">
