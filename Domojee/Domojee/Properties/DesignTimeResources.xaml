@@ -4,6 +4,9 @@
     xmlns:local="using:Domojee.Properties">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ms-appx:///Styles/ObjectPageResources.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Styles/EqLogicRessources.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Styles/Widgets/Default.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Styles/Widgets/Light.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

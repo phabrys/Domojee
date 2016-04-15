@@ -25,28 +25,7 @@
     </converter:ValueConverterGroup>
     <converter:UpdatingConverter x:Key="UpdatingVisibilityConverter" />
 
-    <DataTemplate x:Key="ObjectHeaderTemplate">
-        <TextBlock Text="{Binding name}" />
-    </DataTemplate>
-    <DataTemplate x:Key="ObjectPageTemplate">
-        <ctl:VariableSizedGridView x:Name="eqlogicview"
-                                   ItemTemplateSelector="{StaticResource EqLogicTemplateSelector}"
-                                   ItemsSource="{Binding eqLogics}"
-                                   SelectionMode="None">
-            <ctl:VariableSizedGridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                </Style>
-            </ctl:VariableSizedGridView.ItemContainerStyle>
-            <ctl:VariableSizedGridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid ItemHeight="120"
-                                           ItemWidth="120"
-                                           MaximumRowsOrColumns="20"
-                                           Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ctl:VariableSizedGridView.ItemsPanel>
-        </ctl:VariableSizedGridView>
-    </DataTemplate>
+    <DataTemplate x:Key="LIGHT_OFF_Template" />
+    <DataTemplate x:Key="LIGHT_ON_Template" />
+    <DataTemplate x:Key="LIGHT_STATE_Template" />
 </ResourceDictionary>
