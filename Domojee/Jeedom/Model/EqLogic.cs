@@ -1,4 +1,14 @@
 ﻿using Jeedom.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace Jeedom.Model
 {
@@ -7,8 +17,36 @@ namespace Jeedom.Model
     {
         #region Public Fields
 
+        public int ColSpan
+        {
+            get
+            {
+                var _visibleCmds = GetVisibleCmds().Count();
+                if (_visibleCmds > 3)
+                    return 3;
+                else
+                    return _visibleCmds;
+            }
+        }
+
         [DataMember]
         public string isEnable;
+
+        [DataMember]
+        private bool _isVisible = true;
+        public bool isVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+
+            set
+            {
+                _isVisible = Convert.ToBoolean(value);
+
+            }
+        }
 
         [DataMember]
         public string logicalId;
@@ -17,6 +55,18 @@ namespace Jeedom.Model
         public string object_id;
 
         public JdObject Parent;
+
+        public int RowSpan
+        {
+            get
+            {
+                var _visibleCmds = GetVisibleCmds().Count();
+                if (_visibleCmds > 3)
+                    return (int)Math.Ceiling((double)_visibleCmds / 3);
+                else
+                    return 1;
+            }
+        }
 
         #endregion Public Fields
 
@@ -31,14 +81,9 @@ namespace Jeedom.Model
         private string _eqtype_name;
 
         private RelayCommand<object> _execCommandByLogicalID;
-
         private RelayCommand<object> _execCommandByName;
 
         private RelayCommand<object> _execCommandByType;
-
-        [DataMember]
-        private bool _isVisible = true;
-
         private string _name;
 
         private bool _onVisibility = false;
@@ -75,15 +120,12 @@ namespace Jeedom.Model
             }
         }
 
-        public int ColSpan
+        [DataMember]
+        public ObservableCollection<Command> VisibleCmds
         {
             get
             {
-                var _visibleCmds = GetVisibleCmds().Count();
-                if (_visibleCmds > 3)
-                    return 3;
-                else
-                    return _visibleCmds;
+                return GetVisibleCmds();
             }
         }
 
@@ -192,19 +234,6 @@ namespace Jeedom.Model
         [DataMember]
         public string id { get; set; }
 
-        public bool isVisible
-        {
-            get
-            {
-                return _isVisible;
-            }
-
-            set
-            {
-                _isVisible = Convert.ToBoolean(value);
-            }
-        }
-
         [DataMember]
         public string name
         {
@@ -246,18 +275,6 @@ namespace Jeedom.Model
             }
         }
 
-        public int RowSpan
-        {
-            get
-            {
-                var _visibleCmds = GetVisibleCmds().Count();
-                if (_visibleCmds > 3)
-                    return (int)Math.Ceiling((double)_visibleCmds / 3);
-                else
-                    return 1;
-            }
-        }
-
         public string State
         {
             get
@@ -284,15 +301,6 @@ namespace Jeedom.Model
             }
         }
 
-        [DataMember]
-        public ObservableCollection<Command> VisibleCmds
-        {
-            get
-            {
-                return GetVisibleCmds();
-            }
-        }
-
         #endregion Public Properties
 
         #region Public Methods
@@ -300,6 +308,12 @@ namespace Jeedom.Model
         public ObservableCollection<Command> GetActionsCmds()
         {
             IEnumerable<Command> results = cmds.Where(c => c.type == "action");
+            return new ObservableCollection<Command>(results);
+        }
+
+        public ObservableCollection<Command> GetVisibleCmds()
+        {
+            IEnumerable<Command> results = cmds.Where(c => c.isVisible == true && c.logicalId != null);
             return new ObservableCollection<Command>(results);
         }
 
@@ -312,12 +326,6 @@ namespace Jeedom.Model
             }
             else
                 return new ObservableCollection<Command>();
-        }
-
-        public ObservableCollection<Command> GetVisibleCmds()
-        {
-            IEnumerable<Command> results = cmds.Where(c => c.isVisible == true && c.logicalId != null);
-            return new ObservableCollection<Command>(results);
         }
 
         #endregion Public Methods
