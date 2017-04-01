@@ -1,93 +1,122 @@
 ﻿using Domojee.Controls;
-using Domojee.Services.SettingsServices;
 using Domojee.Views;
 using Jeedom;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Template10.Controls;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Domojee
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : Application
     {
+        /// <summary>
+        /// Initialise l'objet d'application de singleton.  Il s'agit de la première ligne du code créé
+        /// à être exécutée. Elle correspond donc à l'équivalent logique de main() ou WinMain().
+        /// </summary>
         public App()
         {
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
-                Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
-                Microsoft.ApplicationInsights.WindowsCollectors.Session);
-            InitializeComponent();
-            SplashFactory = (e) => new Views.Splash(e);
-
-            #region App settings
-
-            RequestedTheme = SettingsService.Instance.AppTheme;
-            CacheMaxDuration = TimeSpan.FromDays(1);
-            ShowShellBackButton = SettingsService.Instance.UseShellBackButton;
-
-            #endregion App settings
+            this.InitializeComponent();
+            this.Suspending += OnSuspending;
         }
 
-        // runs even if restored from state
-        public override async Task OnInitializeAsync(IActivatedEventArgs args)
+        /// <summary>
+        /// Invoqué lorsque l'application est lancée normalement par l'utilisateur final.  D'autres points d'entrée
+        /// seront utilisés par exemple au moment du lancement de l'application pour l'ouverture d'un fichier spécifique.
+        /// </summary>
+        /// <param name="e">Détails concernant la requête et le processus de lancement.</param>
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            // content may already be shell when resuming
-            if ((Window.Current.Content as ModalDialog) == null)
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            // Ne répétez pas l'initialisation de l'application lorsque la fenêtre comporte déjà du contenu,
+            // assurez-vous juste que la fenêtre est active
+            if (rootFrame == null)
             {
-                // setup hamburger shell inside a modal dialog
-                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-                Window.Current.Content = new ModalDialog
+                // Créez un Frame utilisable comme contexte de navigation et naviguez jusqu'à la première page
+                rootFrame = new Frame();
+
+                rootFrame.NavigationFailed += OnNavigationFailed;
+
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    DisableBackButtonWhenModal = true,
-                    Content = new Shell(nav),
-                    ModalContent = new Busy(),
-                };
-            }
-            await Task.CompletedTask;
-        }
-
-        // runs only when not restored from state
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
-        {
-            ConfigurationViewModel config = new ConfigurationViewModel();
-            SettingsService.Instance.UseShellBackButton = true;
-
-            // Ne rien mettre au dessus de ce code sinon Template10 fonctionne mal.
-            NavigationService.Navigate(typeof(DashboardPage));
-
-            if (config.Populated)
-            {
-                //Lancer le dispatchertimer
-                var _dispatcher = new DispatcherTimer();
-                _dispatcher.Interval = TimeSpan.FromMinutes(1);
-                _dispatcher.Tick += _dispatcher_Tick;
-                _dispatcher.Start();
-
-                var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-
-                // Tentative de connexion à Jeedom
-                if (await RequestViewModel.Instance.PingJeedom() != null)
-                {
-                    ConnectDialog.ShowConnectDialog();
-                    return;
+                    //TODO: chargez l'état de l'application précédemment suspendue
                 }
 
-                await taskFactory.StartNew(async () =>
-                {
-                    await RequestViewModel.Instance.FirstLaunch();
-                });
-            }
-            else
-            {
-                ConnectDialog.ShowConnectDialog();
+                // Placez le frame dans la fenêtre active
+                Window.Current.Content = rootFrame;
             }
 
-            await Task.CompletedTask;
+            if (e.PrelaunchActivated == false)
+            {
+                if (rootFrame.Content == null)
+                {
+                    // Quand la pile de navigation n'est pas restaurée, accédez à la première page,
+                    // puis configurez la nouvelle page en transmettant les informations requises en tant que
+                    // paramètre
+                    ConfigurationViewModel config = new ConfigurationViewModel();
+
+                    if (config.Populated)
+                    {
+                        //Lancer le dispatchertimer
+                        var _dispatcher = new DispatcherTimer();
+                        _dispatcher.Interval = TimeSpan.FromMinutes(1);
+                        _dispatcher.Tick += _dispatcher_Tick;
+                        _dispatcher.Start();
+
+                        var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+
+                        // Tentative de connexion à Jeedom
+                        if (await RequestViewModel.Instance.PingJeedom() != null)
+                        {
+                            //ConnectDialog.ShowConnectDialog();
+                            return;
+                        }
+
+                        await taskFactory.StartNew(async () =>
+                        {
+                            await RequestViewModel.Instance.FirstLaunch();
+                        });
+                    }
+                    else
+                    {
+                        //ConnectDialog.ShowConnectDialog();
+                    }
+                    rootFrame.Navigate(typeof(Shell), e.Arguments);
+                }
+                // Vérifiez que la fenêtre actuelle est active
+                Window.Current.Activate();
+            }
+        }
+
+        /// <summary>
+        /// Appelé lorsque la navigation vers une page donnée échoue
+        /// </summary>
+        /// <param name="sender">Frame à l'origine de l'échec de navigation.</param>
+        /// <param name="e">Détails relatifs à l'échec de navigation</param>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+        }
+
+        /// <summary>
+        /// Appelé lorsque l'exécution de l'application est suspendue.  L'état de l'application est enregistré
+        /// sans savoir si l'application pourra se fermer ou reprendre sans endommager
+        /// le contenu de la mémoire.
+        /// </summary>
+        /// <param name="sender">Source de la requête de suspension.</param>
+        /// <param name="e">Détails de la requête de suspension.</param>
+        private void OnSuspending(object sender, SuspendingEventArgs e)
+        {
+            var deferral = e.SuspendingOperation.GetDeferral();
+            //TODO: enregistrez l'état de l'application et arrêtez toute activité en arrière-plan
+            deferral.Complete();
         }
 
         private async void _dispatcher_Tick(object sender, object e)
@@ -97,4 +126,18 @@ namespace Domojee
             //Shell.SetBusy(false);
         }
     }
+
+    /*/ content may already be shell when resuming
+ if ((Window.Current.Content as ModalDialog) == null)
+ {
+     // setup hamburger shell inside a modal dialog
+     var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+     Window.Current.Content = new ModalDialog
+     {
+         DisableBackButtonWhenModal = true,
+         Content = new Shell(nav),
+         ModalContent = new Busy(),
+     };
+ }
+ await Task.CompletedTask;*/
 }

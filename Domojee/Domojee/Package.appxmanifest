@@ -18,24 +18,22 @@
       <uap:VisualElements DisplayName="Domojee" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Domojee" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0088AA" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#004455" />
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="portrait" />
           <uap:Rotation Preference="landscape" />
         </uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.GeofenceBackgroundTask">
+        <uap:Extension Category="windows.appService" EntryPoint="VoiceCommandService.DomojeeVoiceCommandService">
+          <uap:AppService Name="DomojeeVoiceCommandService" />
+        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.LocationBackgroundTask">
           <BackgroundTasks>
-            <Task Type="location" />
+            <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.BadgeNotificationHistoryChangedTriggerTask">
-          <BackgroundTasks>
-            <Task Type="systemEvent" />
-          </BackgroundTasks>
-        </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastActivationTypeBackgroundClosedTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationHistoryChangedTriggerTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
           </BackgroundTasks>
@@ -45,19 +43,21 @@
             <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationHistoryChangedTriggerTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastActivationTypeBackgroundClosedTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.LocationBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.BadgeNotificationHistoryChangedTriggerTask">
           <BackgroundTasks>
-            <Task Type="timer" />
+            <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
-        <uap:Extension Category="windows.appService" EntryPoint="VoiceCommandService.DomojeeVoiceCommandService">
-          <uap:AppService Name="DomojeeVoiceCommandService" />
-        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.GeofenceBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="location" />
+          </BackgroundTasks>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>

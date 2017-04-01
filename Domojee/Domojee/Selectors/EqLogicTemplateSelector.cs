@@ -69,9 +69,9 @@ namespace Domojee.Selectors
             int _find = 0;
             foreach (var type in types)
             {
-                if (eq.cmds != null)
+                if (eq.Cmds != null)
                 {
-                    var search = eq.cmds.Where(c => c.display.generic_type == type);
+                    var search = eq.Cmds.Where(c => c.Display.generic_type == type);
                     if (search.Count() > 0)
                         _find += 1;
                 }

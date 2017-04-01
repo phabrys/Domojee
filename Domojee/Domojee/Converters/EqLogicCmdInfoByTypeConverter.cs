@@ -14,7 +14,7 @@ namespace Domojee.Converters
         {
             var cmds = (ObservableCollection<Command>)value;
             var searchType = parameter.ToString();
-            var searchcmd = cmds.Where(c => c.display.generic_type == searchType).First();
+            var searchcmd = cmds.Where(c => c.Display.generic_type == searchType).First();
 
             if (searchcmd != null)
             {

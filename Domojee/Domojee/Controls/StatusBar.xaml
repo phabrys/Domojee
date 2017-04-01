@@ -12,7 +12,7 @@
         <cvrt:MailVisibilityConverter x:Key="MailVisibilityConverter" />
     </UserControl.Resources>
 
-    <RelativePanel Height="24" Background="{ThemeResource HeaderBackground}">
+    <RelativePanel Height="24" Background="#FF004455">
         <SymbolIcon x:Name="MailIcon"
                     Margin="5,2"
                     RelativePanel.AlignRightWithPanel="True"

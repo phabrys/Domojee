@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:Template10.Behaviors"
     xmlns:c="using:Domojee.Converters"
-    xmlns:controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:jdm="using:Jeedom"
@@ -15,39 +14,6 @@
     xmlns:vm="using:Domojee.ViewModels"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <vm:DashboardPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
-    <Page.Resources>
-        <ResourceDictionary Source="../Styles/ObjectPageResources.xaml" />
-    </Page.Resources>
-
-    <Grid Background="{ThemeResource MainBackground}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <!--  header  -->
-        <controls:PageHeader
-            x:Name="pageHeader"
-            Text="Tableau de bord" />
-
-        <!--  content  -->
-        <Grid Grid.Row="1">
-            <ScrollViewer>
-                <Pivot
-                    HeaderTemplate="{StaticResource ObjectHeaderTemplate}"
-                    ItemTemplate="{StaticResource ObjectPageTemplate}"
-                    ItemsSource="{x:Bind ViewModel.Request.ObjectList}" />
-            </ScrollViewer>
-        </Grid>
-
-        <!--  statusbar  -->
-        <Grid Grid.Row="2">
-            <localctl:StatusBar />
-        </Grid>
+    <Grid>
     </Grid>
 </Page>

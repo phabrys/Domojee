@@ -31,7 +31,7 @@ namespace Domojee.Selectors
 
             // Cherche si on a spécifié un Template dans les customParameters de l'équipement
             //TODO : Voir "generic_type" : https://www.jeedom.com/forum/viewtopic.php?f=112&t=15155#p278226
-            if (cmd.display != null)
+            if (cmd.Display != null)
             {
                 /* switch(cmd.display.generic_type)
                 {
@@ -45,7 +45,7 @@ namespace Domojee.Selectors
                         return LIGHT_OFF_Template;
                 } */
             }
-            switch (cmd.subType)
+            switch (cmd.SubType)
             {
                 case "numeric":
                     return NumericCmdTemplate;

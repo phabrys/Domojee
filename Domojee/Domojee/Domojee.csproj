@@ -11,8 +11,8 @@
     <AssemblyName>Domojee</AssemblyName>
     <DefaultLanguage>fr-FR</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -90,24 +90,17 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DomojeeVoiceCommandes.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Assets\Fonts\WeatherIcons.ttf" />
-    <Content Include="Assets\Fonts\FontAwesome.ttf" />
-    <None Include="Domojee_StoreKey.pfx" />
+    <Content Include="Fonts\WeatherIcons.ttf" />
+    <Content Include="Fonts\Jeedom.ttf" />
+    <Content Include="Fonts\FontAwesome.ttf" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConnectControl.xaml.cs">
-      <DependentUpon>ConnectControl.xaml</DependentUpon>
+    <Compile Include="Controls\PageHeader.xaml.cs">
+      <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ServerState.xaml.cs">
       <DependentUpon>ServerState.xaml</DependentUpon>
@@ -126,56 +119,32 @@
     <Compile Include="Converters\MailVisibilityConverter.cs" />
     <Compile Include="Converters\UpdatingConverter.cs" />
     <Compile Include="Converters\ValueConverterGroup.cs" />
-    <Compile Include="Converters\VisibleWhenDesktop.cs" />
     <Compile Include="Converters\StateToFontAwesomeConverter.cs" />
+    <Compile Include="Helpers\MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selectors\CmdTemplateSelector.cs" />
     <Compile Include="Selectors\EqLogicTemplateSelector.cs" />
-    <Compile Include="Services\SettingsServices\SettingsServices.cs" />
-    <Compile Include="ViewModels\ConnectViewModel.cs" />
-    <Compile Include="ViewModels\DashboardPageViewModel.cs" />
-    <Compile Include="ViewModels\MessagePageViewModel.cs" />
-    <Compile Include="ViewModels\ScenePageViewModel.cs" />
-    <Compile Include="ViewModels\ServerPageViewModel.cs" />
-    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
-    <Compile Include="Views\Busy.xaml.cs">
-      <DependentUpon>Busy.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ConnectDialog.xaml.cs">
-      <DependentUpon>ConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EqLogicPage.xaml.cs">
-      <DependentUpon>EqLogicPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LoadingPage.xaml.cs">
-      <DependentUpon>LoadingPage.xaml</DependentUpon>
+    <Compile Include="Views\FavoritePage.xaml.cs">
+      <DependentUpon>FavoritePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ObjectPage.xaml.cs">
-      <DependentUpon>ObjectPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ScenePage.xaml.cs">
       <DependentUpon>ScenePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ServerPage.xaml.cs">
-      <DependentUpon>ServerPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <Compile Include="Views\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Splash.xaml.cs">
-      <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -185,8 +154,7 @@
     <None Include="Domojee_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Images\WP.jpg" />
+    <Content Include="Assets\logo.svg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -201,7 +169,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\ConnectControl.xaml">
+    <Page Include="Controls\PageHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,45 +181,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Properties\DesignTimeResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
-    </Page>
-    <Page Include="Styles\Custom.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Styles\EqLogicRessources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Styles\ObjectPageResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Styles\Widgets\Default.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Styles\Widgets\Light.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Views\Busy.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\AboutPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -259,11 +189,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EqLogicPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LoadingPage.xaml">
+    <Page Include="Views\FavoritePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,19 +197,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ObjectPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ScenePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ServerPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SettingsPage.xaml">
+    <Page Include="Views\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -291,36 +209,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Splash.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Jeedom\Jeedom.csproj">
-      <Project>{e1987124-2d93-4cb4-9767-39ee26575802}</Project>
-      <Name>Jeedom</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Localisation\Localisation.csproj">
-      <Project>{00265c6d-b82b-4047-b6a6-fa0d3ab515ce}</Project>
-      <Name>Localisation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Notification\Notification.csproj">
-      <Project>{9c1c6a34-d674-4d90-a30f-cd91af5bc020}</Project>
-      <Name>Notification</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VoiceCommandService\VoiceCommandService.csproj">
-      <Project>{73b9215a-97b9-41f6-9405-f67a0d1523f7}</Project>
-      <Name>VoiceCommandService</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\Widget\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

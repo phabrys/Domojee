@@ -18,8 +18,8 @@ namespace Domojee.Views
         {
             this.InitializeComponent();
             PackageVersion version = Package.Current.Id.Version;
-            tbVersion.Text = String.Format(": {0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
-            Logo.Begin();
+            //tbVersion.Text = String.Format(": {0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+            //Logo.Begin();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

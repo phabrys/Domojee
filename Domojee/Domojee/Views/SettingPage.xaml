@@ -1,15 +1,19 @@
-﻿<Page x:Class="Domojee.Views.AboutPage"
+﻿<Page x:Class="Domojee.Views.SettingPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:Behaviors="using:Template10.Behaviors"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:c="using:Domojee.Converters"
+      xmlns:Jeedom="using:Jeedom"
+      xmlns:ViewModels="using:Domojee.ViewModels"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:Domojee.Views"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:localcontrols="using:Domojee.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Domojee.ViewModels"
-      mc:Ignorable="d" RequestedTheme="Dark">
+      mc:Ignorable="d">
+
+    <!--Page.DataContext>
+        <vm:SettingPageViewModel x:Name="ViewModel" />
+    </-->
 
     <Grid>
         
