@@ -12,23 +12,24 @@
         <cvrt:MailVisibilityConverter x:Key="MailVisibilityConverter" />
     </UserControl.Resources>
 
-    <RelativePanel Height="24" Background="#FF004455">
+    <RelativePanel Height="24" Background="#FFF2F2F2">
         <SymbolIcon x:Name="MailIcon"
                     Margin="5,2"
                     RelativePanel.AlignRightWithPanel="True"
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     Symbol="Mail"
+                    Foreground="#FF004455"
                     Visibility="{Binding MessageList, Converter={StaticResource MailVisibilityConverter}}" />
         <ProgressRing x:Name="ProgressStatus"
                       Margin="5,2"
-                      Foreground="White"
+                      Foreground="#FF004455"
                       IsActive="{Binding Updating, FallbackValue=True}"
                       RelativePanel.AlignVerticalCenterWithPanel="True"
                       RelativePanel.LeftOf="{Binding ElementName=MailIcon}" />
         <TextBlock x:Name="StatusMessage"
                    Margin="5,2"
                    FontSize="12"
-                   Foreground="White"
+                   Foreground="#FF004455"
                    RelativePanel.AlignLeftWithPanel="True"
                    RelativePanel.AlignVerticalCenterWithPanel="True"
                    Text="{Binding LoadingMessage, FallbackValue=Prêt}" />

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Domojee.Views"
+    xmlns:controls="using:Domojee.Controls"
     xmlns:helpers="using:Domojee.Helpers"
     xmlns:uwptk="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,7 +23,12 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
         <uwptk:HamburgerMenu
+            Grid.Row="0"
             x:Name="hamburgerMenu"
             Foreground="White"
             ItemTemplate="{StaticResource MenuItemTemplate}"
@@ -30,5 +36,6 @@
             PaneBackground="#FF004455" ItemClick="hamburgerMenu_ItemClick" OptionsItemClick="hamburgerMenu_OptionsItemClick">
             <Frame x:Name="contentFrame" Background="Black" Foreground="White"/>
         </uwptk:HamburgerMenu>
+        <controls:StatusBar Grid.Row="1"/>
     </Grid>
 </Page>

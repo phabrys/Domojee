@@ -12,12 +12,16 @@
 
     <Grid Background="#FF004455">
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <SymbolIcon Grid.Column="0" Symbol="{x:Bind Icon, Mode=OneWay}" Foreground="White" />
-            <TextBlock Grid.Column="1" Text="{x:Bind Title, Mode=OneWay}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <SymbolIcon Grid.Row="1" Symbol="{x:Bind Icon, Mode=OneWay}" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                <SymbolIcon.RenderTransform>
+                    <CompositeTransform ScaleY="0.5" ScaleX="0.5"/>
+                </SymbolIcon.RenderTransform>
+            </SymbolIcon>
+            <TextBlock Grid.Row="0" Text="{x:Bind Title, Mode=OneWay}" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </UserControl>

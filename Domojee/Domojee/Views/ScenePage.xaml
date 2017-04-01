@@ -4,12 +4,17 @@
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Domojee.Views"
+      xmlns:controls="using:Domojee.Controls"
       xmlns:localctl="using:Domojee.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Domojee.ViewModels"
       mc:Ignorable="d">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <controls:PageHeader Title="Scénarios" Icon="Clock" Grid.Row="0"/>
     </Grid>
 </Page>

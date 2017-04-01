@@ -23,7 +23,7 @@ namespace Domojee.Controls
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(PageHeader), new PropertyMetadata(""));
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(Symbol, typeof(PageHeader), new PropertyMetadata(""));
+            DependencyProperty.Register("Icon", typeof(Symbol), typeof(PageHeader), new PropertyMetadata(""));
 
         public PageHeader()
         {

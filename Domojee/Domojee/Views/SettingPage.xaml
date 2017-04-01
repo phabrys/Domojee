@@ -4,6 +4,7 @@
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Jeedom="using:Jeedom"
       xmlns:ViewModels="using:Domojee.ViewModels"
+      xmlns:controls="using:Domojee.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:localcontrols="using:Domojee.Controls"
@@ -11,11 +12,11 @@
       xmlns:vm="using:Domojee.ViewModels"
       mc:Ignorable="d">
 
-    <!--Page.DataContext>
-        <vm:SettingPageViewModel x:Name="ViewModel" />
-    </-->
-
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <controls:PageHeader Title="Paramètres" Icon="Setting" Grid.Row="0"/>
     </Grid>
 </Page>

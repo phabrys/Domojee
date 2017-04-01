@@ -31,7 +31,7 @@ namespace Domojee
         /// seront utilisés par exemple au moment du lancement de l'application pour l'ouverture d'un fichier spécifique.
         /// </summary>
         /// <param name="e">Détails concernant la requête et le processus de lancement.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -60,34 +60,6 @@ namespace Domojee
                     // Quand la pile de navigation n'est pas restaurée, accédez à la première page,
                     // puis configurez la nouvelle page en transmettant les informations requises en tant que
                     // paramètre
-                    ConfigurationViewModel config = new ConfigurationViewModel();
-
-                    if (config.Populated)
-                    {
-                        //Lancer le dispatchertimer
-                        var _dispatcher = new DispatcherTimer();
-                        _dispatcher.Interval = TimeSpan.FromMinutes(1);
-                        _dispatcher.Tick += _dispatcher_Tick;
-                        _dispatcher.Start();
-
-                        var taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-
-                        // Tentative de connexion à Jeedom
-                        if (await RequestViewModel.Instance.PingJeedom() != null)
-                        {
-                            //ConnectDialog.ShowConnectDialog();
-                            return;
-                        }
-
-                        await taskFactory.StartNew(async () =>
-                        {
-                            await RequestViewModel.Instance.FirstLaunch();
-                        });
-                    }
-                    else
-                    {
-                        //ConnectDialog.ShowConnectDialog();
-                    }
                     rootFrame.Navigate(typeof(Shell), e.Arguments);
                 }
                 // Vérifiez que la fenêtre actuelle est active
