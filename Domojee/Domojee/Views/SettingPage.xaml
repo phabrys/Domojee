@@ -10,13 +10,38 @@
       xmlns:localcontrols="using:Domojee.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Domojee.ViewModels"
+      RequestedTheme="Dark"
       mc:Ignorable="d">
-
+    <Page.DataContext>
+        <vm:SettingViewModel x:Name="ViewModel" />
+    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <controls:PageHeader Title="Paramètres" Icon="Setting" Grid.Row="0"/>
+        <controls:PageHeader Title="Paramètres" Icon="Setting" Grid.Row="0" />
+        <Grid Grid.Row="1">
+            <Grid Padding="20,10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="32" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBox Text="{x:Bind ViewModel.Host, Mode=TwoWay}" PlaceholderText="Adresse d'accès au serveur JEEDOM" Header="Adresse" Margin="0,10,0,0" />
+                    <TextBox Text="{x:Bind ViewModel.Login, Mode=TwoWay}" PlaceholderText="Nom d'utilisateur" Header="Identifiant" Margin="0,5" />
+                    <PasswordBox Password="{x:Bind ViewModel.Password, Mode=TwoWay}" PlaceholderText="Mot de passe de connexion" Header="Mot de passe" Margin="0,5" />
+                    <ToggleSwitch Header="Connexion automatique" IsOn="{x:Bind ViewModel.ConnexionAuto, Mode=TwoWay}" Margin="0,5" />
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Se connecter" Grid.Column="0" Width="150" Height="32" Margin="5,0" Click="Connexion_Click" />
+                    <Button Content="Mode démo" Grid.Column="1" Width="150" Height="32" Margin="5,0" />
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

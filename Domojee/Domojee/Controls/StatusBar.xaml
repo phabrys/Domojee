@@ -8,6 +8,7 @@
              d:DesignHeight="24"
              d:DesignWidth="400"
              mc:Ignorable="d">
+    
     <UserControl.Resources>
         <cvrt:MailVisibilityConverter x:Key="MailVisibilityConverter" />
     </UserControl.Resources>

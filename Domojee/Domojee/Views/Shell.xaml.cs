@@ -1,19 +1,11 @@
-﻿using Domojee.Helpers;
+﻿using Domojee.Controls;
+using Domojee.Helpers;
 using Domojee.Services;
+using Jeedom;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
@@ -33,7 +25,21 @@ namespace Domojee.Views
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += Shell_BackRequested;
             NavigationService.ContentFrame = contentFrame;
-            NavigationService.Navigate(typeof(FavoritePage));
+            if (RequestViewModel.config.Populated)
+                NavigationService.Navigate(typeof(FavoritePage));
+            else
+                NavigationService.Navigate(typeof(SettingPage));
+
+            //Lancer le dispatchertimer toutes les 20 secondes
+            var _dispatcher = new DispatcherTimer();
+            _dispatcher.Interval = TimeSpan.FromSeconds(20);
+            _dispatcher.Tick += _dispatcher_Tick;
+            _dispatcher.Start();
+        }
+
+        private async void _dispatcher_Tick(object sender, object e)
+        {
+            await RequestViewModel.Instance.UpdateTask();
         }
 
         private void Shell_BackRequested(object sender, BackRequestedEventArgs e)
