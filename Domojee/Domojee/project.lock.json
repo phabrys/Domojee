@@ -2,18 +2,6 @@
   "version": 2,
   "targets": {
     "UAP,Version=v10.0": {
-      "lib-uwp-jeedom/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
-        },
-        "compile": {
-          "lib/uap10.0/Jeedom.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Jeedom.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -2349,21 +2337,17 @@
             "rid": "win10-x86"
           }
         }
+      },
+      "Jeedom/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+          "Newtonsoft.Json": "9.0.1"
+        }
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "lib-uwp-jeedom/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
-        },
-        "compile": {
-          "lib/uap10.0/Jeedom.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Jeedom.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -4749,21 +4733,17 @@
         "native": {
           "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
         }
+      },
+      "Jeedom/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+          "Newtonsoft.Json": "9.0.1"
+        }
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "lib-uwp-jeedom/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
-        },
-        "compile": {
-          "lib/uap10.0/Jeedom.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Jeedom.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -7188,21 +7168,17 @@
         "native": {
           "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
         }
+      },
+      "Jeedom/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+          "Newtonsoft.Json": "9.0.1"
+        }
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "lib-uwp-jeedom/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
-        },
-        "compile": {
-          "lib/uap10.0/Jeedom.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Jeedom.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -9597,21 +9573,17 @@
         "native": {
           "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
         }
+      },
+      "Jeedom/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+          "Newtonsoft.Json": "9.0.1"
+        }
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "lib-uwp-jeedom/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
-        },
-        "compile": {
-          "lib/uap10.0/Jeedom.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Jeedom.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -12045,21 +12017,17 @@
         "native": {
           "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
         }
+      },
+      "Jeedom/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+          "Newtonsoft.Json": "9.0.1"
+        }
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "lib-uwp-jeedom/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
-        },
-        "compile": {
-          "lib/uap10.0/Jeedom.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Jeedom.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -14454,21 +14422,17 @@
         "native": {
           "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
         }
+      },
+      "Jeedom/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+          "Newtonsoft.Json": "9.0.1"
+        }
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "lib-uwp-jeedom/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
-        },
-        "compile": {
-          "lib/uap10.0/Jeedom.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Jeedom.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -16902,20 +16866,18 @@
         "native": {
           "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
         }
+      },
+      "Jeedom/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+          "Newtonsoft.Json": "9.0.1"
+        }
       }
     }
   },
   "libraries": {
-    "lib-uwp-jeedom/1.0.5": {
-      "sha512": "0CLTw1Mt7shiwjvDQLHjwbMEJlrYKNqIX/YDbLBSod58/cC/ILEHm1NXdSkT0A9h6Kpegk/90J3JnJHNz5nNEA==",
-      "type": "package",
-      "path": "lib-uwp-jeedom/1.0.5",
-      "files": [
-        "lib-uwp-jeedom.1.0.5.nupkg.sha512",
-        "lib-uwp-jeedom.nuspec",
-        "lib/uap10.0/Jeedom.dll"
-      ]
-    },
     "Microsoft.CSharp/4.0.1": {
       "sha512": "17h8b5mXa87XYKrrVqdgZ38JefSUqLChUQpXgSnpzsM0nDOhE40FTeNWOJ/YmySGV6tG6T8+hjz6vxbknHJr6A==",
       "type": "package",
@@ -25326,11 +25288,15 @@
         "win2d.uwp.1.19.0.nupkg.sha512",
         "win2d.uwp.nuspec"
       ]
+    },
+    "Jeedom/1.0.0": {
+      "type": "project",
+      "path": "../../../lib-uwp-jeedom/Jeedom/project.json",
+      "msbuildProject": "../../../lib-uwp-jeedom/Jeedom/Jeedom.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "lib-uwp-jeedom >= 1.0.5",
       "microsoft.netcore.universalwindowsplatform >= 5.3.1",
       "microsoft.toolkit.uwp.ui.controls >= 1.4.0"
     ],
@@ -25345,10 +25311,18 @@
       "projectName": "Domojee",
       "projectPath": "C:\\Users\\fabri_dqyhpg3\\Source\\Repos\\Domojee\\Domojee\\Domojee\\Domojee.csproj",
       "projectJsonPath": "C:\\Users\\fabri_dqyhpg3\\Source\\Repos\\Domojee\\Domojee\\Domojee\\project.json",
-      "projectStyle": "ProjectJson"
+      "projectStyle": "ProjectJson",
+      "frameworks": {
+        "uap10.0": {
+          "projectReferences": {
+            "C:\\Users\\fabri_dqyhpg3\\Source\\Repos\\lib-uwp-jeedom\\Jeedom\\Jeedom.csproj": {
+              "projectPath": "C:\\Users\\fabri_dqyhpg3\\Source\\Repos\\lib-uwp-jeedom\\Jeedom\\Jeedom.csproj"
+            }
+          }
+        }
+      }
     },
     "dependencies": {
-      "lib-uwp-jeedom": "1.0.5",
       "microsoft.netcore.universalwindowsplatform": "5.3.1",
       "microsoft.toolkit.uwp.ui.controls": "1.4.0"
     },

@@ -1,5 +1,4 @@
-﻿using Domojee.Controls;
-using Domojee.Helpers;
+﻿using Domojee.Helpers;
 using Domojee.Services;
 using Jeedom;
 using System;
@@ -25,8 +24,15 @@ namespace Domojee.Views
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += Shell_BackRequested;
             NavigationService.ContentFrame = contentFrame;
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
             if (RequestViewModel.config.Populated)
+            {
+                await RequestViewModel.Instance.FirstLaunch();
                 NavigationService.Navigate(typeof(FavoritePage));
+            }
             else
                 NavigationService.Navigate(typeof(SettingPage));
 
@@ -35,17 +41,12 @@ namespace Domojee.Views
             _dispatcher.Interval = TimeSpan.FromSeconds(20);
             _dispatcher.Tick += _dispatcher_Tick;
             _dispatcher.Start();
+            base.OnNavigatedTo(e);
         }
 
         private async void _dispatcher_Tick(object sender, object e)
         {
             await RequestViewModel.Instance.UpdateTask();
-        }
-
-        private void Shell_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            NavigationService.GoBack();
-            e.Handled = true;
         }
 
         private void hamburgerMenu_ItemClick(object sender, ItemClickEventArgs e)
@@ -58,6 +59,12 @@ namespace Domojee.Views
         {
             var item = e.ClickedItem as MenuItem;
             NavigationService.Navigate(item.PageType);
+        }
+
+        private void Shell_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            NavigationService.GoBack();
+            e.Handled = true;
         }
     }
 }
