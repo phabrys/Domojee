@@ -1,6 +1,6 @@
 # Domojee
 
-Application Windows Universelle non officielle permettant de gérer sa box domotique Jeedom.
+Application Windows Universelle non officielle permettant de gérer sa box domotique Jeedom. [![GitHub release][gh-rel-badge]][gh-rel]
 
 Cette application n'est pas officielle. 
 
