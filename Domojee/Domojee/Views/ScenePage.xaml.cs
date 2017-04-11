@@ -2,6 +2,7 @@
 using Jeedom.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -22,12 +23,16 @@ namespace Domojee.Views
             NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
-        private async void gridview_ItemClick(object sender, ItemClickEventArgs e)
+        private async void RunScene_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Scene scene = e.ClickedItem as Scene;
-            scene.Updating = true;
-            await RequestViewModel.Instance.RunScene(scene);
-            scene.Updating = false;
+            var button = sender as Button;
+            var id = button.Tag as string;
+            var lst = from s in RequestViewModel.Instance.SceneList where s.id == id select s;
+            if (lst.Count() != 0)
+            {
+                var scene = lst.First();
+                await RequestViewModel.Instance.RunScene(scene);
+            }
         }
     }
 }

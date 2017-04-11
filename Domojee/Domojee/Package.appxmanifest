@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="35915Phabrys.Domojee" Publisher="CN=F3F1F7F3-0E10-455C-B3C8-3B98F8AFBB91" Version="4.1.5.0" />
+  <Identity Name="35915Phabrys.Domojee" Publisher="CN=F3F1F7F3-0E10-455C-B3C8-3B98F8AFBB91" Version="4.1.6.0" />
   <mp:PhoneIdentity PhoneProductId="a889ec51-eaf7-49b7-9a57-118ba2f44e74" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Domojee</DisplayName>
@@ -25,20 +25,12 @@
         </uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="VoiceCommandService.DomojeeVoiceCommandService">
-          <uap:AppService Name="DomojeeVoiceCommandService" />
-        </uap:Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.LocationBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.GeofenceBackgroundTask">
           <BackgroundTasks>
-            <Task Type="timer" />
+            <Task Type="location" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationHistoryChangedTriggerTask">
-          <BackgroundTasks>
-            <Task Type="systemEvent" />
-          </BackgroundTasks>
-        </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationQuickReplyTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.BadgeNotificationHistoryChangedTriggerTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
           </BackgroundTasks>
@@ -48,16 +40,24 @@
             <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.BadgeNotificationHistoryChangedTriggerTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationQuickReplyTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.GeofenceBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Notification.ToastNotificationHistoryChangedTriggerTask">
           <BackgroundTasks>
-            <Task Type="location" />
+            <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Localisation.LocationBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="VoiceCommandService.DomojeeVoiceCommandService">
+          <uap:AppService Name="DomojeeVoiceCommandService" />
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
