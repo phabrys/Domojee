@@ -1,7 +1,5 @@
 ﻿using System;
 using Windows.ApplicationModel;
-using Windows.Foundation.Metadata;
-using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -18,7 +16,7 @@ namespace Domojee.Views
         {
             this.InitializeComponent();
             PackageVersion version = Package.Current.Id.Version;
-            //tbVersion.Text = String.Format(": {0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+            tbVersion.Text = String.Format(": {0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
             //Logo.Begin();
         }
 

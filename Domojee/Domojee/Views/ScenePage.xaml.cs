@@ -1,10 +1,5 @@
 ﻿using Jeedom;
-using Jeedom.Model;
-using System;
-using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.Foundation.Metadata;
-using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -26,6 +21,7 @@ namespace Domojee.Views
         private async void RunScene_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var button = sender as Button;
+            button.IsEnabled = false;
             var id = button.Tag as string;
             var lst = from s in RequestViewModel.Instance.SceneList where s.id == id select s;
             if (lst.Count() != 0)
@@ -33,6 +29,7 @@ namespace Domojee.Views
                 var scene = lst.First();
                 await RequestViewModel.Instance.RunScene(scene);
             }
+            button.IsEnabled = true;
         }
     }
 }

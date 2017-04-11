@@ -61,7 +61,8 @@
             <GridView
                 x:Name="gridView"
                 ItemTemplate="{StaticResource DataTemplate1}"
-                ItemsSource="{Binding SceneList}" SelectionMode="None" />
+                ItemsSource="{Binding SceneList}"
+                SelectionMode="None" />
         </ScrollViewer>
     </Grid>
 </Page>
