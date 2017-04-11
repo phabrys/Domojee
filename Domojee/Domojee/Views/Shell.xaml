@@ -33,7 +33,7 @@
             Foreground="White"
             ItemTemplate="{StaticResource MenuItemTemplate}"
             OptionsItemTemplate="{StaticResource MenuItemTemplate}"
-            PaneBackground="#FF004455" ItemClick="hamburgerMenu_ItemClick" OptionsItemClick="hamburgerMenu_OptionsItemClick">
+            PaneBackground="#FF333333" ItemClick="hamburgerMenu_ItemClick" OptionsItemClick="hamburgerMenu_OptionsItemClick">
             <Frame x:Name="contentFrame" Background="Black" Foreground="White" />
         </uwptk:HamburgerMenu>
         <controls:StatusBar Grid.Row="1" />

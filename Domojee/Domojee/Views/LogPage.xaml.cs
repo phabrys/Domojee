@@ -20,9 +20,9 @@ namespace Domojee.Views
     /// <summary>
     /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
     /// </summary>
-    public sealed partial class MessagePage : Page
+    public sealed partial class LogPage : Page
     {
-        public MessagePage()
+        public LogPage()
         {
             this.InitializeComponent();
         }

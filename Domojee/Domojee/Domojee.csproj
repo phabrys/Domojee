@@ -16,8 +16,6 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Domojee_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>0F45B215E0F639039A676462A8807B4A2A4776E6</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -118,8 +116,8 @@
     <Compile Include="Converters\EqLogicState2BrushConverter.cs" />
     <Compile Include="Converters\EqLogicStateConverter.cs" />
     <Compile Include="Converters\EqLogicCmdInfoByTypeConverter.cs" />
-    <Compile Include="Converters\MailMessageVisibilityConverter.cs" />
-    <Compile Include="Converters\MailVisibilityConverter.cs" />
+    <Compile Include="Converters\LogMessageVisibilityConverter.cs" />
+    <Compile Include="Converters\LogVisibilityConverter.cs" />
     <Compile Include="Converters\UpdatingConverter.cs" />
     <Compile Include="Converters\ValueConverterGroup.cs" />
     <Compile Include="Converters\StateToFontAwesomeConverter.cs" />
@@ -128,6 +126,7 @@
     <Compile Include="Selectors\CmdTemplateSelector.cs" />
     <Compile Include="Selectors\EqLogicTemplateSelector.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -138,8 +137,8 @@
     <Compile Include="Views\FavoritePage.xaml.cs">
       <DependentUpon>FavoritePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MessagePage.xaml.cs">
-      <DependentUpon>MessagePage.xaml</DependentUpon>
+    <Compile Include="Views\LogPage.xaml.cs">
+      <DependentUpon>LogPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScenePage.xaml.cs">
       <DependentUpon>ScenePage.xaml</DependentUpon>
@@ -197,9 +196,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MessagePage.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\LogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ScenePage.xaml">
       <SubType>Designer</SubType>
@@ -218,11 +217,6 @@
     <Folder Include="Converters\Widget\" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\lib-uwp-jeedom\Jeedom\Jeedom.csproj">
       <Project>{82dc8c1a-b894-4c0a-8bb4-73de4b718eec}</Project>
       <Name>Jeedom</Name>
@@ -230,6 +224,9 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

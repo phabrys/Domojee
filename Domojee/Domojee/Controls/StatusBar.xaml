@@ -10,7 +10,7 @@
              mc:Ignorable="d">
     
     <UserControl.Resources>
-        <cvrt:MailVisibilityConverter x:Key="MailVisibilityConverter" />
+        <cvrt:LogVisibilityConverter x:Key="MailVisibilityConverter" />
     </UserControl.Resources>
 
     <RelativePanel Height="24" Background="#FFF2F2F2">

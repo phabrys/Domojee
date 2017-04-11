@@ -18,5 +18,52 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <controls:PageHeader Title="A propos" Icon="Help" Grid.Row="0"/>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Padding="10">
+                <TextBlock x:Name="textBlock"
+                           HorizontalAlignment="Center"
+                           FontSize="40"
+                           Style="{StaticResource TitleTextBlockStyle}"
+                           Text="Domojee"
+                           TextWrapping="Wrap" />
+                <Image x:Name="image"
+                       Width="150"
+                       RenderTransformOrigin="0.5,0.5"
+                       Source="ms-appx:///Assets/Square150x150Logo.png">
+                    <Image.RenderTransform>
+                        <CompositeTransform />
+                    </Image.RenderTransform>
+                </Image>
+                <TextBlock HorizontalAlignment="Center"
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           Text="Connectez-vous à votre box domotique"
+                           TextAlignment="Center" />
+                <StackPanel Margin="0,20,0,0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                    <StackPanel Padding="0,0,10,0">
+                        <TextBlock Text="Version" />
+                        <TextBlock Text="Développeurs" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock x:Name="tbVersion" Text=": 4.1.5" />
+                        <TextBlock Text=": Phabrys" />
+                        <TextBlock Text="  mika-nt28" />
+                        <TextBlock Text="  DanoneKid" />
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Margin="0,20,0,0"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center">
+                    <Run>Merci à toute l'équipe JEEDOM</Run>
+                    <LineBreak />
+                    <Run>Pour leur solution domotique innovante</Run>
+                    <LineBreak />
+                    <Hyperlink NavigateUri="https://www.jeedom.com">https://www.jeedom.com</Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

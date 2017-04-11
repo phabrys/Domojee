@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
-    "microsoft.netcore.universalwindowsplatform": "5.3.1",
-    "microsoft.toolkit.uwp.ui.controls": "1.4.0"
+    "microsoft.netcore.universalwindowsplatform": "5.2.3",
+    "Microsoft.Toolkit.Uwp.UI.Controls": "1.4.1"
   },
   "frameworks": {
     "uap10.0": {}

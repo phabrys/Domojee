@@ -28,17 +28,21 @@ namespace Domojee.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (RequestViewModel.config.Populated)
+            if (RequestViewModel.config.Populated && RequestViewModel.config.ConnexionAuto)
             {
-                await RequestViewModel.Instance.FirstLaunch();
+                if (RequestViewModel.config.IsDemoEnabled)
+                    RequestViewModel.Instance.LaunchDemo();
+                else
+                    await RequestViewModel.Instance.FirstLaunch();
+
                 NavigationService.Navigate(typeof(FavoritePage));
             }
             else
                 NavigationService.Navigate(typeof(SettingPage));
 
-            //Lancer le dispatchertimer toutes les 20 secondes
+            //Lancer le dispatchertimer toutes les 10 secondes
             var _dispatcher = new DispatcherTimer();
-            _dispatcher.Interval = TimeSpan.FromSeconds(20);
+            _dispatcher.Interval = TimeSpan.FromSeconds(10);
             _dispatcher.Tick += _dispatcher_Tick;
             _dispatcher.Start();
             base.OnNavigatedTo(e);

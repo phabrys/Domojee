@@ -8,15 +8,15 @@ using Windows.UI.Xaml.Data;
 
 namespace Domojee.Converters
 {
-    internal class MailMessageVisibilityConverter : IValueConverter
+    internal class LogVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var count = value as int?;
             if (count != null && count > 0)
-                return Visibility.Collapsed;
-            else
                 return Visibility.Visible;
+            else
+                return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

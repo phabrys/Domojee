@@ -1,17 +1,18 @@
-﻿<Page x:Class="Domojee.Views.SettingPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-      xmlns:Jeedom="using:Jeedom"
-      xmlns:ViewModels="using:Domojee.ViewModels"
-      xmlns:controls="using:Domojee.Controls"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:localcontrols="using:Domojee.Controls"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Domojee.ViewModels"
-      RequestedTheme="Dark"
-      mc:Ignorable="d">
+﻿<Page
+    x:Class="Domojee.Views.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Jeedom="using:Jeedom"
+    xmlns:ViewModels="using:Domojee.ViewModels"
+    xmlns:controls="using:Domojee.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:localcontrols="using:Domojee.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Domojee.ViewModels"
+    RequestedTheme="Dark"
+    mc:Ignorable="d">
     <Page.DataContext>
         <vm:SettingViewModel x:Name="ViewModel" />
     </Page.DataContext>
@@ -20,28 +21,61 @@
             <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <controls:PageHeader Title="Paramètres" Icon="Setting" Grid.Row="0" />
-        <Grid Grid.Row="1">
-            <Grid Padding="20,10" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <localcontrols:PageHeader
+            Title="Paramètres"
+            Grid.Row="0"
+            Icon="Setting" />
+        <ScrollViewer Grid.Row="1">
+            <Grid
+                Padding="20,10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="32" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
-                    <TextBox Text="{x:Bind ViewModel.Host, Mode=TwoWay}" PlaceholderText="Adresse d'accès au serveur JEEDOM" Header="Adresse" Margin="0,10,0,0" />
-                    <TextBox Text="{x:Bind ViewModel.Login, Mode=TwoWay}" PlaceholderText="Nom d'utilisateur" Header="Identifiant" Margin="0,5" />
-                    <PasswordBox Password="{x:Bind ViewModel.Password, Mode=TwoWay}" PlaceholderText="Mot de passe de connexion" Header="Mot de passe" Margin="0,5" />
-                    <ToggleSwitch Header="Connexion automatique" IsOn="{x:Bind ViewModel.ConnexionAuto, Mode=TwoWay}" Margin="0,5" />
+                    <TextBox
+                        Margin="0,10,0,0"
+                        Header="Adresse"
+                        PlaceholderText="Adresse d'accès au serveur JEEDOM"
+                        Text="{x:Bind ViewModel.Host, Mode=TwoWay}" />
+                    <TextBox
+                        Margin="0,5"
+                        Header="Identifiant"
+                        PlaceholderText="Nom d'utilisateur"
+                        Text="{x:Bind ViewModel.Login, Mode=TwoWay}" />
+                    <PasswordBox
+                        Margin="0,5"
+                        Header="Mot de passe"
+                        Password="{x:Bind ViewModel.Password, Mode=TwoWay}"
+                        PlaceholderText="Mot de passe de connexion" />
+                    <ToggleSwitch
+                        Margin="0,5"
+                        Header="Connexion automatique"
+                        IsOn="{x:Bind ViewModel.ConnexionAuto, Mode=TwoWay}" />
                 </StackPanel>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button Content="Se connecter" Grid.Column="0" Width="150" Height="32" Margin="5,0" Click="Connexion_Click" />
-                    <Button Content="Mode démo" Grid.Column="1" Width="150" Height="32" Margin="5,0" />
+                    <Button
+                        Grid.Column="0"
+                        Width="150"
+                        Height="32"
+                        Margin="5,0"
+                        Click="Connexion_Click"
+                        Content="Se connecter" />
+                    <Button
+                        Grid.Column="1"
+                        Width="150"
+                        Height="32"
+                        Margin="5,0"
+                        Click="Demo_Click"
+                        Content="Mode démo" />
                 </Grid>
             </Grid>
-        </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

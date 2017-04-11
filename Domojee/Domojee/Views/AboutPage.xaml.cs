@@ -22,12 +22,12 @@ namespace Domojee.Views
             //Logo.Begin();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            /*if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
-            }
+            }*/
 
             base.OnNavigatedTo(e);
         }
